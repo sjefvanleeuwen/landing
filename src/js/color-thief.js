@@ -492,13 +492,18 @@ class DynamicTheme {
     // Only run if IntersectionObserver is supported
     if (!('IntersectionObserver' in window)) return;
 
+    // Disconnect old observer if it exists
+    if (this.scrollObserver) {
+      this.scrollObserver.disconnect();
+    }
+
     const options = {
       root: null,
       rootMargin: '-50% 0% -50% 0%', // Trigger when image cross the horizontal center line
       threshold: 0
     };
 
-    const observer = new IntersectionObserver((entries) => {
+    this.scrollObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const img = entry.target;
@@ -512,7 +517,7 @@ class DynamicTheme {
     // Watch all major article images
     const selectors = '.article-image img, .hero-image img, .full-bleed img, .hero-overlay img';
     document.querySelectorAll(selectors).forEach(img => {
-      observer.observe(img);
+      this.scrollObserver.observe(img);
     });
   }
 
@@ -564,8 +569,8 @@ class DynamicTheme {
 window.colorThief = new ColorThief();
 window.dynamicTheme = new DynamicTheme();
 
-// Auto-initialize elements with data-color-source attribute
-document.addEventListener('DOMContentLoaded', () => {
+// SPA-friendly initialization
+export function initDynamicTheming() {
   const dynamicElements = document.querySelectorAll('[data-dynamic-theme]');
   
   // If we're on a page that supports dynamic theming, init scroll observation
@@ -581,6 +586,11 @@ document.addEventListener('DOMContentLoaded', () => {
       await window.dynamicTheme.applyFromImage(img, element);
     }
   });
+}
+
+// Auto-initialize elements with data-color-source attribute
+document.addEventListener('DOMContentLoaded', () => {
+  initDynamicTheming();
 });
 
 export { ColorThief, DynamicTheme };

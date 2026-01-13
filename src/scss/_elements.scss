@@ -94,6 +94,25 @@
   }
 }
 
+.btn-outline {
+  display: inline-block;
+  padding: 12px 30px;
+  border: 1px solid var(--theme-accent, #fff);
+  color: var(--theme-accent, #fff);
+  text-decoration: none;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  background: transparent;
+
+  &:hover {
+    background: var(--theme-accent, #fff);
+    color: var(--theme-bg, #000);
+  }
+}
+
 // Type showcase sections
 .type-showcase {
   height: 100vh;

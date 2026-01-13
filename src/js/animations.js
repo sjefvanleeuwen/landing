@@ -69,6 +69,51 @@ class MagazineChevron extends HTMLElement {
   }
 }
 
+class MagazineFooter extends HTMLElement {
+  connectedCallback() {
+    this.innerHTML = `
+      <footer>
+        <div class="footer-grid">
+          <div class="footer-col">
+            <h4 style="font-family: 'Orbitron'; font-size: 1.5rem; letter-spacing: 5px;">MAGAZINE</h4>
+            <p style="color: #666; line-height: 1.8; margin-top: 20px;">An exploration of high-end digital editorial design using modern vanilla web technologies.</p>
+          </div>
+          <div class="footer-col">
+            <h4>Sections</h4>
+            <ul>
+              <li><a href="#/diagrams">Diagrams</a></li>
+              <li><a href="#/blog">Blog</a></li>
+              <li><a href="#/about">About Architecture</a></li>
+              <li><a href="#/elements">Elements</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="#/about">About Us</a></li>
+              <li><a href="#/contact">Contact</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Use</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Stay Connected</h4>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">Subscribe to our newsletter for weekly editorial insights.</p>
+            <div style="display: flex;">
+              <input type="email" placeholder="Email" style="padding: 10px; background: #111; border: 1px solid #222; color: #fff; flex: 1;">
+              <button style="background: #fff; border: none; padding: 10px 15px; cursor: pointer;">GO</button>
+            </div>
+          </div>
+        </div>
+        <div class="copyright">
+          &copy; 2026 MODERN MAGAZINE. BUILT WITH VANILLA JS & SASS. INSPIRED BY HTML5UP.
+        </div>
+      </footer>
+    `;
+  }
+}
+
 customElements.define('m-reveal', MagazineReveal);
 customElements.define('m-nav', MagazineNav);
 customElements.define('m-chevron', MagazineChevron);
+customElements.define('m-footer', MagazineFooter);

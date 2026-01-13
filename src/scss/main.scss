@@ -4,7 +4,17 @@
 @import 'article';
 @import 'diagrams';
 
-// Navigation
+// SPA Loader
+#app-root {
+  transition: opacity 0.3s ease;
+  
+  &.loading {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+// Navigation active state
 m-nav {
   position: fixed;
   top: 0;
@@ -17,6 +27,13 @@ m-nav {
   align-items: center;
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   background: rgba(0, 0, 0, 0); // Explicitly start with 0 opacity
+
+  .nav-links a.active {
+    color: $color-gold;
+    &::after {
+      width: 100%;
+    }
+  }
 
   &.scrolled {
     background: rgba(5, 5, 5, 0.95); // Even darker
@@ -61,6 +78,10 @@ m-nav {
     &.scrolled { padding: 15px 20px; }
     .nav-links { display: none; } // Simple mobile hidden nav for now
   }
+}
+
+m-footer, m-chevron {
+  display: block;
 }
 
 header {
