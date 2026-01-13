@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Magazine | Editorial Design</title>
+    <!-- We will use Vite to handle the Scss and JS during dev -->
+</head>
+<body>
+    <div class="landing-page">
+        <m-nav>
+          <a href="index.html" class="logo">MAGAZINE</a>
+          <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="blog.html">Blog</a>
+            <a href="about.html">About</a>
+            <a href="elements.html">Elements</a>
+          </div>
+        </m-nav>
+  
+        <header>
+          <m-reveal class="hero-content fly-in-up">
+            <h1>Modern Magazine</h1>
+            <p>A vanilla exploration of style and motion.</p>
+          </m-reveal>
+          <m-chevron text="Explore"></m-chevron>
+        </header>
+  
+        <section class="magazine-grid">
+          <m-reveal class="feature-large fly-in-left">
+            <img src="/images/image2.png" alt="Featured Story">
+            <div class="content">
+              <h2>Featured Story</h2>
+              <p>Exploring the boundaries of vanilla web development with high-end magazine aesthetics.</p>
+            </div>
+          </m-reveal>
+          
+          <m-reveal class="feature-small fly-in-right">
+            <h3>Sidebar Insight</h3>
+            <p>Details about the modern web architecture without heavy frameworks.</p>
+            <img src="/images/image3.png" alt="Sidebar Ad" style="width: 100%; height: auto; margin-top: 20px;">
+          </m-reveal>
+          <m-chevron text="Latest News"></m-chevron>
+        </section>
+  
+        <section style="background: #111;">
+          <div class="magazine-grid">
+             <m-reveal class="feature-small fly-in-left">
+              <h3>Breaking News</h3>
+              <p>Scroll down to see more animations in action. We are using a minimalist approach with maximum visual impact.</p>
+              <div class="placeholder-img" style="aspect-ratio: 1/1;">Editorial Art</div>
+            </m-reveal>
+            <m-reveal class="feature-large fly-in-right">
+              <img src="/images/image3.png" alt="Gallery">
+              <div class="content">
+                <h2>Visual Impact</h2>
+                <p>Intersection Observer makes it easy to trigger animations without external libraries.</p>
+              </div>
+            </m-reveal>
+          </div>
+          <m-chevron text="The Philosophy"></m-chevron>
+        </section>
+  
+        <section class="magazine-grid">
+          <m-reveal class="feature-half fly-in-up delay-1">
+             <h3>Architecture</h3>
+             <p>Modern layouts using CSS Grid and Flexbox provide the structure needed for complex magazine designs.</p>
+          </m-reveal>
+          <m-reveal class="feature-half fly-in-up delay-2">
+             <h3>Performance</h3>
+             <p>By avoiding heavy frameworks, we ensure that the page remains responsive and accessibility remains a priority.</p>
+          </m-reveal>
+          <m-chevron text="Architecture"></m-chevron>
+        </section>
+  
+        <section id="contact" class="contact-section-wrapper">
+          <m-reveal class="fly-in-up" style="width: 100%;">
+            <div class="contact-grid">
+              <div class="contact-info">
+                <h2>Get In Touch</h2>
+                <p>Our editorial team is always looking for new stories and perspectives.</p>
+                <div class="social-links">
+                  <a href="#" class="social-icon">TW</a>
+                  <a href="#" class="social-icon">IG</a>
+                  <a href="#" class="social-icon">LI</a>
+                </div>
+              </div>
+              <div class="contact-form">
+                <form onsubmit="event.preventDefault(); alert('Message Sent!');">
+                  <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" placeholder="John Doe">
+                  </div>
+                  <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="john@example.com">
+                  </div>
+                  <button type="submit" class="btn-submit">Send Message</button>
+                </form>
+              </div>
+            </div>
+          </m-reveal>
+          <m-chevron text="The Team"></m-chevron>
+        </section>
+  
+        <section id="team" style="background: #111;">
+          <m-reveal class="fly-in-up" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+            <h2 style="text-align: center;">The Team</h2>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 50px; width: 100%; max-width: 1000px;">
+               <div style="text-align: center;">
+                 <div style="width: 120px; height: 120px; background: #1a1a1a; border-radius: 50%; margin: 0 auto 15px auto; border: 1px solid #333; overflow: hidden;">
+                   <img src="/images/member1.png" alt="Alex Rivera" style="width: 100%; height: 100%; object-fit: cover;">
+                 </div>
+                 <h4 style="margin-bottom: 5px;">Alex Rivera</h4>
+                 <p style="font-size: 0.8rem; color: #666;">Creative Director</p>
+               </div>
+               <div style="text-align: center;">
+                 <div style="width: 120px; height: 120px; background: #1a1a1a; border-radius: 50%; margin: 0 auto 15px auto; border: 1px solid #333; overflow: hidden;">
+                   <img src="/images/member2.png" alt="Jordan Smith" style="width: 100%; height: 100%; object-fit: cover;">
+                 </div>
+                 <h4 style="margin-bottom: 5px;">Jordan Smith</h4>
+                 <p style="font-size: 0.8rem; color: #666;">Lead Architect</p>
+               </div>
+               <div style="text-align: center;">
+                 <div style="width: 120px; height: 120px; background: #1a1a1a; border-radius: 50%; margin: 0 auto 15px auto; border: 1px solid #333; overflow: hidden;">
+                   <img src="/images/member3.png" alt="Casey Wong" style="width: 100%; height: 100%; object-fit: cover;">
+                 </div>
+                 <h4 style="margin-bottom: 5px;">Casey Wong</h4>
+                 <p style="font-size: 0.8rem; color: #666;">Editorial Lead</p>
+               </div>
+            </div>
+          </m-reveal>
+          <m-chevron text="Footer"></m-chevron>
+        </section>
+
+        <footer>
+          <div class="footer-grid">
+            <div class="footer-col">
+              <h4 style="font-family: 'Orbitron'; font-size: 1.5rem; letter-spacing: 5px;">MAGAZINE</h4>
+              <p style="color: #666; line-height: 1.8; margin-top: 20px;">An exploration of high-end digital editorial design using modern vanilla web technologies.</p>
+            </div>
+            <div class="footer-col">
+              <h4>Sections</h4>
+              <ul>
+                <li><a href="#">Architecture</a></li>
+                <li><a href="#">Performance</a></li>
+                <li><a href="#">Visual Impact</a></li>
+                <li><a href="#">Editorial</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h4>Company</h4>
+              <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Use</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h4>Stay Connected</h4>
+              <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">Subscribe to our newsletter for weekly editorial insights.</p>
+              <div style="display: flex;">
+                <input type="email" placeholder="Email" style="padding: 10px; background: #111; border: 1px solid #222; color: #fff; flex: 1;">
+                <button style="background: #fff; border: none; padding: 10px 15px; cursor: pointer;">GO</button>
+              </div>
+            </div>
+          </div>
+          <div class="copyright">
+            &copy; 2026 MODERN MAGAZINE. BUILT WITH VANILLA JS & SASS. INSPIRED BY HTML5UP.
+          </div>
+        </footer>
+      </div>
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>

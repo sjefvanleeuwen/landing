@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Color of Innovation | Modern Magazine</title>
+</head>
+<body>
+    <div class="article-page article-dynamic" data-dynamic-theme=".hero-image img">
+        <m-nav>
+          <a href="index.html" class="logo">MAGAZINE</a>
+          <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="blog.html">Blog</a>
+            <a href="about.html">About</a>
+            <a href="elements.html">Elements</a>
+          </div>
+        </m-nav>
+
+        <!-- Article Hero - Dynamic Color -->
+        <header class="article-hero dynamic-hero">
+          <div class="hero-image">
+            <img src="/images/image2.png" alt="The Color of Innovation" crossorigin="anonymous">
+          </div>
+          <div class="hero-overlay dynamic-overlay">
+            <m-reveal class="fly-in-up">
+              <div class="article-meta">
+                <span class="category dynamic-accent">DEEP DIVE</span>
+                <span class="read-time">15 MIN READ</span>
+              </div>
+              <h1 class="article-title dynamic-title">The Color of<br>Innovation</h1>
+              <p class="article-subtitle">How dynamic theming is revolutionizing digital experiences</p>
+            </m-reveal>
+          </div>
+          <m-chevron text="Explore"></m-chevron>
+        </header>
+
+        <!-- Two Column Article Layout -->
+        <article class="article-two-column">
+          
+          <!-- Main Column -->
+          <div class="main-column">
+            
+            <!-- Lead -->
+            <section class="article-lead">
+              <m-reveal class="fly-in-up">
+                <p class="lead-text">
+                  <span class="drop-cap dynamic-drop">C</span>olor is not decoration—it's 
+                  communication. In the hands of a skilled designer, a single hue can 
+                  convey trust, urgency, luxury, or rebellion. But what if color could 
+                  respond to context, adapting in real-time to create perfect harmony?
+                </p>
+              </m-reveal>
+            </section>
+
+            <section class="article-body">
+              <m-reveal class="fly-in-up">
+                <h2 class="dynamic-heading">The Science of Perception</h2>
+                <p>
+                  Our eyes are extraordinary instruments. They can distinguish approximately 
+                  10 million different colors, yet our perception of any single color depends 
+                  entirely on its surroundings. A red that appears vibrant against white becomes 
+                  muted against orange. Context is everything.
+                </p>
+                <p>
+                  This phenomenon, known as simultaneous contrast, has fascinated artists for 
+                  centuries. Josef Albers dedicated his life to exploring it in his seminal 
+                  work "Interaction of Color." Now, with modern web technologies, we can 
+                  harness these principles programmatically.
+                </p>
+              </m-reveal>
+            </section>
+
+            <!-- Color Demo Block -->
+            <div class="color-demo-block">
+              <m-reveal class="fly-in-up">
+                <div class="demo-header">
+                  <span class="demo-label">EXTRACTED PALETTE</span>
+                </div>
+                <div class="palette-display" id="paletteDisplay">
+                  <div class="palette-swatch primary">
+                    <span class="swatch-label">Primary</span>
+                  </div>
+                  <div class="palette-swatch accent">
+                    <span class="swatch-label">Accent</span>
+                  </div>
+                  <div class="palette-swatch background">
+                    <span class="swatch-label">Background</span>
+                  </div>
+                  <div class="palette-swatch text-demo">
+                    <span class="swatch-label">Text</span>
+                  </div>
+                </div>
+                <p class="demo-note">Colors above are dynamically extracted from the hero image</p>
+              </m-reveal>
+            </div>
+
+            <section class="article-body">
+              <m-reveal class="fly-in-up">
+                <h2 class="dynamic-heading">Algorithmic Harmony</h2>
+                <p>
+                  The key to dynamic theming lies in understanding color relationships. 
+                  When we extract a dominant color from an image, we're not just sampling 
+                  pixels—we're identifying the emotional core of the visual. From that 
+                  single seed, an entire palette can bloom.
+                </p>
+                <p>
+                  Luminance calculations determine whether text should be light or dark. 
+                  Saturation adjustments create accent variations. Complementary hues 
+                  provide contrast when needed. The mathematics of color become the 
+                  foundation for aesthetic decisions.
+                </p>
+              </m-reveal>
+            </section>
+
+            <!-- Full Width Image -->
+            <figure class="article-image full-bleed">
+              <m-reveal class="fly-in-up">
+                <img src="/images/image3.png" alt="Color in nature" crossorigin="anonymous">
+                <figcaption>Nature's palettes: the ultimate inspiration for digital design</figcaption>
+              </m-reveal>
+            </figure>
+
+            <section class="article-body">
+              <m-reveal class="fly-in-up">
+                <h2 class="dynamic-heading">WCAG and Accessibility</h2>
+                <p>
+                  Beautiful design means nothing if it can't be perceived. The Web Content 
+                  Accessibility Guidelines (WCAG) establish minimum contrast ratios: 4.5:1 
+                  for normal text, 3:1 for large text. Our color extraction system calculates 
+                  these ratios automatically, ensuring that dynamically generated themes 
+                  remain accessible.
+                </p>
+                <p>
+                  This isn't a limitation—it's a feature. Constraints breed creativity. 
+                  When we design systems that enforce accessibility, we're not restricting 
+                  expression; we're channeling it toward solutions that work for everyone.
+                </p>
+              </m-reveal>
+            </section>
+
+            <!-- Code Block -->
+            <div class="code-showcase">
+              <m-reveal class="fly-in-up">
+                <div class="code-header">
+                  <span class="code-lang">JavaScript</span>
+                  <span class="code-title">Color Extraction</span>
+                </div>
+                <pre class="code-block"><code>// Extract dominant color from image
+const dominant = colorThief.getDominantColor(img);
+
+// Generate accessible theme
+const theme = colorThief.generateTheme(dominant);
+
+// Apply to CSS custom properties
+dynamicTheme.applyFromImage(img, element);</code></pre>
+              </m-reveal>
+            </div>
+
+            <section class="article-body">
+              <m-reveal class="fly-in-up">
+                <h2 class="dynamic-heading">The Future is Contextual</h2>
+                <p>
+                  Imagine a web where every page adapts to its content. Where a photography 
+                  portfolio shifts its entire color scheme based on the featured image. Where 
+                  e-commerce sites create cohesive brand experiences around product imagery. 
+                  This is the promise of dynamic theming.
+                </p>
+                <p>
+                  We're moving beyond static design systems toward living, breathing 
+                  interfaces that respond to their content. The technology exists today. 
+                  The question is: how will you use it?
+                </p>
+                <p class="article-end">◆</p>
+              </m-reveal>
+            </section>
+
+          </div>
+
+          <!-- Sidebar Column -->
+          <aside class="sidebar-column">
+            
+            <!-- Author Card -->
+            <div class="sidebar-author">
+              <m-reveal class="fly-in-right">
+                <img src="/images/member3.png" alt="Alex Nomura" class="author-avatar">
+                <div class="author-info">
+                  <span class="author-name">Alex Nomura</span>
+                  <span class="author-title">Tech Lead</span>
+                </div>
+                <p class="author-bio">
+                  Alex specializes in the intersection of design systems and front-end 
+                  engineering, with a focus on accessible, performant interfaces.
+                </p>
+                <span class="author-date">January 8, 2026</span>
+              </m-reveal>
+            </div>
+
+            <!-- Table of Contents -->
+            <nav class="sidebar-toc">
+              <m-reveal class="fly-in-right">
+                <h4>In This Article</h4>
+                <ul>
+                  <li><a href="#" class="dynamic-link">The Science of Perception</a></li>
+                  <li><a href="#" class="dynamic-link">Algorithmic Harmony</a></li>
+                  <li><a href="#" class="dynamic-link">WCAG and Accessibility</a></li>
+                  <li><a href="#" class="dynamic-link">The Future is Contextual</a></li>
+                </ul>
+              </m-reveal>
+            </nav>
+
+            <!-- Key Stats -->
+            <div class="sidebar-stats">
+              <m-reveal class="fly-in-right">
+                <h4>By The Numbers</h4>
+                <div class="stat-item">
+                  <span class="stat-number dynamic-stat">10M</span>
+                  <span class="stat-label">Colors the human eye can distinguish</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-number dynamic-stat">4.5:1</span>
+                  <span class="stat-label">Minimum WCAG contrast ratio</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-number dynamic-stat">100ms</span>
+                  <span class="stat-label">Average color extraction time</span>
+                </div>
+              </m-reveal>
+            </div>
+
+            <!-- Related Tags -->
+            <div class="sidebar-tags">
+              <m-reveal class="fly-in-right">
+                <h4>Topics</h4>
+                <div class="tag-cloud">
+                  <span class="tag dynamic-tag">Color Theory</span>
+                  <span class="tag dynamic-tag">JavaScript</span>
+                  <span class="tag dynamic-tag">Accessibility</span>
+                  <span class="tag dynamic-tag">Design Systems</span>
+                  <span class="tag dynamic-tag">CSS Variables</span>
+                </div>
+              </m-reveal>
+            </div>
+
+            <!-- Share Widget -->
+            <div class="sidebar-share">
+              <m-reveal class="fly-in-right">
+                <h4>Share</h4>
+                <div class="share-buttons">
+                  <a href="#" class="share-btn">Twitter</a>
+                  <a href="#" class="share-btn">LinkedIn</a>
+                  <a href="#" class="share-btn">Copy Link</a>
+                </div>
+              </m-reveal>
+            </div>
+
+          </aside>
+
+        </article>
+
+        <!-- Related Articles -->
+        <section class="related-articles">
+          <m-reveal class="fly-in-up">
+            <h2 class="section-title">Continue Reading</h2>
+          </m-reveal>
+          <div class="related-grid">
+            <m-reveal class="fly-in-left">
+              <a href="article-1.html" class="related-card">
+                <img src="/images/image1.png" alt="Future of Design">
+                <div class="related-content">
+                  <span class="related-category">EDITORIAL</span>
+                  <h3>The Future of Design</h3>
+                  <span class="related-time">8 min read</span>
+                </div>
+              </a>
+            </m-reveal>
+            <m-reveal class="fly-in-right">
+              <a href="article-2.html" class="related-card">
+                <img src="/images/image3.png" alt="Architects">
+                <div class="related-content">
+                  <span class="related-category">PROFILES</span>
+                  <h3>Architects of Tomorrow</h3>
+                  <span class="related-time">12 min read</span>
+                </div>
+              </a>
+            </m-reveal>
+          </div>
+        </section>
+
+        <footer class="site-footer">
+          <div class="footer-content">
+            <div class="copyright">
+              &copy; 2026 MODERN MAGAZINE. ALL RIGHTS RESERVED.
+            </div>
+          </div>
+        </footer>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+    <script type="module">
+      import { DynamicTheme } from '/src/js/color-thief.js';
+      
+      // Initialize dynamic theming for this article
+      document.addEventListener('DOMContentLoaded', async () => {
+        const article = document.querySelector('.article-dynamic');
+        const heroImg = document.querySelector('.hero-image img');
+        
+        if (heroImg && article) {
+          // Wait for image to load
+          if (!heroImg.complete) {
+            await new Promise(resolve => heroImg.onload = resolve);
+          }
+          
+          const theme = await window.dynamicTheme.applyFromImage(heroImg, article);
+          
+          // Update palette display with colors
+          const paletteDisplay = document.getElementById('paletteDisplay');
+          if (paletteDisplay) {
+            const primarySwatch = paletteDisplay.querySelector('.primary');
+            const accentSwatch = paletteDisplay.querySelector('.accent');
+            const bgSwatch = paletteDisplay.querySelector('.background');
+            const textSwatch = paletteDisplay.querySelector('.text-demo');
+            
+            primarySwatch.style.background = `rgb(${theme.primaryRgb})`;
+            accentSwatch.style.background = `rgb(${theme.accentRgb})`;
+            bgSwatch.style.background = `rgb(${theme.bgDarkRgb})`;
+            textSwatch.style.background = `rgb(${theme.textPrimaryRgb})`;
+            
+            // Show contrast ratios on hover
+            if (theme.contrastRatios) {
+              accentSwatch.title = `Contrast: ${theme.contrastRatios.accentOnBg.toFixed(2)}:1`;
+              textSwatch.title = `Contrast: ${theme.contrastRatios.textOnBg.toFixed(2)}:1`;
+            }
+          }
+          
+          // Log contrast ratios for verification
+          console.log('🎨 Dynamic Theme Applied');
+          console.log('   Primary:', theme.primaryHex);
+          console.log('   Accent:', theme.accentHex);
+          console.log('   Contrast Ratios:', theme.contrastRatios);
+          console.log('   ✓ Text on BG:', theme.contrastRatios.textOnBg.toFixed(2) + ':1', 
+                      theme.contrastRatios.textOnBg >= 4.5 ? '(WCAG AA ✓)' : '(needs improvement)');
+          console.log('   ✓ Accent on BG:', theme.contrastRatios.accentOnBg.toFixed(2) + ':1',
+                      theme.contrastRatios.accentOnBg >= 4.5 ? '(WCAG AA ✓)' : '(needs improvement)');
+          console.log('   ✓ Gold on BG:', theme.contrastRatios.goldOnBg.toFixed(2) + ':1',
+                      theme.contrastRatios.goldOnBg >= 4.5 ? '(WCAG AA ✓)' : '(needs improvement)');
+        }
+      });
+    </script>
+</body>
+</html>

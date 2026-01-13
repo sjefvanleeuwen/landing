@@ -1,0 +1,137 @@
+// Typography - Primary
+$font-header: 'Orbitron', sans-serif;
+$font-body: 'Exo 2', sans-serif;
+
+// Typography - Editorial (New)
+$font-display: 'Bebas Neue', sans-serif;
+$font-serif: 'Playfair Display', Georgia, serif;
+$font-elegant: 'Cinzel', serif;
+$font-classic: 'Cormorant Garamond', Georgia, serif;
+
+// Colors (HTML5UP inspired - often muted or high contrast)
+$color-bg: #0a0a0a;
+$color-text: #ffffff;
+$color-accent: #3498db;
+$color-header-bg: #1a1a1a;
+$color-header-text: #ffffff;
+$color-muted: #888888;
+
+// Golden Palette
+$color-gold: #D4AF37;
+$color-gold-light: #F4E4BA;
+$color-gold-dark: #AA8C2C;
+
+// --- Font Face Definitions ---
+
+@font-face {
+  font-family: 'Exo 2';
+  src: url('/fonts/exo2-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Orbitron';
+  src: url('/fonts/orbitron-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Bebas Neue';
+  src: url('/fonts/bebas-neue-regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Cinzel';
+  src: url('/fonts/cinzel-regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Cinzel';
+  src: url('/fonts/cinzel-bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('/fonts/playfair-display-regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('/fonts/playfair-display-bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/cormorant-garamond-regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/cormorant-garamond-bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+
+html.fonts-loading {
+  body {
+    opacity: 0;
+  }
+}
+
+html.fonts-loaded {
+  body {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+  }
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%; // Changed from height: 100%
+  overflow-x: hidden;
+  background-color: $color-bg;
+}
+
+body {
+  font-family: $font-body;
+  color: $color-text;
+  line-height: 1.6;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-header;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  margin-bottom: 0.5em;
+}

@@ -1,0 +1,435 @@
+@import 'base';
+@import 'animations';
+@import 'elements';
+@import 'article';
+
+// Navigation
+m-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 25px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(0, 0, 0, 0); // Explicitly start with 0 opacity
+
+  &.scrolled {
+    background: rgba(5, 5, 5, 0.95); // Even darker
+    backdrop-filter: blur(20px);     // Even more blur
+    -webkit-backdrop-filter: blur(20px);
+    padding: 12px 50px;              // Narrower for a more "compact" feel
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15); // More visible border
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+  }
+
+  .logo {
+    font-family: $font-header;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: 5px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 30px;
+    
+    a {
+      font-family: $font-header;
+      font-size: 0.7rem;
+      color: #fff;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+      
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 20px;
+    &.scrolled { padding: 15px 20px; }
+    .nav-links { display: none; } // Simple mobile hidden nav for now
+  }
+}
+
+header {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/images/image1.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
+  @media (max-width: 1024px) {
+    background-attachment: scroll;
+  }
+
+  color: $color-header-text;
+  text-align: center;
+  padding: 0 20px;
+  
+  .hero-content {
+    h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      margin-bottom: 0.5rem;
+      padding: 0;
+      display: inline-block;
+    }
+    p {
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      opacity: 0.9;
+      margin-top: 20px;
+    }
+  }
+
+  m-chevron {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+section {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5vh clamp(20px, 5vw, 50px);
+  margin: 0;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+
+  m-chevron {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+// Ensure footer stays below the snapped content
+footer {
+  background: #000;
+  padding: 60px clamp(20px, 5vw, 50px) 40px clamp(20px, 5vw, 50px);
+}
+
+.magazine-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(10px, 2vw, 30px);
+  max-width: 1400px;
+  width: 100%;
+  align-items: center;
+}
+
+.feature-large {
+  grid-column: span 8;
+  position: relative;
+  overflow: hidden;
+  height: 65vh; // Constrain to 65% of viewport height
+  @media (max-width: 1024px) { 
+    grid-column: span 12;
+    height: 40vh;
+  }
+
+  background: #111;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.9));
+    color: white;
+    padding: 30px 20px 20px 20px;
+    pointer-events: none;
+
+    h2 {
+      border-bottom: 2px solid white;
+      margin-top: 0;
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+    }
+  }
+}
+
+.feature-small {
+  grid-column: span 4;
+  position: relative;
+  height: 65vh; // Match large height
+  background: #111;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px;
+  border: 1px solid #222;
+
+  img {
+    height: 30%;
+    width: 100%;
+    object-fit: cover;
+    margin-top: auto;
+  }
+
+  @media (max-width: 1024px) { 
+    grid-column: span 12;
+    height: auto;
+  }
+}
+
+.feature-half {
+  grid-column: span 6;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px;
+  background: #111;
+  border: 1px solid #222;
+  @media (max-width: 768px) { grid-column: span 12; height: auto; }
+}
+
+.placeholder-img {
+  background: #1a1a1a;
+  width: 100%;
+  aspect-ratio: 16/9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.content {
+  h2 {
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    margin: 0;
+    border-bottom: 2px solid $color-header-text;
+    display: inline-block;
+    padding-bottom: 5px;
+  }
+}
+
+// Contact Form Style
+.contact-section-wrapper {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+  
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .contact-info {
+    h2 { border-bottom-color: #fff; }
+    p { font-size: 1.2rem; opacity: 0.7; line-height: 1.8; }
+  }
+
+  .form-group {
+    margin-bottom: 25px;
+    
+    label {
+      display: block;
+      font-family: $font-header;
+      font-size: 0.7rem;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 15px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #fff;
+      font-family: $font-body;
+      transition: all 0.3s;
+
+      &:focus {
+        outline: none;
+        border-color: $color-accent;
+        background: rgba(255,255,255,0.1);
+      }
+    }
+  }
+
+  .btn-submit {
+    background: $color-accent;
+    color: #fff;
+    border: none;
+    padding: 18px 45px;
+    font-family: $font-header;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+    transition: all 0.3s;
+
+    &:hover {
+      background: #fff;
+      color: #000;
+    }
+  }
+}
+
+// Extensive Footer
+footer {
+  background: #000;
+  color: #fff;
+  padding: 100px 50px 40px 50px;
+  
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 60px;
+    max-width: 1400px;
+    margin: 0 auto 80px auto;
+    
+    @media (max-width: 1024px) { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 600px) { grid-template-columns: 1fr; }
+  }
+
+  .footer-col {
+    h4 {
+      font-size: 1rem;
+      margin-bottom: 35px;
+      position: relative;
+      letter-spacing: 3px;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        left: 0;
+        width: 40px;
+        height: 2px;
+        background: $color-accent;
+      }
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      li {
+        margin-bottom: 15px;
+        a {
+          color: #666;
+          text-decoration: none;
+          transition: color 0.3s;
+          font-size: 0.9rem;
+          &:hover { color: #fff; }
+        }
+      }
+    }
+  }
+
+  .social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    
+    .social-icon {
+      width: 45px;
+      height: 45px;
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-decoration: none;
+      transition: all 0.3s;
+      
+      &:hover {
+        border-color: #fff;
+        background: #fff;
+        color: #000;
+      }
+    }
+  }
+
+  .copyright {
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 40px;
+    text-align: center;
+    color: #333;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+}
+
+// Sub-pages (Blog, About, etc.)
+.sub-page {
+  background: $color-bg;
+  min-height: 100vh;
+  
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 40px 80px;
+    
+    @media (max-width: 768px) {
+      padding: 100px 20px 60px;
+    }
+  }
+  
+  section {
+    height: auto;
+    min-height: auto;
+    padding: 0;
+    margin-bottom: 60px;
+  }
+  
+  h1 {
+    font-family: $font-elegant;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    letter-spacing: 0.15em;
+    color: #fff;
+    margin-bottom: 50px;
+    
+    &::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 3px;
+      background: $color-gold;
+      margin-top: 20px;
+    }
+  }
+}
