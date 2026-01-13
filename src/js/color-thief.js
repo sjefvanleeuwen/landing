@@ -446,6 +446,7 @@ class DynamicTheme {
   constructor() {
     this.colorThief = new ColorThief();
     this.currentTheme = null;
+    this.colorCache = new Map();
   }
 
   /**
@@ -454,22 +455,65 @@ class DynamicTheme {
    * @param {HTMLElement} target - Element to apply theme to (defaults to :root)
    */
   async applyFromImage(img, target = document.documentElement) {
-    // Wait for image to load if needed
+    if (this.colorCache.has(img.src)) {
+      const cached = this.colorCache.get(img.src);
+      this._setCSSProperties(target, cached);
+      target.classList.remove('theme-light', 'theme-dark');
+      target.classList.add(cached.isDark ? 'theme-dark' : 'theme-light');
+      this.currentTheme = cached;
+      return cached;
+    }
+
     if (!img.complete) {
       await new Promise(resolve => img.onload = resolve);
     }
 
-    const dominantColor = this.colorThief.getDominantColor(img);
-    const theme = this.colorThief.generateTheme(dominantColor);
-    this.currentTheme = theme;
+    try {
+      const dominantColor = this.colorThief.getDominantColor(img);
+      const theme = this.colorThief.generateTheme(dominantColor);
+      this.colorCache.set(img.src, theme);
+      this.currentTheme = theme;
 
-    this._setCSSProperties(target, theme);
-    
-    // Add theme class for conditional styling
-    target.classList.remove('theme-light', 'theme-dark');
-    target.classList.add(theme.isDark ? 'theme-dark' : 'theme-light');
+      this._setCSSProperties(target, theme);
+      target.classList.remove('theme-light', 'theme-dark');
+      target.classList.add(theme.isDark ? 'theme-dark' : 'theme-light');
 
-    return theme;
+      return theme;
+    } catch (e) {
+      console.warn('DynamicTheme: Could not extract colors from image', img.src);
+      return null;
+    }
+  }
+
+  /**
+   * Initialize scroll observation to change theme as different images come into view
+   */
+  initScrollObservation() {
+    // Only run if IntersectionObserver is supported
+    if (!('IntersectionObserver' in window)) return;
+
+    const options = {
+      root: null,
+      rootMargin: '-50% 0% -50% 0%', // Trigger when image cross the horizontal center line
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          // Apply theme to the whole page container or root
+          const target = document.querySelector('.article-page') || document.documentElement;
+          this.applyFromImage(img, target);
+        }
+      });
+    }, options);
+
+    // Watch all major article images
+    const selectors = '.article-image img, .hero-image img, .full-bleed img, .hero-overlay img';
+    document.querySelectorAll(selectors).forEach(img => {
+      observer.observe(img);
+    });
   }
 
   /**
@@ -522,7 +566,14 @@ window.dynamicTheme = new DynamicTheme();
 
 // Auto-initialize elements with data-color-source attribute
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('[data-dynamic-theme]').forEach(async (element) => {
+  const dynamicElements = document.querySelectorAll('[data-dynamic-theme]');
+  
+  // If we're on a page that supports dynamic theming, init scroll observation
+  if (dynamicElements.length > 0 || document.querySelector('.article-page')) {
+    window.dynamicTheme.initScrollObservation();
+  }
+
+  dynamicElements.forEach(async (element) => {
     const imgSelector = element.dataset.dynamicTheme;
     const img = element.querySelector(imgSelector) || document.querySelector(imgSelector);
     
