@@ -21,17 +21,17 @@ if ('fonts' in document) {
 
 // Initialize SPA Router
 const routes = {
-  'home': { template: '/home.html' },
-  'blog': { template: '/blog.html' },
-  'diagrams': { template: '/diagrams.html' },
-  'about': { template: '/about.html' },
-  'elements': { template: '/elements.html' },
-  'article-1': { template: '/article-1.html' },
-  'article-2': { template: '/article-2.html' },
-  'article-3': { template: '/article-3.html' },
-  'article-4': { template: '/article-4.html' },
-  'article-5': { template: '/article-5.html' },
-  'article-6': { template: '/article-6.html' }
+  'home': { template: 'home.html' },
+  'blog': { template: 'blog.html' },
+  'diagrams': { template: 'diagrams.html' },
+  'about': { template: 'about.html' },
+  'elements': { template: 'elements.html' },
+  'article-1': { template: 'article-1.html' },
+  'article-2': { template: 'article-2.html' },
+  'article-3': { template: 'article-3.html' },
+  'article-4': { template: 'article-4.html' },
+  'article-5': { template: 'article-5.html' },
+  'article-6': { template: 'article-6.html' }
 };
 
 new Router(routes, 'app-root');

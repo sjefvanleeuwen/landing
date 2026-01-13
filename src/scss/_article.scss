@@ -2,7 +2,8 @@
 
 .article-page {
   background: var(--theme-bg, $color-bg);
-  transition: background-color 1s ease;
+  transition: background-color 2.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: background-color;
   
   // Reset landing page section styles for articles
   section {
@@ -15,8 +16,18 @@
   }
   
   // Smoothly transition all dynamic color changes
-  &.article-dynamic * {
-    transition: color 1s ease, background-color 1s ease, border-color 1s ease, fill 1s ease;
+  &.article-dynamic {
+    h1, h2, h3, h4, h5, h6,
+    p, span, a, blockquote, div,
+    .sidebar-card, .sidebar-quote, .data-list li,
+    .drop-cap, .article-meta span, .btn-outline,
+    .dynamic-heading, .dynamic-drop, .dynamic-accent, .dynamic-title,
+    svg, path, button {
+      transition: color 2s cubic-bezier(0.4, 0, 0.2, 1), 
+                  background-color 2.2s cubic-bezier(0.4, 0, 0.2, 1), 
+                  border-color 2s cubic-bezier(0.4, 0, 0.2, 1), 
+                  fill 2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
   }
 }
 

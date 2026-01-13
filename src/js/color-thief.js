@@ -446,7 +446,102 @@ class DynamicTheme {
   constructor() {
     this.colorThief = new ColorThief();
     this.currentTheme = null;
+    this.defaultTheme = null;
     this.colorCache = new Map();
+    this.activeImg = null;
+    this.isTransitioning = false;
+    this._onScroll = null;
+    this._timeouts = [];
+    this._ticking = false;
+  }
+
+  /**
+   * Reset instance state for new page navigation
+   */
+  reset() {
+    // 1. Clear all trackable timeouts
+    this._timeouts.forEach(clearTimeout);
+    this._timeouts = [];
+
+    // 2. Detach old scroll listeners
+    if (this._onScroll) {
+      window.removeEventListener('scroll', this._onScroll);
+      this._onScroll = null;
+    }
+    this._ticking = false;
+
+    // 3. Clean up intersection observers if they exist
+    if (this.scrollObserver) {
+      this.scrollObserver.disconnect();
+    }
+
+    // 4. Reset internal state
+    this.currentTheme = null;
+    this.defaultTheme = null;
+    this.activeImg = null;
+    
+    // 5. Clean up stale CSS properties on all potential targets
+    const targets = [
+      document.documentElement,
+      document.getElementById('app-root'),
+      ...Array.from(document.querySelectorAll('.article-page, .sub-page, .landing-page'))
+    ].filter((v, i, a) => v && a.indexOf(v) === i); // Unique targets
+
+    targets.forEach(target => {
+      if (target.style) {
+        const props = [
+          '--theme-bg', '--theme-bg-rgb', '--theme-bg-light',
+          '--theme-accent', '--theme-accent-rgb', '--theme-accent-hex',
+          '--theme-text', '--theme-text-rgb', '--theme-text-secondary', '--theme-text-muted',
+          '--theme-primary', '--theme-primary-rgb', '--theme-primary-hex',
+          '--theme-gold', '--theme-gold-rgb',
+          '--theme-overlay', '--theme-overlay-light'
+        ];
+        props.forEach(p => target.style.removeProperty(p));
+        target.classList.remove('theme-light', 'theme-dark');
+      }
+    });
+  }
+
+  /**
+   * Trackable timeout wrapper
+   */
+  _setTimeout(callback, delay) {
+    const id = setTimeout(callback, delay);
+    this._timeouts.push(id);
+    return id;
+  }
+
+  /**
+   * Internal method to apply a theme object to a target
+   */
+  _applyTheme(theme, target, sourceImg = null) {
+    if (!theme || !target) return;
+    
+    // Safety check: is the target still in the document?
+    if (!document.contains(target) && target !== document.documentElement) return;
+    
+    // Prevent redundant application to the same image source
+    if (this.activeImg === sourceImg && this.currentTheme === theme) {
+      return;
+    }
+    
+    this.currentTheme = theme;
+    this.activeImg = sourceImg;
+    
+    // Use requestAnimationFrame to ensure the transition always triggers
+    // even after a DOM swap (SPA navigation)
+    requestAnimationFrame(() => {
+      this._setCSSProperties(target, theme);
+      
+      // Manage theme classes
+      target.classList.remove('theme-light', 'theme-dark');
+      target.classList.add(theme.isDark ? 'theme-dark' : 'theme-light');
+      
+      if (!this.defaultTheme) {
+        this.defaultTheme = theme;
+      }
+    });
   }
 
   /**
@@ -455,70 +550,44 @@ class DynamicTheme {
    * @param {HTMLElement} target - Element to apply theme to (defaults to :root)
    */
   async applyFromImage(img, target = document.documentElement) {
-    if (this.colorCache.has(img.src)) {
-      const cached = this.colorCache.get(img.src);
-      this._setCSSProperties(target, cached);
-      target.classList.remove('theme-light', 'theme-dark');
-      target.classList.add(cached.isDark ? 'theme-dark' : 'theme-light');
-      this.currentTheme = cached;
+    if (!img) return null;
+
+    // Use image src or ID as key for caching
+    const cacheKey = img.src || img.id;
+
+    if (this.colorCache.has(cacheKey)) {
+      const cached = this.colorCache.get(cacheKey);
+      this._applyTheme(cached, target, img);
       return cached;
     }
 
+    // Cross-origin safety
+    if (img.src && !img.src.startsWith(window.location.origin) && !img.crossOrigin) {
+      img.crossOrigin = 'anonymous';
+    }
+
     if (!img.complete) {
-      await new Promise(resolve => img.onload = resolve);
+      try {
+        await new Promise((resolve, reject) => {
+          img.onload = resolve;
+          img.onerror = () => reject(new Error('Image failed to load'));
+          this._setTimeout(() => reject(new Error('Image load timeout')), 3000);
+        });
+      } catch (e) {
+        return null;
+      }
     }
 
     try {
       const dominantColor = this.colorThief.getDominantColor(img);
       const theme = this.colorThief.generateTheme(dominantColor);
-      this.colorCache.set(img.src, theme);
-      this.currentTheme = theme;
-
-      this._setCSSProperties(target, theme);
-      target.classList.remove('theme-light', 'theme-dark');
-      target.classList.add(theme.isDark ? 'theme-dark' : 'theme-light');
-
+      this.colorCache.set(cacheKey, theme);
+      this._applyTheme(theme, target, img);
       return theme;
     } catch (e) {
-      console.warn('DynamicTheme: Could not extract colors from image', img.src);
+      console.warn('DynamicTheme: Color extraction failed:', e.message);
       return null;
     }
-  }
-
-  /**
-   * Initialize scroll observation to change theme as different images come into view
-   */
-  initScrollObservation() {
-    // Only run if IntersectionObserver is supported
-    if (!('IntersectionObserver' in window)) return;
-
-    // Disconnect old observer if it exists
-    if (this.scrollObserver) {
-      this.scrollObserver.disconnect();
-    }
-
-    const options = {
-      root: null,
-      rootMargin: '-50% 0% -50% 0%', // Trigger when image cross the horizontal center line
-      threshold: 0
-    };
-
-    this.scrollObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const img = entry.target;
-          // Apply theme to the whole page container or root
-          const target = document.querySelector('.article-page') || document.documentElement;
-          this.applyFromImage(img, target);
-        }
-      });
-    }, options);
-
-    // Watch all major article images
-    const selectors = '.article-image img, .hero-image img, .full-bleed img, .hero-overlay img';
-    document.querySelectorAll(selectors).forEach(img => {
-      this.scrollObserver.observe(img);
-    });
   }
 
   /**
@@ -526,9 +595,88 @@ class DynamicTheme {
    */
   applyFromColor(color, target = document.documentElement) {
     const theme = this.colorThief.generateTheme(color);
-    this.currentTheme = theme;
-    this._setCSSProperties(target, theme);
+    this._applyTheme(theme, target);
     return theme;
+  }
+
+  /**
+   * Initialize scroll observation with high-precision midpoint tracking
+   */
+  initScrollObservation() {
+    // 1. Detach old scroll listeners if they exist (don't call full reset here to avoid clearing hero theme)
+    if (this._onScroll) {
+      window.removeEventListener('scroll', this._onScroll);
+    }
+
+    const getTarget = () => document.querySelector('.article-page, #app-root') || document.documentElement;
+    const selectors = '.article-image img, .hero-image img, .full-bleed img, .hero-overlay img, .feature-large img, figure img, img[crossorigin="anonymous"]';
+    
+    // 2. High-precision Scroll Monitor
+    const checkMidpoints = () => {
+      // Safety: If the observer was destroyed/reset during the RAF wait, abort.
+      if (!this._onScroll) return;
+
+      const target = getTarget();
+      const images = document.querySelectorAll(selectors);
+      const viewportMid = window.innerHeight / 2;
+      
+      let bestMatch = null;
+      let minDistance = Infinity;
+
+      images.forEach(img => {
+        // Skip if image is not actually visible or loaded yet
+        if (img.offsetWidth === 0 || img.offsetHeight === 0) return;
+
+        const rect = img.getBoundingClientRect();
+        
+        // Calculate the "absolute mid point" using the logic: top + height/2
+        const imgMid = rect.top + (rect.height / 2);
+        const distance = Math.abs(viewportMid - imgMid);
+
+        // We only care about images that are visible on screen
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          if (distance < minDistance) {
+            minDistance = distance;
+            bestMatch = img;
+          }
+        }
+      });
+
+      // Threshold: The image midpoint must be within 30% of the screen center
+      if (bestMatch && minDistance < window.innerHeight * 0.3) {
+        this.applyFromImage(bestMatch, target);
+      } else if (window.scrollY < 120 && this.defaultTheme) {
+        // Back to top - revert to hero theme
+        // Slightly higher threshold (120) to ensure hero theme sticks at the very top
+        this._applyTheme(this.defaultTheme, target, null);
+      }
+      
+      this._ticking = false;
+    };
+
+    this._onScroll = () => {
+      if (!this._ticking) {
+        requestAnimationFrame(checkMidpoints);
+        this._ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    
+    // 3. Initial checks with slight delays to account for dynamic loading/rendering
+    const runInitialCheck = () => {
+      const target = getTarget();
+      const heroImg = document.querySelector('#hero-img, .hero-image img, header img, [data-hero-img]');
+      if (heroImg) {
+        this.applyFromImage(heroImg, target);
+      }
+      checkMidpoints();
+    };
+
+    // Run immediately and again after short delays to catch late-renders
+    runInitialCheck();
+    this._setTimeout(runInitialCheck, 50);
+    this._setTimeout(checkMidpoints, 300);
   }
 
   _setCSSProperties(target, theme) {
@@ -571,17 +719,29 @@ window.dynamicTheme = new DynamicTheme();
 
 // SPA-friendly initialization
 export function initDynamicTheming() {
+  // 1. Force a clean slate
+  window.dynamicTheme.reset();
+
+  // 2. Locate dynamic elements and check if this is a "Dynamic Content" page
+  // We check for specific classes or the dynamic-theme data attribute
   const dynamicElements = document.querySelectorAll('[data-dynamic-theme]');
+  const appRoot = document.getElementById('app-root');
   
-  // If we're on a page that supports dynamic theming, init scroll observation
-  if (dynamicElements.length > 0 || document.querySelector('.article-page')) {
+  const hasDynamicAttr = dynamicElements.length > 0 || (appRoot && appRoot.hasAttribute('data-dynamic-theme'));
+  const hasArticleClass = !!document.querySelector('.article-page, .article-layout, .article-dynamic');
+  
+  // 3. Initialize observation if needed
+  if (hasArticleClass || hasDynamicAttr) {
     window.dynamicTheme.initScrollObservation();
   }
 
+  // 4. Handle elements that want to be themed by a specific child image
   dynamicElements.forEach(async (element) => {
     const imgSelector = element.dataset.dynamicTheme;
-    const img = element.querySelector(imgSelector) || document.querySelector(imgSelector);
+    // Check if the selector is valid and finds an image
+    if (!imgSelector) return;
     
+    const img = element.querySelector(imgSelector) || document.querySelector(imgSelector);
     if (img) {
       await window.dynamicTheme.applyFromImage(img, element);
     }

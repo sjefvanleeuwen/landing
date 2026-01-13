@@ -7,21 +7,12 @@
 </head>
 <body>
     <div class="article-page article-dynamic" data-dynamic-theme=".hero-image img">
-        <m-nav>
-          <a href="index.html" class="logo">MAGAZINE</a>
-          <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="blog.html">Blog</a>
-            <a href="diagrams.html">Diagrams</a>
-            <a href="about.html">About</a>
-            <a href="elements.html">Elements</a>
-          </div>
-        </m-nav>
+        <!-- (m-nav removed for SPA) -->
 
         <!-- Article Hero -->
         <header class="article-hero dynamic-hero">
           <div class="hero-image">
-            <img src="/images/image14.png" alt="Architecture of Density" crossorigin="anonymous" id="hero-img">
+            <img src="images/image14.png" alt="Architecture of Density" crossorigin="anonymous" id="hero-img">
           </div>
           <div class="hero-overlay dynamic-overlay">
             <m-reveal class="fly-in-up">
@@ -74,7 +65,7 @@
             <!-- Full Width Image 15 (Dynamic Source) -->
             <figure class="article-image full-bleed dynamic-section" data-image-source="image15-el">
               <m-reveal class="fly-in-up">
-                <img src="/images/image15.png" alt="Structured Chaos" crossorigin="anonymous" id="image15-el">
+                <img src="images/image15.png" alt="Structured Chaos" crossorigin="anonymous" id="image15-el">
                 <figcaption>The lattice of modern existence</figcaption>
               </m-reveal>
             </figure>
@@ -97,7 +88,7 @@
              <!-- Full Width Image 16 (Dynamic Source) -->
              <figure class="article-image full-bleed dynamic-section" data-image-source="image16-el">
               <m-reveal class="fly-in-up">
-                <img src="/images/image16.png" alt="Network Nodes" crossorigin="anonymous" id="image16-el">
+                <img src="images/image16.png" alt="Network Nodes" crossorigin="anonymous" id="image16-el">
                 <figcaption>Nodes in the infinite network</figcaption>
               </m-reveal>
             </figure>
@@ -177,7 +168,7 @@
           <div class="related-grid">
             <m-reveal class="fly-in-left">
               <a href="article-5.html" class="related-card">
-                <img src="/images/image7.png" alt="Neon Shadows">
+                <img src="images/image7.png" alt="Neon Shadows">
                 <div class="related-content">
                   <span class="related-category">FUTURISM</span>
                   <h3>Neon Shadows</h3>
@@ -187,7 +178,7 @@
             </m-reveal>
             <m-reveal class="fly-in-right">
               <a href="article-3.html" class="related-card">
-                <img src="/images/image2.png" alt="Color Tech">
+                <img src="images/image2.png" alt="Color Tech">
                 <div class="related-content">
                   <span class="related-category">DEEP DIVE</span>
                   <h3>The Color of Innovation</h3>
@@ -198,16 +189,12 @@
           </div>
         </section>
 
-        <footer class="site-footer">
-          <div class="footer-content">
-            <div class="copyright">
-              &copy; 2026 MODERN MAGAZINE. ALL RIGHTS RESERVED.
-            </div>
-          </div>
-        </footer>
+        <!-- (footer and scripts removed for SPA) -->
     </div>
+</body>
+</html>
 
-    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="src/main.js"></script>
     <script type="module">
       import { DynamicTheme } from '/src/js/color-thief.js';
       
@@ -264,3 +251,4 @@
     </script>
 </body>
 </html>
+

@@ -23,8 +23,10 @@ export class Router {
         // If it's a relative path to an html file, convert to hash
         if (url.pathname.endsWith('.html') && !url.hash) {
           e.preventDefault();
-          const route = url.pathname.replace(/^\/|\.html$/g, '');
-          window.location.hash = `/${route === 'index' ? '' : route}`;
+          // Get just the filename (e.g., 'about.html' -> 'about')
+          const filename = url.pathname.split('/').pop().replace('.html', '');
+          const route = filename === 'index' ? 'home' : filename;
+          window.location.hash = `#/${route === 'home' ? '' : route}`;
         }
       }
     });
@@ -58,13 +60,29 @@ export class Router {
       this.container.innerHTML = content.innerHTML;
       this.container.className = content.className; // Maintain page-specific styling
       
+      // Clear previous data attributes
+      Array.from(this.container.attributes).forEach(attr => {
+        if (attr.name.startsWith('data-')) {
+          this.container.removeAttribute(attr.name);
+        }
+      });
+
+      // Transfer data attributes (important for dynamic theming)
+      Array.from(content.attributes).forEach(attr => {
+        if (attr.name.startsWith('data-')) {
+          this.container.setAttribute(attr.name, attr.value);
+        }
+      });
+      
       this.updateActiveLinks(path);
 
-      // Re-initialize dynamic theme and scroll observation
-      initDynamicTheming();
-
-      // Scroll to top on navigation
+      // Scroll to top on navigation BEFORE initializing theming
+      // This is critical so the midpoint calculation starts from top
       window.scrollTo(0, 0);
+
+      // Re-initialize dynamic theme and scroll observation
+      // Note: initDynamicTheming now handles internal resets
+      initDynamicTheming();
       
       // Trigger any custom scripts or observers
       document.dispatchEvent(new CustomEvent('page-loaded', { detail: { path } }));

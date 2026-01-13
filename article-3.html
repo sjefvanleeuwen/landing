@@ -7,21 +7,12 @@
 </head>
 <body>
     <div class="article-page article-dynamic" data-dynamic-theme=".hero-image img">
-        <m-nav>
-          <a href="index.html" class="logo">MAGAZINE</a>
-          <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="blog.html">Blog</a>
-            <a href="diagrams.html">Diagrams</a>
-            <a href="about.html">About</a>
-            <a href="elements.html">Elements</a>
-          </div>
-        </m-nav>
+        <!-- (m-nav removed for SPA) -->
 
         <!-- Article Hero - Dynamic Color -->
         <header class="article-hero dynamic-hero">
           <div class="hero-image">
-            <img src="/images/image2.png" alt="The Color of Innovation" crossorigin="anonymous">
+            <img src="images/image2.png" alt="The Color of Innovation" crossorigin="anonymous">
           </div>
           <div class="hero-overlay dynamic-overlay">
             <m-reveal class="fly-in-up">
@@ -117,7 +108,7 @@
             <!-- Full Width Image -->
             <figure class="article-image full-bleed">
               <m-reveal class="fly-in-up">
-                <img src="/images/image3.png" alt="Color in nature" crossorigin="anonymous">
+                <img src="images/image3.png" alt="Color in nature" crossorigin="anonymous">
                 <figcaption>Nature's palettes: the ultimate inspiration for digital design</figcaption>
               </m-reveal>
             </figure>
@@ -184,7 +175,7 @@ dynamicTheme.applyFromImage(img, element);</code></pre>
             <!-- Author Card -->
             <div class="sidebar-author">
               <m-reveal class="fly-in-right">
-                <img src="/images/member3.png" alt="Alex Nomura" class="author-avatar">
+                <img src="images/member3.png" alt="Alex Nomura" class="author-avatar">
                 <div class="author-info">
                   <span class="author-name">Alex Nomura</span>
                   <span class="author-title">Tech Lead</span>
@@ -267,7 +258,7 @@ dynamicTheme.applyFromImage(img, element);</code></pre>
           <div class="related-grid">
             <m-reveal class="fly-in-left">
               <a href="article-1.html" class="related-card">
-                <img src="/images/image1.png" alt="Future of Design">
+                <img src="images/image1.png" alt="Future of Design">
                 <div class="related-content">
                   <span class="related-category">EDITORIAL</span>
                   <h3>The Future of Design</h3>
@@ -277,7 +268,7 @@ dynamicTheme.applyFromImage(img, element);</code></pre>
             </m-reveal>
             <m-reveal class="fly-in-right">
               <a href="article-2.html" class="related-card">
-                <img src="/images/image3.png" alt="Architects">
+                <img src="images/image3.png" alt="Architects">
                 <div class="related-content">
                   <span class="related-category">PROFILES</span>
                   <h3>Architects of Tomorrow</h3>
@@ -288,16 +279,12 @@ dynamicTheme.applyFromImage(img, element);</code></pre>
           </div>
         </section>
 
-        <footer class="site-footer">
-          <div class="footer-content">
-            <div class="copyright">
-              &copy; 2026 MODERN MAGAZINE. ALL RIGHTS RESERVED.
-            </div>
-          </div>
-        </footer>
+        <!-- (site-footer and scripts removed for SPA) -->
     </div>
+</body>
+</html>
 
-    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="src/main.js"></script>
     <script type="module">
       import { DynamicTheme } from '/src/js/color-thief.js';
       
@@ -350,3 +337,4 @@ dynamicTheme.applyFromImage(img, element);</code></pre>
     </script>
 </body>
 </html>
+
