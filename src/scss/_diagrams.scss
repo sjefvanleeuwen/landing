@@ -1,0 +1,259 @@
+@import 'base';
+
+.diagram-section {
+    padding: 100px 0;
+    background: darken($color-bg, 2%);
+}
+
+.display-title {
+    font-family: $font-header;
+    font-size: 4rem;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+    margin-bottom: 0.5rem;
+    line-height: 1;
+
+    @media (max-width: 768px) {
+        font-size: 2.5rem;
+    }
+}
+
+.subtitle {
+    font-family: $font-serif;
+    font-style: italic;
+    color: $color-gold;
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+}
+
+.mind-map-section {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 100px clamp(20px, 5vw, 50px);
+    background: darken($color-bg, 4%);
+
+    h3 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .feature-full {
+        width: 100%;
+        max-width: 1400px;
+    }
+}
+
+m-flowchart,
+m-barchart,
+m-mindmap,
+m-linechart,
+m-spiderchart {
+    display: block;
+    width: 100%;
+}
+
+.diagram-container {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: clamp(10px, 4vw, 40px);
+    margin-top: 20px;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+
+    svg {
+        width: 100%;
+        height: auto;
+        color: $color-text;
+
+        .node {
+            cursor: pointer;
+            
+            rect {
+                fill: rgba(255, 255, 255, 0.05);
+                stroke: $color-gold;
+                stroke-width: 1;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            text {
+                fill: $color-text;
+                font-family: $font-header;
+                font-size: 10px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                pointer-events: none;
+            }
+
+            &:hover {
+                rect {
+                    fill: $color-gold;
+                    stroke: $color-gold-light;
+                }
+                text {
+                    fill: $color-bg;
+                    font-weight: bold;
+                }
+            }
+        }
+
+        line {
+            stroke: rgba(255, 255, 255, 0.2);
+            stroke-dasharray: 4;
+            animation: dash 10s linear infinite;
+        }
+    }
+}
+
+@keyframes dash {
+    to {
+        stroke-dashoffset: -100;
+    }
+}
+
+// Bar Chart
+.bar-chart-wrapper {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.y-axis {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px 0; // Align with .bar-chart padding
+    height: 300px;
+    
+    .y-label {
+        font-family: $font-header;
+        font-size: 0.6rem;
+        color: #666;
+        text-align: right;
+        min-width: 25px;
+    }
+}
+
+.bar-chart {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    gap: clamp(10px, 2vw, 25px);
+    height: 300px;
+    padding: 40px 20px;
+    background: rgba(0,0,0,0.1);
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 40px;
+        bottom: 40px;
+        left: 0;
+        right: 0;
+        background-image: linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+        background-size: 100% 25%; // Creates 4 grid spaces
+    }
+
+    .bar {
+        flex: 1;
+        background: linear-gradient(to top, darken($color-gold, 10%), $color-gold);
+        height: 0;
+        transition: height 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        
+        &::after {
+            content: attr(data-label);
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: $font-header;
+            font-size: 0.6rem;
+            color: $color-muted;
+            white-space: nowrap;
+        }
+
+        span {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: $font-header;
+            font-size: 0.7rem;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        &:hover {
+            filter: brightness(1.2);
+            span {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+// Trigger animation when parent m-reveal is active
+[active] .bar,
+.active .bar {
+    height: var(--height);
+}
+
+// Mind Map
+.mind-map-container {
+    height: clamp(500px, 80vh, 800px);
+    padding: 0;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba($color-gold, 0.05);
+    overflow: hidden;
+    
+    canvas {
+        width: 100%;
+        height: 100%;
+        cursor: crosshair;
+    }
+}
+
+.diagram-description {
+    margin-top: 40px;
+    font-family: $font-serif;
+    font-size: 0.9rem;
+    color: $color-muted;
+    border-left: 2px solid $color-gold;
+    padding-left: 15px;
+}
+
+// Line Chart
+.line-chart {
+    polyline {
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 1000;
+        transition: stroke-dashoffset 2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+}
+
+.active .line-chart polyline,
+[active] .line-chart polyline {
+    stroke-dashoffset: 0;
+}
+
+// Spider Chart
+.spider-chart {
+    polygon {
+        opacity: 0;
+        transform: scale(0.5);
+        transform-origin: center;
+        transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+}
+
+.active .spider-chart polygon,
+[active] .spider-chart polygon {
+    opacity: 1;
+    transform: scale(1);
+}
