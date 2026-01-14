@@ -1138,7 +1138,7 @@
   
   // Dynamic accent colors
   .dynamic-accent {
-    color: var(--theme-accent, $color-gold) !important;
+    color: var(--theme-gold, $color-gold) !important;
   }
   
   .dynamic-title {
@@ -1210,23 +1210,23 @@
       display: block;
       width: 60px;
       height: 3px;
-      background: var(--theme-accent, $color-gold);
+      background: var(--theme-gold, $color-gold);
       margin-top: 15px;
     }
   }
   
   .dynamic-drop {
-    color: var(--theme-accent, $color-gold);
+    color: var(--theme-gold, $color-gold) !important;
   }
   
   .dynamic-link {
     &:hover {
-      color: var(--theme-accent, $color-gold);
+      color: var(--theme-gold, $color-gold) !important;
     }
   }
   
   .dynamic-stat {
-    color: var(--theme-accent, $color-gold);
+    color: var(--theme-gold, $color-gold) !important;
   }
   
   .dynamic-tag {

@@ -86,14 +86,18 @@ class ColorThief {
     };
 
     const hsl = this.rgbToHsl(color);
-    const bgHsl = { h: hsl.h, s: Math.min(hsl.s, 0.4), l: 0.12 }; 
+    const bgHsl = { h: hsl.h, s: Math.min(hsl.s, 0.25), l: 0.08 }; // More neutral, darker background
     let bgDark = this.hslToRgb(bgHsl);
     
     let accent = saturate(color, 0.2);
     accent = this.ensureMinContrast(accent, bgDark, 4.5);
     
     const textOnDark = this.getAccessibleTextColor(bgDark);
-    const goldAccent = this.ensureMinContrast({ r: 212, g: 160, b: 23 }, bgDark, 3.0);
+    
+    // Brand Gold: Base is Metallic Bronze-Gold (197, 160, 40)
+    // We use a deeper bronze base to prevent browser extensions from forcing it to pale yellow.
+    const goldBase = { r: 197, g: 160, b: 40 };
+    const goldAccent = this.ensureMinContrast(goldBase, bgDark, 3.0);
 
     return {
       primaryRgb: this.toRgbString(color),
@@ -102,7 +106,8 @@ class ColorThief {
       accentRgb: this.toRgbString(accent),
       goldRgb: this.toRgbString(goldAccent),
       isDark: luminance < 0.5,
-      overlayDark: `rgba(${bgDark.r}, ${bgDark.g}, ${bgDark.b}, 0.85)`
+      // Change to a radial gradient for the magazine vignette effect
+      overlayDark: `radial-gradient(circle at center, transparent 20%, rgba(${bgDark.r}, ${bgDark.g}, ${bgDark.b}, 0.4) 100%)`
     };
   }
 
