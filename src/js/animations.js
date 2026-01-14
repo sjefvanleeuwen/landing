@@ -22,6 +22,13 @@ class MagazineNav extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
       <a href="index.html" class="logo">MAGAZINE</a>
+      
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+
       <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="blog.html">Blog</a>
@@ -30,6 +37,22 @@ class MagazineNav extends HTMLElement {
         <a href="creator.html">Creator</a>
       </div>
     `;
+
+    const toggle = this.querySelector('.nav-toggle');
+    const links = this.querySelector('.nav-links');
+
+    toggle.addEventListener('click', () => {
+      this.classList.toggle('nav-open');
+      document.body.classList.toggle('no-scroll');
+    });
+
+    // Close menu when a link is clicked (important for SPA)
+    links.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        this.classList.remove('nav-open');
+        document.body.classList.remove('no-scroll');
+      }
+    });
 
     const handleScroll = () => {
       // Check multiple scroll sources for maximum compatibility

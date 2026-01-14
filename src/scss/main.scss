@@ -74,11 +74,96 @@ m-nav {
     }
   }
 
-  @media (max-width: 768px) {
-    padding: 20px;
-    &.scrolled { padding: 15px 20px; }
-    .nav-links { display: none; } // Simple mobile hidden nav for now
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+
+    .bar {
+      width: 100%;
+      height: 2px;
+      background-color: #fff;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
   }
+
+  @media (max-width: 768px) {
+    padding: 20px 30px;
+    &.scrolled { padding: 15px 30px; }
+
+    .nav-toggle {
+      display: flex;
+    }
+
+    .nav-links {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 100%;
+      height: 100vh;
+      background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('/images/image1.png');
+      background-size: cover;
+      background-position: center;
+      backdrop-filter: blur(15px);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      transition: right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+
+      a {
+        font-family: $font-header;
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        color: #fff;
+        opacity: 0.8;
+        transition: all 0.3s ease;
+
+        &:hover {
+          opacity: 1;
+          color: $color-gold;
+          letter-spacing: 8px;
+        }
+
+        &.active {
+          color: $color-gold;
+        }
+      }
+    }
+
+    &.nav-open {
+      .nav-links {
+        right: 0;
+      }
+
+      .nav-toggle {
+        .bar:nth-child(1) {
+          transform: translateY(8px) rotate(45deg);
+        }
+        .bar:nth-child(2) {
+          opacity: 0;
+        }
+        .bar:nth-child(3) {
+          transform: translateY(-8px) rotate(-45deg);
+        }
+      }
+    }
+  }
+}
+
+// Global body class for mobile menu
+body.no-scroll {
+  overflow: hidden;
 }
 
 m-footer, m-chevron {
