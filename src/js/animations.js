@@ -63,7 +63,15 @@ class MagazineChevron extends HTMLElement {
       const parentSection = this.closest('section') || this.closest('header');
       const nextSection = parentSection?.nextElementSibling;
       if (nextSection) {
-        nextSection.scrollIntoView({ behavior: 'smooth' });
+        // Calculate offset to account for fixed navigation height
+        const nav = document.querySelector('m-nav');
+        const navHeight = nav ? nav.offsetHeight : 0;
+        const targetPosition = nextSection.getBoundingClientRect().top + window.scrollY - navHeight;
+
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
       }
     });
   }
