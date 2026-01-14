@@ -20,6 +20,17 @@ class MagazineReveal extends HTMLElement {
 
 class MagazineNav extends HTMLElement {
   connectedCallback() {
+    this.innerHTML = `
+      <a href="index.html" class="logo">MAGAZINE</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="about.html">About</a>
+        <a href="elements.html">Elements</a>
+        <a href="creator.html">Creator</a>
+      </div>
+    `;
+
     const handleScroll = () => {
       // Check multiple scroll sources for maximum compatibility
       const scrollPos = window.pageYOffset || 
@@ -91,8 +102,8 @@ class MagazineFooter extends HTMLElement {
             <ul>
               <li><a href="#/diagrams">Diagrams</a></li>
               <li><a href="#/blog">Blog</a></li>
-              <li><a href="#/about">About Architecture</a></li>
               <li><a href="#/elements">Elements</a></li>
+              <li><a href="#/creator">Card Creator</a></li>
             </ul>
           </div>
           <div class="footer-col">

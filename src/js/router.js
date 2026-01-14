@@ -90,6 +90,13 @@ export class Router {
       // Update active nav links
       this.updateActiveLinks(path);
 
+      // Manage creator-specific body class
+      if (path === 'creator') {
+        document.body.classList.add('creator-mode');
+      } else {
+        document.body.classList.remove('creator-mode');
+      }
+
       // Force scroll reset - absolutely critical for dynamic themes to sync correctly
       if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';

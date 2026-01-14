@@ -2,11 +2,22 @@
 $font-header: 'Orbitron', sans-serif;
 $font-body: 'Exo 2', sans-serif;
 
-// Typography - Editorial (New)
+// Typography - Magazine Collection
+$font-fashion: 'Bodoni Moda', serif;        // VOGUE style (High Contrast)
+$font-avant-garde: 'Syne', sans-serif;      // Art-house / Brutalist
+$font-headline: 'DM Serif Display', serif;  // Heavy, bold headers
+$font-tech-editorial: 'Space Grotesk', sans-serif; // Modern clean tech
+$font-elegant-header: 'Italiana', serif;    // Sophisticated, thin
 $font-display: 'Bebas Neue', sans-serif;
 $font-serif: 'Playfair Display', Georgia, serif;
 $font-elegant: 'Cinzel', serif;
 $font-classic: 'Cormorant Garamond', Georgia, serif;
+
+// Typography - Modern / Tech
+$font-modern-minimal: 'Outfit', sans-serif;
+$font-modern-wide: 'Syncopate', sans-serif;
+$font-modern-euro: 'Michroma', sans-serif;
+$font-pixel: 'VT323', monospace; // Kept by user request
 
 // Colors (HTML5UP inspired - often muted or high contrast)
 $color-bg: #0a0a0a;
@@ -41,6 +52,9 @@ $color-gold-dark: #8B6F1B;  // Deep Burnished Gold
   padding: 0;
 }
 
+/* 
+// Local fonts removed in favor of reliable Google CDN 
+// to prevent OTS parsing errors with corrupt local binaries.
 @font-face {
   font-family: 'Exo 2';
   src: url('/fonts/exo2-regular.woff2') format('woff2');
@@ -56,62 +70,8 @@ $color-gold-dark: #8B6F1B;  // Deep Burnished Gold
   font-style: normal;
   font-display: block;
 }
-
-@font-face {
-  font-family: 'Bebas Neue';
-  src: url('/fonts/bebas-neue-regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: block;
-}
-
-@font-face {
-  font-family: 'Cinzel';
-  src: url('/fonts/cinzel-regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: block;
-}
-
-@font-face {
-  font-family: 'Cinzel';
-  src: url('/fonts/cinzel-bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: block;
-}
-
-@font-face {
-  font-family: 'Playfair Display';
-  src: url('/fonts/playfair-display-regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: block;
-}
-
-@font-face {
-  font-family: 'Playfair Display';
-  src: url('/fonts/playfair-display-bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: block;
-}
-
-@font-face {
-  font-family: 'Cormorant Garamond';
-  src: url('/fonts/cormorant-garamond-regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: block;
-}
-
-@font-face {
-  font-family: 'Cormorant Garamond';
-  src: url('/fonts/cormorant-garamond-bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: block;
-}
+... (other fonts)
+*/
 
 html.fonts-loading {
   body {
@@ -226,3 +186,12 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
   margin-bottom: 0.5em;
 }
+
+// Typography Utilities - Magazine Set
+.font-fashion { font-family: $font-fashion; font-weight: 700; letter-spacing: -0.02em; }
+.font-avant-garde { font-family: $font-avant-garde; font-weight: 800; }
+.font-headline { font-family: $font-headline; font-weight: 400; }
+.font-tech { font-family: $font-tech-editorial; letter-spacing: -0.01em; }
+.font-elegant { font-family: $font-elegant-header; letter-spacing: 0.05em; }
+.font-display { font-family: $font-display; }
+

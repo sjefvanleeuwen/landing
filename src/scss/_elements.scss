@@ -94,6 +94,234 @@
   }
 }
 
+// === NEW VARIATIONS FOR ELEMENTS PAGE ===
+
+// 1. Typography Display Classes
+.display-bodoni { font-family: $font-fashion !important; font-size: clamp(3rem, 8vw, 6rem); line-height: 0.9; }
+.display-syne { font-family: $font-avant-garde !important; font-size: clamp(3rem, 8vw, 6rem); text-transform: uppercase; font-weight: 800; }
+.display-dm { font-family: $font-headline !important; font-size: clamp(3rem, 8vw, 6rem); }
+.display-space { font-family: $font-tech-editorial !important; font-size: clamp(2rem, 5vw, 4rem); letter-spacing: -1px; }
+.display-italiana { font-family: $font-elegant-header !important; font-size: clamp(3rem, 8vw, 6rem); }
+
+// Experimental Display Classes
+.display-wide { font-family: $font-modern-wide !important; font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
+.display-minimal { font-family: $font-modern-minimal !important; font-size: clamp(3rem, 9vw, 7rem); font-weight: 900; letter-spacing: -2px; line-height: 1; }
+.display-pixel { font-family: $font-pixel !important; font-size: clamp(2rem, 6vw, 4rem); text-transform: uppercase; color: #0f0; }
+.display-euro { font-family: $font-modern-euro !important; font-size: clamp(1.5rem, 4vw, 3rem); text-transform: uppercase; letter-spacing: 2px; }
+
+// 2. Color System Utilities
+.bg-neon { background-color: #0b0b0b; --theme-accent: #0ff; --theme-text: #fff; }
+.bg-pastel { background-color: #e6e6fa; --theme-accent: #ff69b4; --theme-text: #333; } // Light mode override
+.bg-mono { background-color: #ffffff; --theme-accent: #000; --theme-text: #000; filter: grayscale(1); }
+.bg-editorial-dark { background-color: #1a0505; --theme-accent: $color-gold; --theme-text: #f0f0f0; }
+.bg-eco { background-color: #f5f5f0; --theme-accent: #2d5a27; --theme-text: #1a1a1a; }
+.bg-midnight { background-color: #05051a; --theme-accent: #7b2cbf; --theme-text: #fff; }
+.bg-crimson { background-color: #3b0a11; --theme-accent: #ff4d6d; --theme-text: #fff; }
+.bg-industrial { background-color: #1e2022; --theme-accent: #f0a500; --theme-text: #fff; }
+.bg-arctic { background-color: #f0f5f9; --theme-accent: #1e3799; --theme-text: #2f3542; }
+.bg-sulfur { background-color: #111; --theme-accent: #d4ff00; --theme-text: #eee; }
+
+// 3. Header Combination Components
+.header-combo {
+  width: 100%;
+  max-width: 900px;
+  margin: 60px auto;
+  text-align: left;
+  padding: 40px;
+  border-left: 1px solid rgba(var(--theme-accent-rgb, 255, 255, 255), 0.2);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  &:hover {
+    transform: scale(1.02);
+  }
+
+  .combo-meta {
+    font-family: $font-modern-euro;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--theme-accent);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .combo-title {
+    margin-bottom: 20px;
+  }
+
+  .combo-sub {
+    font-size: 1.2rem;
+    opacity: 0.8;
+    max-width: 600px;
+    line-height: 1.5;
+  }
+}
+
+// Specific Combination Varieties
+.combo-luxe {
+  .combo-title { font-family: $font-fashion !important; font-size: 5rem; line-height: 0.8; }
+  .combo-sub { font-family: $font-classic; font-style: italic; border-top: 1px solid var(--theme-accent); padding-top: 15px; }
+}
+
+.combo-tech {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.1);
+  .combo-title { font-family: $font-modern-euro !important; font-weight: 700; letter-spacing: -2px; }
+  .combo-sub { font-family: $font-pixel; color: var(--theme-accent); }
+}
+
+.combo-editorial {
+  text-align: center;
+  border-left: none;
+  .combo-title { font-family: $font-headline !important; font-size: 6rem; letter-spacing: -3px; }
+  .combo-meta { border-bottom: 1px solid var(--theme-accent); display: inline-block; padding-bottom: 5px; }
+  .combo-sub { margin: 0 auto; font-family: $font-modern-minimal; font-weight: 300; }
+}
+
+.combo-brutalist {
+  background: var(--theme-accent);
+  color: #000;
+  border-left: 10px solid #000;
+  .combo-title { font-family: $font-avant-garde !important; font-size: 4rem; font-weight: 800; text-transform: uppercase; letter-spacing: -2px; }
+  .combo-meta { color: #000; font-weight: bold; }
+  .combo-sub { color: #000; font-family: $font-tech-editorial; font-weight: bold; }
+}
+
+.combo-noise {
+  background: none;
+  border: none;
+  padding: 0;
+  position: relative;
+  text-align: left;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 60px;
+    height: 60px;
+    border-top: 2px solid var(--theme-accent);
+    border-left: 2px solid var(--theme-accent);
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 60px;
+    height: 60px;
+    border-bottom: 2px solid var(--theme-accent);
+    border-right: 2px solid var(--theme-accent);
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .combo-title { 
+    font-family: $font-avant-garde !important; 
+    font-size: clamp(4rem, 12vw, 8rem); 
+    font-weight: 800; 
+    text-transform: uppercase; 
+    letter-spacing: -4px; 
+    line-height: 0.8;
+    color: #fff;
+    margin: 20px 0;
+    mix-blend-mode: difference;
+    
+    span.accent {
+      color: var(--theme-accent);
+      mix-blend-mode: normal; // Keep the accent color pop
+    }
+  }
+  
+  .combo-meta { 
+    font-family: $font-pixel; 
+    color: var(--theme-accent); 
+    font-size: 0.9rem; 
+    letter-spacing: 4px; 
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .combo-sub { 
+    color: #fff; 
+    font-family: $font-tech-editorial; 
+    font-size: 1.1rem;
+    max-width: 400px;
+    opacity: 0.8;
+  }
+}
+
+.combo-space {
+  text-align: right;
+  border-left: none;
+  border-right: 1px solid var(--theme-accent);
+  .combo-title { font-family: $font-modern-wide !important; font-size: 3rem; letter-spacing: 15px; }
+  .combo-sub { margin-left: auto; font-family: $font-tech-editorial; letter-spacing: 2px; }
+}
+
+.combo-impact {
+  .combo-title { font-family: $font-display !important; font-size: 8rem; line-height: 0.7; transform: skewX(-5deg); }
+  .combo-sub { background: #000; color: #fff; padding: 10px; display: inline-block; }
+}
+
+.combo-delicate {
+  .combo-title { font-family: $font-elegant-header !important; font-size: 4.5rem; font-weight: 300; }
+  .combo-sub { font-family: $font-serif; letter-spacing: 1px; font-weight: 300; }
+}
+
+// 4. Component Variations
+.component-grid {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 40px auto;
+}
+
+.card-var {
+  background: rgba(255,255,255,0.05);
+  padding: 30px;
+  border: 1px solid rgba(255,255,255,0.1);
+  width: 300px;
+  text-align: left;
+  transition: transform 0.3s ease;
+  
+  &:hover { transform: translateY(-5px); }
+  
+  h3 { font-size: 1.5rem; margin-bottom: 10px; }
+  p { font-size: 0.9rem; margin-bottom: 20px; opacity: 0.8; }
+}
+
+// Card Styles
+.card-neon {
+  border-color: #0ff;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+  h3 { font-family: $font-header; color: #0ff; }
+}
+
+.card-elegant {
+  border-color: $color-gold;
+  background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(20,20,20,0.9));
+  h3 { font-family: $font-elegant; color: $color-gold; }
+}
+
+.card-brutalist {
+  background: #fff;
+  color: #000;
+  border: 4px solid #000;
+  border-radius: 0;
+  box-shadow: 8px 8px 0px #000;
+  h3 { font-family: $font-avant-garde; font-weight: 800; text-transform: uppercase; }
+  p { color: #000; font-family: 'Courier New', monospace; }
+  
+  &:hover { transform: translate(-4px, -4px); box-shadow: 12px 12px 0px #000; }
+}
+
 .btn-outline {
   display: inline-block;
   padding: 12px 30px;

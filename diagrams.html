@@ -1,83 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diagrams | Editorial Design</title>
-</head>
-<body>
-    <div class="sub-page">
-      <m-nav class="scrolled">
-        <a href="index.html" class="logo">MAGAZINE</a>
-        <div class="nav-links">
-          <a href="index.html">Home</a>
-          <a href="blog.html">Blog</a>
-          <a href="diagrams.html">Diagrams</a>
-          <a href="about.html">About</a>
-          <a href="elements.html">Elements</a>
-        </div>
-      </m-nav>
-      
-      <main>
-        <section>
-          <div class="magazine-grid">
-            <m-reveal class="feature-full fly-in-up">
-              <h1 class="display-title">Visual Data & Systems</h1>
-              <p class="subtitle">Exploring complex information through minimalist diagrams.</p>
-            </m-reveal>
-          </div>
-        </section>
+<div class="sub-page">
+  <main>
+    <section>
+      <div class="magazine-grid">
+        <m-reveal class="feature-full fly-in-up">
+          <h1 class="display-title">Visual Data & Systems</h1>
+          <p class="subtitle">Exploring complex information through minimalist diagrams.</p>
+        </m-reveal>
+      </div>
+    </section>
 
-        <section class="diagram-section">
-          <div class="magazine-grid">
-            <m-reveal class="feature-large fly-in-left">
-              <h3>System Flow</h3>
-              <m-flowchart></m-flowchart>
-            </m-reveal>
-            
-            <m-reveal class="feature-small fly-in-right">
-              <h3>Metrics</h3>
-              <m-barchart data="70,90,50,85" labels="UX,UI,DEV,SEO"></m-barchart>
-              <p class="diagram-description">Relative performance across key editorial metrics.</p>
-            </m-reveal>
-          </div>
-        </section>
+    <section class="diagram-section">
+      <div class="magazine-grid">
+        <m-reveal class="feature-large fly-in-left">
+          <h3>System Flow</h3>
+          <m-flowchart></m-flowchart>
+        </m-reveal>
+        
+        <m-reveal class="feature-small fly-in-right">
+          <h3>Metrics</h3>
+          <m-barchart data="70,90,50,85" labels="UX,UI,DEV,SEO"></m-barchart>
+          <p class="diagram-description">Relative performance across key editorial metrics.</p>
+        </m-reveal>
+      </div>
+    </section>
 
-        <section class="mind-map-section">
-          <m-reveal class="feature-full fly-in-up">
-             <h3>Interactive Mind Map</h3>
-             <m-mindmap></m-mindmap>
-          </m-reveal>
-        </section>
+    <section class="mind-map-section">
+      <m-reveal class="feature-full fly-in-up">
+          <h3>Interactive Mind Map</h3>
+          <m-mindmap></m-mindmap>
+      </m-reveal>
+    </section>
 
-        <section class="diagram-section" style="background: var(--color-bg);">
-          <div class="magazine-grid">
-            <m-reveal class="feature-small fly-in-left">
-              <h3>System Reach</h3>
-              <m-spiderchart data="85,60,95,70,80" labels="Search,Mobile,Visual,Social,UX"></m-spiderchart>
-              <p class="diagram-description">Multi-dimensional analysis of distribution channels.</p>
-            </m-reveal>
+    <section class="diagram-section" style="background: var(--color-bg);">
+      <div class="magazine-grid">
+        <m-reveal class="feature-small fly-in-left">
+          <h3>System Reach</h3>
+          <m-spiderchart data="85,60,95,70,80" labels="Search,Mobile,Visual,Social,UX"></m-spiderchart>
+          <p class="diagram-description">Multi-dimensional analysis of distribution channels.</p>
+        </m-reveal>
 
-            <m-reveal class="feature-large fly-in-right">
-              <h3>Engagement Trends</h3>
-              <m-linechart data="20,45,30,85,60,95,80" labels="Mon,Tue,Wed,Thu,Fri,Sat,Sun"></m-linechart>
-              <p class="diagram-description">Weekly traffic flow illustrating peak interaction periods.</p>
-            </m-reveal>
-          </div>
-        </section>
+        <m-reveal class="feature-large fly-in-right">
+          <h3>Engagement Trends</h3>
+          <m-linechart data="20,45,30,85,60,95,80" labels="Mon,Tue,Wed,Thu,Fri,Sat,Sun"></m-linechart>
+          <p class="diagram-description">Weekly traffic flow illustrating peak interaction periods.</p>
+        </m-reveal>
+      </div>
+    </section>
 
-      </main>
-
-      <footer>
-        <div class="magazine-grid">
-          <div class="footer-info">
-             <p>&copy; 2026 Modern Magazine. Designed for the web.</p>
-          </div>
-        </div>
-      </footer>
-    </div>
-    <script type="module" src="src/main.js"></script>
-    <script type="module" src="src/js/diagrams.js"></script>
-</body>
-</html>
+  </main>
+</div>
 

@@ -93,6 +93,7 @@ class ColorThief {
     accent = this.ensureMinContrast(accent, bgDark, 4.5);
     
     const textOnDark = this.getAccessibleTextColor(bgDark);
+    const textOnAccent = this.getAccessibleTextColor(accent);
     
     // Brand Gold: Base is Metallic Bronze-Gold (197, 160, 40)
     // We use a deeper bronze base to prevent browser extensions from forcing it to pale yellow.
@@ -104,6 +105,7 @@ class ColorThief {
       bgDarkRgb: this.toRgbString(bgDark),
       textPrimaryRgb: this.toRgbString(textOnDark),
       accentRgb: this.toRgbString(accent),
+      accentTextRgb: this.toRgbString(textOnAccent),
       goldRgb: this.toRgbString(goldAccent),
       isDark: luminance < 0.5,
       // Change to a radial gradient for the magazine vignette effect
@@ -271,9 +273,28 @@ class DynamicTheme {
     if (theme) {
       this._apply(theme, img);
       
-      // Also extract a raw palette specifically for visualization
-      const rawPalette = this.colorThief.getPalette(img, 4);
-      theme.rawPalette = rawPalette.map(c => this.colorThief.toRgbString(c));
+      // Extract a rich palette for visualizers (palette selectors)
+      const rawPalette = this.colorThief.getPalette(img, 8);
+      
+      const hexPalette = rawPalette.map(c => {
+        const toHex = (n) => n.toString(16).padStart(2, '0');
+        return `#${toHex(c.r)}${toHex(c.g)}${toHex(c.b)}`;
+      });
+
+      // Calculate inverted versions of the palette for "Difference" blend compatibility
+      const invertedPalette = rawPalette.map(c => {
+        const toHex = (n) => (255 - n).toString(16).padStart(2, '0');
+        return `#${toHex(c.r)}${toHex(c.g)}${toHex(c.b)}`;
+      });
+
+      // Broadcast theme update for any listeners (like the Title Card Creator)
+      document.dispatchEvent(new CustomEvent('theme-updated', { 
+        detail: { 
+          palette: hexPalette.map(hex => ({ rgbPrimary: hex })),
+          invertedPalette: invertedPalette.map(hex => ({ rgbPrimary: hex })),
+          theme: theme 
+        } 
+      }));
       
       return theme;
     }
@@ -317,8 +338,32 @@ class DynamicTheme {
 
     if (bestImg) {
       this._extract(bestImg).then(theme => {
-        if (this._lifecycleId === currentId) {
+        if (theme && this._lifecycleId === currentId) {
           this._apply(theme, bestImg);
+          
+          const rgbToInverted = (rgbStr) => {
+            const [r, g, b] = rgbStr.split(',').map(n => 255 - parseInt(n.trim()));
+            return `rgb(${r}, ${g}, ${b})`;
+          };
+
+          // Broadcast theme update for any listeners
+          document.dispatchEvent(new CustomEvent('theme-updated', { 
+            detail: {
+              palette: [
+                { rgbPrimary: `rgb(${theme.primaryRgb})` },
+                { rgbPrimary: `rgb(${theme.accentRgb})` },
+                { rgbPrimary: `rgb(${theme.goldRgb})` },
+                { rgbPrimary: `rgb(${theme.bgDarkRgb})` }
+              ],
+              invertedPalette: [
+                { rgbPrimary: rgbToInverted(theme.primaryRgb) },
+                { rgbPrimary: rgbToInverted(theme.accentRgb) },
+                { rgbPrimary: rgbToInverted(theme.goldRgb) },
+                { rgbPrimary: rgbToInverted(theme.bgDarkRgb) }
+              ],
+              theme: theme
+            } 
+          }));
         }
       });
     } else if (this.defaultTheme) {
@@ -352,10 +397,14 @@ class DynamicTheme {
       root.style.setProperty('--theme-primary', `rgb(${theme.primaryRgb})`);
       root.style.setProperty('--theme-text', `rgb(${theme.textPrimaryRgb})`);
       root.style.setProperty('--theme-accent', `rgb(${theme.accentRgb})`);
+      root.style.setProperty('--theme-accent-text', `rgb(${theme.accentTextRgb})`);
       root.style.setProperty('--theme-gold', `rgb(${theme.goldRgb})`);
       root.style.setProperty('--theme-overlay', theme.overlayDark);
       root.classList.toggle('theme-dark', theme.isDark);
       root.classList.toggle('theme-light', !theme.isDark);
+
+      // Contrast Audit - Ensure elements on accent background are readable
+      this._auditContrast();
 
       // Handle Palette Display (found in article-3.html)
       // This specifically fulfills the user request for a "different method" (raw palette)
@@ -368,6 +417,23 @@ class DynamicTheme {
           }
         });
       }
+    });
+  }
+
+  /**
+   * Scans for specific problem areas where contrast might fail 
+   * and applies overrides if the automated theme values aren't enough.
+   */
+  _auditContrast() {
+    const accentCards = document.querySelectorAll('.accent-card');
+    const accentText = getComputedStyle(document.documentElement).getPropertyValue('--theme-accent-text').trim();
+    
+    accentCards.forEach(card => {
+      // Find all nested text elements that might be inheriting wrong colors
+      const nested = card.querySelectorAll('h1, h2, h3, h4, h5, h6, p, li, strong, span, i, b');
+      nested.forEach(el => {
+        el.style.color = accentText;
+      });
     });
   }
 }

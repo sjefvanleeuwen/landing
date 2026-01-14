@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neon Shadows | Modern Magazine</title>
-</head>
-<body>
     <div class="article-page article-dynamic" data-dynamic-theme=".hero-image img">
-        <!-- (m-nav removed for SPA) -->
-
         <!-- Article Hero - Dynamic Color -->
         <header class="article-hero dynamic-hero">
           <div class="hero-image">
@@ -143,66 +133,6 @@
 
         <!-- (footer and scripts removed for SPA) -->
     </div>
-</body>
-</html>
-
-    <script type="module" src="src/main.js"></script>
-    <script type="module">
-      import { DynamicTheme } from '/src/js/color-thief.js';
-      
-      document.addEventListener('DOMContentLoaded', async () => {
-        const article = document.querySelector('.article-dynamic');
-        
-        // --- 1. Initial Hero Theme (Image 7) ---
-        const heroImg = document.querySelector('#hero-img');
-        if (heroImg && article) {
-          if (!heroImg.complete) {
-            await new Promise(resolve => heroImg.onload = resolve);
-          }
-          await window.dynamicTheme.applyFromImage(heroImg, article);
-          console.log('Phase 1 Theme Applied');
-        }
-
-        // --- 2. Scroll-Based Theming (Images 8 & 9) ---
-        
-        const observerOptions = {
-          root: null,
-          threshold: 0.5,
-          rootMargin: "-10% 0px -10% 0px"
-        };
-
-        const themeObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const imgId = entry.target.dataset.imageSource;
-              const img = document.getElementById(imgId);
-              
-              if (img && img.complete) {
-                 window.dynamicTheme.applyFromImage(img, article);
-                 console.log(`Switched theme to ${imgId}`);
-              }
-            }
-          });
-        }, observerOptions);
-
-        document.querySelectorAll('.dynamic-section').forEach(section => {
-          themeObserver.observe(section);
-        });
-
-        const heroObserver = new IntersectionObserver((entries) => {
-             entries.forEach(async entry => {
-               if (entry.isIntersecting) {
-                   await window.dynamicTheme.applyFromImage(heroImg, article);
-                   console.log('Reverted to Phase 1 Theme');
-               }
-             });
-        }, { threshold: 0.5 });
-        
-        const heroSection = document.querySelector('.article-hero');
-        if(heroSection) heroObserver.observe(heroSection);
-
-      });
-    </script>
 </body>
 </html>
 
