@@ -45,6 +45,33 @@ class ColorThief {
     return dominantColor;
   }
 
+  /**
+   * Get a palette of distinct colors from an image
+   */
+  getPalette(img, colorCount = 4, quality = 10) {
+    const { width, height } = this._prepareCanvas(img);
+    const imageData = this.ctx.getImageData(0, 0, width, height).data;
+    const colorCounts = new Map();
+
+    for (let i = 0; i < imageData.length; i += 4 * quality) {
+      const r = imageData[i], g = imageData[i + 1], b = imageData[i + 2], a = imageData[i + 3];
+      if (a < 125) continue;
+      
+      const quantized = this._quantizeColor(r, g, b, 16);
+      const key = `${quantized.r},${quantized.g},${quantized.b}`;
+      colorCounts.set(key, (colorCounts.get(key) || 0) + 1);
+    }
+
+    // Sort by frequency and return top ones
+    return Array.from(colorCounts.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, colorCount)
+      .map(([key]) => {
+        const [r, g, b] = key.split(',').map(Number);
+        return { r, g, b };
+      });
+  }
+
   generateTheme(color) {
     const luminance = this.getLuminance(color);
     const saturate = (c, amount) => {
@@ -220,8 +247,24 @@ class DynamicTheme {
         }
       });
     }
-    // Run an initial update
     this._update();
+  }
+
+  /**
+   * Helper for manual theme application (used in article-3.html)
+   */
+  async applyFromImage(img) {
+    const theme = await this._extract(img);
+    if (theme) {
+      this._apply(theme, img);
+      
+      // Also extract a raw palette specifically for visualization
+      const rawPalette = this.colorThief.getPalette(img, 4);
+      theme.rawPalette = rawPalette.map(c => this.colorThief.toRgbString(c));
+      
+      return theme;
+    }
+    return null;
   }
 
   _update() {
@@ -295,6 +338,18 @@ class DynamicTheme {
       root.style.setProperty('--theme-overlay', theme.overlayDark);
       root.classList.toggle('theme-dark', theme.isDark);
       root.classList.toggle('theme-light', !theme.isDark);
+
+      // Handle Palette Display (found in article-3.html)
+      // This specifically fulfills the user request for a "different method" (raw palette)
+      const paletteContainer = document.getElementById('paletteDisplay');
+      if (paletteContainer && (source === this.heroImg || source === 'hero-initial' || source === 'hero-top-reset')) {
+        this.colorThief.getPalette(this.heroImg, 4).forEach((color, idx) => {
+          const swatches = paletteContainer.querySelectorAll('.palette-swatch');
+          if (swatches[idx]) {
+            swatches[idx].style.background = `rgb(${this.colorThief.toRgbString(color)})`;
+          }
+        });
+      }
     });
   }
 }

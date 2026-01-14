@@ -70,17 +70,17 @@
                   <span class="demo-label">EXTRACTED PALETTE</span>
                 </div>
                 <div class="palette-display" id="paletteDisplay">
-                  <div class="palette-swatch primary">
-                    <span class="swatch-label">Primary</span>
+                  <div class="palette-swatch s1">
+                    <span class="swatch-label">Color 1</span>
                   </div>
-                  <div class="palette-swatch accent">
-                    <span class="swatch-label">Accent</span>
+                  <div class="palette-swatch s2">
+                    <span class="swatch-label">Color 2</span>
                   </div>
-                  <div class="palette-swatch background">
-                    <span class="swatch-label">Background</span>
+                  <div class="palette-swatch s3">
+                    <span class="swatch-label">Color 3</span>
                   </div>
-                  <div class="palette-swatch text-demo">
-                    <span class="swatch-label">Text</span>
+                  <div class="palette-swatch s4">
+                    <span class="swatch-label">Color 4</span>
                   </div>
                 </div>
                 <p class="demo-note">Colors above are dynamically extracted from the hero image</p>
@@ -281,60 +281,6 @@ dynamicTheme.applyFromImage(img, element);</code></pre>
 
         <!-- (site-footer and scripts removed for SPA) -->
     </div>
-</body>
-</html>
-
-    <script type="module" src="src/main.js"></script>
-    <script type="module">
-      import { DynamicTheme } from '/src/js/color-thief.js';
-      
-      // Initialize dynamic theming for this article
-      document.addEventListener('DOMContentLoaded', async () => {
-        const article = document.querySelector('.article-dynamic');
-        const heroImg = document.querySelector('.hero-image img');
-        
-        if (heroImg && article) {
-          // Wait for image to load
-          if (!heroImg.complete) {
-            await new Promise(resolve => heroImg.onload = resolve);
-          }
-          
-          const theme = await window.dynamicTheme.applyFromImage(heroImg, article);
-          
-          // Update palette display with colors
-          const paletteDisplay = document.getElementById('paletteDisplay');
-          if (paletteDisplay) {
-            const primarySwatch = paletteDisplay.querySelector('.primary');
-            const accentSwatch = paletteDisplay.querySelector('.accent');
-            const bgSwatch = paletteDisplay.querySelector('.background');
-            const textSwatch = paletteDisplay.querySelector('.text-demo');
-            
-            primarySwatch.style.background = `rgb(${theme.primaryRgb})`;
-            accentSwatch.style.background = `rgb(${theme.accentRgb})`;
-            bgSwatch.style.background = `rgb(${theme.bgDarkRgb})`;
-            textSwatch.style.background = `rgb(${theme.textPrimaryRgb})`;
-            
-            // Show contrast ratios on hover
-            if (theme.contrastRatios) {
-              accentSwatch.title = `Contrast: ${theme.contrastRatios.accentOnBg.toFixed(2)}:1`;
-              textSwatch.title = `Contrast: ${theme.contrastRatios.textOnBg.toFixed(2)}:1`;
-            }
-          }
-          
-          // Log contrast ratios for verification
-          console.log('🎨 Dynamic Theme Applied');
-          console.log('   Primary:', theme.primaryHex);
-          console.log('   Accent:', theme.accentHex);
-          console.log('   Contrast Ratios:', theme.contrastRatios);
-          console.log('   ✓ Text on BG:', theme.contrastRatios.textOnBg.toFixed(2) + ':1', 
-                      theme.contrastRatios.textOnBg >= 4.5 ? '(WCAG AA ✓)' : '(needs improvement)');
-          console.log('   ✓ Accent on BG:', theme.contrastRatios.accentOnBg.toFixed(2) + ':1',
-                      theme.contrastRatios.accentOnBg >= 4.5 ? '(WCAG AA ✓)' : '(needs improvement)');
-          console.log('   ✓ Gold on BG:', theme.contrastRatios.goldOnBg.toFixed(2) + ':1',
-                      theme.contrastRatios.goldOnBg >= 4.5 ? '(WCAG AA ✓)' : '(needs improvement)');
-        }
-      });
-    </script>
 </body>
 </html>
 
