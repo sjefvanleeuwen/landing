@@ -114,7 +114,17 @@ export class Router {
       
     } catch (error) {
       console.error('Routing error:', error);
-      this.container.innerHTML = '<h1>404</h1><p>Page not found.</p>';
+      this.container.innerHTML = `
+        <div class="sub-page">
+          <section class="elements-hero">
+            <div class="title-stack">
+              <span class="overline">ERROR // 404</span>
+              <h1 class="hero-title cinematic">LOST IN THE NOISE</h1>
+              <p class="tagline">System failure or missing frequency.</p>
+            </div>
+          </section>
+        </div>
+      `;
     } finally {
       this.container.classList.remove('loading');
     }

@@ -20,6 +20,10 @@ export default defineConfig({
         article4: './article-4.html',
         article5: './article-5.html',
         article6: './article-6.html',
+        creator: './creator.html',
+        neuralArch: './neural-arch.html',
+        noiseFloor: './noise-floor.html',
+        error404: './404.html',
       }
     }
   }

@@ -35,7 +35,8 @@ const routes = {
   'article-5': { template: 'article-5.html' },
   'article-6': { template: 'article-6.html' },
   'noise-floor': { template: 'noise-floor.html' },
-  'creator': { template: 'creator.html' }
+  'creator': { template: 'creator.html' },
+  '404': { template: '404.html' }
 };
 
 new Router(routes, 'app-root');

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    <title>404 | Lost in the Noise</title>
+    
+    <!-- Google Fonts: Editorial Collection -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700;6..96,900&family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Serif+Display&family=Exo+2:wght@400;600;700&family=Italiana&family=Michroma&family=Orbitron:wght@400;500;700;900&family=Outfit:wght@300;500;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@300;400;700&family=Syncopate:wght@400;700&family=Syne:wght@400;700;800&family=VT323&display=swap" rel="stylesheet">
+</head>
+<body>
+    <m-nav></m-nav>
+
+    <div id="app-root">
+        <div class="sub-page error-page" data-dynamic-theme="#error-hero-img">
+            <header class="elements-hero">
+                <div class="hero-image">
+                    <img src="images/image21.png" id="error-hero-img" alt="Lost" crossorigin="anonymous">
+                </div>
+                <m-reveal class="fly-in-up active">
+                    <div class="title-stack">
+                        <span class="overline">CONNECTION // SEVERED</span>
+                        <h1 class="hero-title phase-glitch" data-text="LOST IN PHASE">
+                            LOST IN<br>PHASE
+                            <span class="status-line">Attempting to re-sync with origin host...</span>
+                        </h1>
+                        <span class="tagline">Data corruption detected. Requested directory is unreachable.</span>
+                        <div style="margin-top: 40px;">
+                            <a href="index.html" class="btn-outline">Re-Sync Origin</a>
+                        </div>
+                    </div>
+                    </div>
+                </m-reveal>
+            </header>
+        </div>
+    </div>
+
+    <m-footer></m-footer>
+
+    <!-- Support both standalone and SPA routing -->
+    <script type="module" src="src/main.js"></script>
+
+    <!-- Styles moved to _elements.scss for SPA compatibility -->
+</body>
+</html>
