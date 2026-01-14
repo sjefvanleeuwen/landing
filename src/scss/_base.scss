@@ -16,12 +16,28 @@ $color-header-bg: #1a1a1a;
 $color-header-text: #ffffff;
 $color-muted: #888888;
 
-// Golden Palette
-$color-gold: #D4AF37;
-$color-gold-light: #F4E4BA;
-$color-gold-dark: #AA8C2C;
+// Golden Palette - Unified Magazine Gold (Warm, non-greenish)
+$color-gold: #D4A017;       // Deep Golden
+$color-gold-light: #FFD700; // Bright Gold
+$color-gold-dark: #A67C00;  // Dark Golden (Richer, less green)
 
-// --- Font Face Definitions ---
+:root {
+  // Theme transitions - Ensures dynamic color changes are professional and smooth
+  transition: 
+    background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.8s ease,
+    --theme-bg 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+    --theme-primary 1s ease,
+    --theme-accent 1s ease,
+    --theme-gold 1.5s ease;
+}
+
+// Variables & Global resets
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 @font-face {
   font-family: 'Exo 2';

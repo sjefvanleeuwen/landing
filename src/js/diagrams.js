@@ -8,7 +8,7 @@ class MagazineFlowchart extends HTMLElement {
         <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
           <defs>
             <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
-              <polygon points="0 0, 10 3.5, 0 7" fill="currentColor" />
+              <polygon points="0 0, 10 3.5, 0 7" fill="var(--theme-gold, #D4A017)" />
             </marker>
           </defs>
           <g class="node" transform="translate(50, 50)" data-info="Start Point">
@@ -23,8 +23,8 @@ class MagazineFlowchart extends HTMLElement {
             <rect width="80" height="40" rx="4" />
             <text x="40" y="25" text-anchor="middle">Output</text>
           </g>
-          <line x1="130" y1="70" x2="175" y2="70" stroke="currentColor" marker-end="url(#arrowhead)" />
-          <line x1="260" y1="70" x2="305" y2="70" stroke="currentColor" marker-end="url(#arrowhead)" />
+          <line x1="130" y1="70" x2="175" y2="70" stroke="var(--theme-gold, #D4A017)" marker-end="url(#arrowhead)" />
+          <line x1="260" y1="70" x2="305" y2="70" stroke="var(--theme-gold, #D4A017)" marker-end="url(#arrowhead)" />
         </svg>
       </div>
     `;
@@ -106,7 +106,7 @@ class MagazineMindMap extends HTMLElement {
 
     let width, height;
     const nodes = [
-        { id: "core", text: "Editorial", x: 0, y: 0, size: 45, color: "#D4AF37" },
+        { id: "core", text: "Editorial", x: 0, y: 0, size: 45, color: "#D4A017" },
         { id: "design", text: "Design", x: -110, y: -40, size: 30, color: "#ffffff" },
         { id: "tech", text: "System", x: 110, y: -40, size: 30, color: "#ffffff" },
         { id: "concept", text: "Concept", x: 0, y: 100, size: 30, color: "#ffffff" },
@@ -284,7 +284,7 @@ class MagazineLineChart extends HTMLElement {
       <div class="diagram-container">
         <svg viewBox="0 0 ${width} ${height}" class="line-chart">
           ${yLabelsHTML}
-          <polyline points="${points}" fill="none" stroke="#D4AF37" stroke-width="2" />
+          <polyline points="${points}" fill="none" stroke="var(--theme-gold, #D4A017)" stroke-width="2" />
           ${values.map((v, i) => {
             const x = padding + (i * (width - padding * 2)) / (values.length - 1);
             const y = height - padding - (v / max) * (height - padding * 2);
@@ -352,7 +352,7 @@ class MagazineSpiderChart extends HTMLElement {
       <div class="diagram-container">
         <svg viewBox="0 0 ${size} ${size}" class="spider-chart">
           ${grid}
-          <polygon points="${dataPoints}" fill="rgba(212, 175, 55, 0.2)" stroke="#D4AF37" stroke-width="2" />
+          <polygon points="${dataPoints}" fill="rgba(212, 160, 23, 0.2)" stroke="var(--theme-gold, #D4A017)" stroke-width="2" />
           ${labelsHTML}
         </svg>
       </div>

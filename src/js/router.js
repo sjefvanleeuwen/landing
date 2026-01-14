@@ -8,6 +8,12 @@ export class Router {
     this.routes = routes;
     this.container = document.getElementById(containerId);
     if (!this.container) return;
+    
+    // Disable automatic browser scroll restoration for a true SPA feel
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    
     this.init();
   }
 
@@ -23,6 +29,10 @@ export class Router {
         // If it's a relative path to an html file, convert to hash
         if (url.pathname.endsWith('.html') && !url.hash) {
           e.preventDefault();
+          
+          // Force scroll to top immediately on click
+          window.scrollTo({ top: 0, behavior: 'instant' });
+          
           // Get just the filename (e.g., 'about.html' -> 'about')
           const filename = url.pathname.split('/').pop().replace('.html', '');
           const route = filename === 'index' ? 'home' : filename;
@@ -33,6 +43,9 @@ export class Router {
   }
 
   async handleRoute() {
+    // 1. Immediately scroll to top when navigation begins
+    window.scrollTo(0, 0);
+
     let path = window.location.hash.slice(2) || 'home';
     if (path === '') path = 'home';
 
@@ -74,17 +87,22 @@ export class Router {
         }
       });
       
+      // Update active nav links
       this.updateActiveLinks(path);
 
-      // Scroll to top on navigation BEFORE initializing theming
-      // This is critical so the midpoint calculation starts from top
+      // Force scroll reset - absolutely critical for dynamic themes to sync correctly
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
       window.scrollTo(0, 0);
 
-      // Re-initialize dynamic theme and scroll observation
-      // Note: initDynamicTheming now handles internal resets
+      // Initialize the dynamic theme engine for the new content
       initDynamicTheming();
-      
-      // Trigger any custom scripts or observers
+
+      // Secondary scroll safety (handles edge cases in some browsers)
+      requestAnimationFrame(() => window.scrollTo(0, 0));
+
+      // Global event
       document.dispatchEvent(new CustomEvent('page-loaded', { detail: { path } }));
       
     } catch (error) {

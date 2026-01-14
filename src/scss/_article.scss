@@ -2,7 +2,7 @@
 
 .article-page {
   background: var(--theme-bg, $color-bg);
-  transition: background-color 2.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: background-color;
   
   // Reset landing page section styles for articles
@@ -23,10 +23,10 @@
     .drop-cap, .article-meta span, .btn-outline,
     .dynamic-heading, .dynamic-drop, .dynamic-accent, .dynamic-title,
     svg, path, button {
-      transition: color 2s cubic-bezier(0.4, 0, 0.2, 1), 
-                  background-color 2.2s cubic-bezier(0.4, 0, 0.2, 1), 
-                  border-color 2s cubic-bezier(0.4, 0, 0.2, 1), 
-                  fill 2s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: color 0.6s ease, 
+                  background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                  border-color 0.6s ease, 
+                  fill 0.6s ease;
     }
   }
 }
