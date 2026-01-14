@@ -203,9 +203,11 @@ class DynamicTheme {
     this.activeElement = null;
     this.defaultTheme = null;
     this.heroImg = null;
+    this._lifecycleId = 0;
   }
 
   reset() {
+    this._lifecycleId++;
     if (this.observer) this.observer.disconnect();
     if (this._onScroll) window.removeEventListener('scroll', this._onScroll);
     this.activeElement = null;
@@ -215,14 +217,17 @@ class DynamicTheme {
     const root = document.documentElement;
     ['--theme-bg', '--theme-bg-rgb', '--theme-primary', '--theme-text', '--theme-accent', '--theme-gold', '--theme-overlay']
       .forEach(p => root.style.removeProperty(p));
+    root.classList.remove('theme-dark', 'theme-light');
   }
 
   init() {
     this.reset();
+    const currentId = this._lifecycleId;
     const allImages = Array.from(document.querySelectorAll('.article-hero img, .hero-image img, header img, #hero-img, .article-image img, .feature-large img, .full-bleed img, figure img'));
     this.heroImg = allImages.find(img => img.closest('.article-hero, .hero-image, header'));
 
     this.observer = new IntersectionObserver((entries) => {
+      if (this._lifecycleId !== currentId) return;
       entries.forEach(entry => entry.isIntersecting ? this._visibilityMap.set(entry.target, true) : this._visibilityMap.delete(entry.target));
       this._update();
     }, { threshold: [0, 0.1, 1], rootMargin: "20% 0px" });
@@ -231,8 +236,12 @@ class DynamicTheme {
 
     let ticking = false;
     this._onScroll = () => {
+      if (this._lifecycleId !== currentId) return;
       if (!ticking) {
-        requestAnimationFrame(() => { this._update(); ticking = false; });
+        requestAnimationFrame(() => { 
+          if (this._lifecycleId === currentId) this._update(); 
+          ticking = false; 
+        });
         ticking = true;
       }
     };
@@ -240,9 +249,8 @@ class DynamicTheme {
 
     if (this.heroImg) {
       this._extract(this.heroImg).then(theme => {
-        if (theme) {
+        if (theme && this._lifecycleId === currentId) {
           this.defaultTheme = theme;
-          // Set the stage immediately for the text underneath the main image
           if (window.scrollY < 100) this._apply(theme, 'hero-initial');
         }
       });
@@ -268,11 +276,11 @@ class DynamicTheme {
   }
 
   _update() {
+    const currentId = this._lifecycleId;
     const scrollY = window.scrollY;
     const vh = window.innerHeight;
-    const focusPoint = vh * 0.15; // Set color based on content entering the top 15% of screen
+    const focusPoint = vh * 0.15;
 
-    // ABSOLUTE TOP: Main image stage. Thoroughly reset when at the top.
     if (scrollY < 50 && this.defaultTheme) {
       this._apply(this.defaultTheme, 'hero-top-reset');
       return;
@@ -281,20 +289,18 @@ class DynamicTheme {
     let bestImg = null;
     let minDistance = Infinity;
 
-    // Use current visibility map or fallback to query
     const images = this._visibilityMap.size > 0 
       ? Array.from(this._visibilityMap.keys())
       : Array.from(document.querySelectorAll('.article-hero img, .hero-image img, .article-image img, figure img'));
 
     images.forEach(img => {
+      if (!img.isConnected || img.offsetWidth === 0) return;
       const rect = img.getBoundingClientRect();
       
-      // If the focus point is literally INSIDE the image, it is the absolute dominant source.
       if (rect.top <= focusPoint && rect.bottom >= focusPoint) {
         bestImg = img;
         minDistance = 0;
       } 
-      // Otherwise, measure distance to the closest edge of the image
       else if (rect.top < vh && rect.bottom > 0) {
         const dist = Math.min(Math.abs(rect.top - focusPoint), Math.abs(rect.bottom - focusPoint));
         if (dist < minDistance) {
@@ -304,12 +310,12 @@ class DynamicTheme {
       }
     });
 
-    // Strategy for Reverse and Thoroughness:
-    // 1. If we found an image on screen near the focus point, use it.
-    // 2. If we are in a text block (no image near focus point), fall back to the Hero theme
-    //    as it is the "default stage" for the article.
     if (bestImg) {
-      this._extract(bestImg).then(theme => this._apply(theme, bestImg));
+      this._extract(bestImg).then(theme => {
+        if (this._lifecycleId === currentId) {
+          this._apply(theme, bestImg);
+        }
+      });
     } else if (this.defaultTheme) {
       this._apply(this.defaultTheme, 'text-block-fallback');
     }
@@ -327,8 +333,15 @@ class DynamicTheme {
 
   _apply(theme, source) {
     if (!theme || this.activeElement === source) return;
+    
+    // Safety check for SPA transitions
+    if (typeof source !== 'string' && !source.isConnected) return;
+
     this.activeElement = source;
     requestAnimationFrame(() => {
+      // Final guard inside animation frame
+      if (typeof source !== 'string' && !source.isConnected) return;
+      
       const root = document.documentElement;
       root.style.setProperty('--theme-bg', `rgb(${theme.bgDarkRgb})`);
       root.style.setProperty('--theme-primary', `rgb(${theme.primaryRgb})`);
