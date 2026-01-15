@@ -106,7 +106,7 @@ class MagazineMindMap extends HTMLElement {
 
     let width, height;
     const nodes = [
-        { id: "core", text: "Editorial", x: 0, y: 0, size: 45, color: "#D4A017" },
+        { id: "core", text: "Strategy", x: 0, y: 0, size: 45, color: "#D4A017" },
         { id: "design", text: "Design", x: -110, y: -40, size: 30, color: "#ffffff" },
         { id: "tech", text: "System", x: 110, y: -40, size: 30, color: "#ffffff" },
         { id: "concept", text: "Concept", x: 0, y: 100, size: 30, color: "#ffffff" },

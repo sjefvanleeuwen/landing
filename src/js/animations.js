@@ -21,7 +21,7 @@ class MagazineReveal extends HTMLElement {
 class MagazineNav extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
-      <a href="index.html" class="logo">MAGAZINE</a>
+      <a href="index.html" class="logo">SJEF VAN LEEUWEN</a>
       
       <button class="nav-toggle" aria-label="Toggle navigation">
         <span class="bar"></span>
@@ -117,8 +117,8 @@ class MagazineFooter extends HTMLElement {
       <footer>
         <div class="footer-grid">
           <div class="footer-col">
-            <h4 style="font-family: 'Orbitron'; font-size: 1.5rem; letter-spacing: 5px;">MAGAZINE</h4>
-            <p style="color: #666; line-height: 1.8; margin-top: 20px;">An exploration of high-end digital editorial design using modern vanilla web technologies.</p>
+            <h4 style="font-family: 'Orbitron'; font-size: 1.5rem; letter-spacing: 5px;">SJEF VAN LEEUWEN</h4>
+            <p style="color: #666; line-height: 1.8; margin-top: 20px;">A showcase of modern architecture, strategy, and design using vanilla web technologies.</p>
           </div>
           <div class="footer-col">
             <h4>Sections</h4>
@@ -140,7 +140,7 @@ class MagazineFooter extends HTMLElement {
           </div>
           <div class="footer-col">
             <h4>Stay Connected</h4>
-            <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">Subscribe to our newsletter for weekly editorial insights.</p>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">Subscribe to our newsletter for weekly tech and strategy insights.</p>
             <div style="display: flex;">
               <input type="email" placeholder="Email" style="padding: 10px; background: #111; border: 1px solid #222; color: #fff; flex: 1;">
               <button style="background: #fff; border: none; padding: 10px 15px; cursor: pointer;">GO</button>
@@ -148,7 +148,7 @@ class MagazineFooter extends HTMLElement {
           </div>
         </div>
         <div class="copyright">
-          &copy; 2026 MODERN MAGAZINE. BUILT WITH VANILLA JS & SASS. INSPIRED BY HTML5UP.
+          &copy; 2026 SJEF VAN LEEUWEN. ALL RIGHTS RESERVED.
         </div>
       </footer>
     `;

@@ -1,6 +1,6 @@
 # Magazine Style Landing Page
 
-A vanilla HTML/Sass/JS landing page inspired by HTML5UP, built with Storybook.
+A high-end, vanilla HTML/Sass/JS landing page built with Storybook.
 
 ## Features
 - **Magazine Aesthetics**: Bold headers, grid layouts, and high contrast.

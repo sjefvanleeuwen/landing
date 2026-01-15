@@ -6,7 +6,7 @@ export const Default = () => {
   return `
     <div class="landing-page">
       <m-nav>
-        <a href="#" class="logo">MAGAZINE</a>
+        <a href="#" class="logo">SJEF VAN LEEUWEN</a>
         <div class="nav-links">
           <a href="#">Home</a>
           <a href="#">Stories</a>
@@ -18,7 +18,7 @@ export const Default = () => {
 
       <header>
         <m-reveal class="hero-content fly-in-up">
-          <h1>Modern Magazine</h1>
+          <h1>SJEF VAN LEEUWEN</h1>
           <p>A vanilla exploration of style and motion.</p>
         </m-reveal>
         <m-chevron text="Explore"></m-chevron>
@@ -177,7 +177,7 @@ export const Default = () => {
           </div>
           <div class="footer-col">
             <h4>Stay Connected</h4>
-            <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">Subscribe to our newsletter for weekly editorial insights.</p>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">Subscribe to our newsletter for weekly tech and strategy insights.</p>
             <div style="display: flex;">
               <input type="email" placeholder="Email" style="padding: 10px; background: #111; border: 1px solid #222; color: #fff; flex: 1;">
               <button style="background: #fff; border: none; padding: 10px 15px; cursor: pointer;">GO</button>
@@ -185,7 +185,7 @@ export const Default = () => {
           </div>
         </div>
         <div class="copyright">
-          &copy; 2026 MODERN MAGAZINE. BUILT WITH VANILLA JS & SASS. INSPIRED BY HTML5UP.
+          &copy; 2026 SJEF VAN LEEUWEN. ALL RIGHTS RESERVED.
         </div>
       </footer>
     </div>

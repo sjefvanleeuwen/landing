@@ -36,6 +36,8 @@ const routes = {
   'article-4': { template: 'article-4.html' },
   'article-5': { template: 'article-5.html' },
   'article-6': { template: 'article-6.html' },
+  'article-7': { template: 'article-7.html' },
+  'article-8': { template: 'article-8.html' },
   'noise-floor': { template: 'noise-floor.html' },
   'creator': { template: 'creator.html' },
   'cv': { template: 'cv.html' },
@@ -64,4 +66,4 @@ document.addEventListener('page-loaded', (e) => {
     }
 });
 
-console.log('Magazine Design System Loaded (SPA Mode)');
+console.log('SJEF VAN LEEUWEN Design System Loaded (SPA Mode)');

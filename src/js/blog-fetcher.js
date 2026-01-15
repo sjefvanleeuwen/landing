@@ -52,6 +52,20 @@ export async function initBlog() {
                 file: "beyond-build-vs-buy-rise-vibe-coding-third-way-sjef-van-leeuwen--big9e.html",
                 date: "2025",
                 category: "DEVELOPMENT"
+            },
+            {
+                title: "MIT's Applied Generative AI",
+                file: "article-7.html",
+                date: "Apr 2025",
+                category: "AI & STRATEGY",
+                isInternal: true
+            },
+            {
+                title: "The Case for Graph-Shaped Data",
+                file: "article-8.html",
+                date: "Dec 2023",
+                category: "ARCHITECTURE",
+                isInternal: true
             }
         ];
 

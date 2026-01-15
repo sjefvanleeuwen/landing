@@ -4,7 +4,7 @@ export default {
 
 const Header = `
   <m-nav class="scrolled">
-    <a href="#" class="logo">MAGAZINE</a>
+    <a href="#" class="logo">SJEF VAN LEEUWEN</a>
     <div class="nav-links">
       <a href="#">Home</a>
       <a href="#">Stories</a>
@@ -19,7 +19,7 @@ const Footer = `
   <footer>
     <div class="footer-grid">
       <div class="footer-col">
-        <h4 style="font-family: 'Orbitron'; font-size: 1.5rem; letter-spacing: 5px;">MAGAZINE</h4>
+        <h4 style="font-family: 'Orbitron'; font-size: 1.5rem; letter-spacing: 5px;">SJEF VAN LEEUWEN</h4>
         <p style="color: #666; line-height: 1.8; margin-top: 20px;">A exploration of high-end digital editorial design using modern vanilla web technologies.</p>
       </div>
       <div class="footer-col">
@@ -42,7 +42,7 @@ const Footer = `
       </div>
       <div class="footer-col">
         <h4>Stay Connected</h4>
-        <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">Subscribe to our newsletter for weekly editorial insights.</p>
+        <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">Subscribe to our newsletter for weekly tech and strategy insights.</p>
         <div style="display: flex;">
           <input type="email" placeholder="Email" style="padding: 10px; background: #111; border: 1px solid #222; color: #fff; flex: 1;">
           <button style="background: #fff; border: none; padding: 10px 15px; cursor: pointer;">GO</button>
@@ -50,7 +50,7 @@ const Footer = `
       </div>
     </div>
     <div class="copyright">
-      &copy; 2026 MODERN MAGAZINE. BUILT WITH VANILLA JS & SASS. INSPIRED BY HTML5UP.
+      &copy; 2026 SJEF VAN LEEUWEN. ALL RIGHTS RESERVED.
     </div>
   </footer>
 `;
@@ -134,7 +134,7 @@ export const About = () => {
           
           <m-reveal class="feature-small fly-in-right">
             <h3>Philosophy</h3>
-            <p>Inspired by the simplicity of early web templates but powered by modern browser capabilities, Magazine aims to redefine the digital reading experience.</p>
+            <p>Powered by modern browser capabilities, Magazine aims to redefine the digital reading experience through advanced typography and fluid layouts.</p>
             <p>Every line of code is written to be understandable, performant, and beautiful.</p>
           </m-reveal>
         </section>
