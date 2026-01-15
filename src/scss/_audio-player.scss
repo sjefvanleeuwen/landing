@@ -85,7 +85,7 @@ m-audio-player {
         .top-info {
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
+            align-items: flex-start;
             margin-bottom: 30px;
             padding: 0;
         }
@@ -115,13 +115,15 @@ m-audio-player {
         }
 
         .time-display-large {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2rem, 6vw, 4rem);
-            font-weight: 700;
+            font-family: 'Michroma', sans-serif;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 400;
             letter-spacing: 0.1em;
             color: #fff;
             text-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
             font-variant-numeric: tabular-nums;
+            min-width: 6em;
+            text-align: right;
         }
 
         .visualizer-container {
@@ -202,11 +204,12 @@ m-audio-player {
         .time-display-middle {
             position: absolute;
             right: 0;
-            top: 50%;
+            top: 25%; // Moved up to stay above the bars
             transform: translateY(-50%);
             font-size: 1.5rem;
             letter-spacing: 0.1em;
             font-variant-numeric: tabular-nums;
+            z-index: 10; // Ensure it stays on top in Z-axis too
         }
     }
 

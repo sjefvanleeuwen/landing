@@ -30,7 +30,7 @@ export function initAudioPlayer() {
         const spacing = 4;
         const totalWidth = canvas.width;
         const barWidth = (totalWidth / barCount) - spacing;
-        const centerY = canvas.height / 2;
+        const centerY = canvas.height * 0.7; // Moved down to keep text above during scaling
 
         for (let i = 0; i < barCount; i++) {
             // Smoothly update bar heights

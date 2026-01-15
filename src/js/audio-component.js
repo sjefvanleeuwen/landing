@@ -27,12 +27,12 @@ export class MagazineAudioPlayer extends HTMLElement {
 
                 <div class="hero-overlay player-content-wrapper" style="position: relative; z-index: 10; width: 80%; max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; justify-content: center; height: 100%; transform: translateY(-30px);">
                     <m-reveal class="fly-in-up active">
-                        <div class="top-info" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px;">
+                        <div class="top-info" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px;">
                             <div class="track-info" style="text-align: left;">
-                                <h1 class="track-title" style="font-family: 'Michroma', sans-serif; font-size: clamp(1.5rem, 4vw, 2.5rem); text-transform: uppercase; color: #fff; margin: 0;">${title}</h1>
+                                <h1 class="track-title" style="font-family: 'Michroma', sans-serif; font-size: clamp(1.5rem, 4vw, 2.5rem); text-transform: uppercase; color: #fff; margin: 0; line-height: 1.2;">${title}</h1>
                                 <p class="track-artist" style="font-family: 'Orbitron', sans-serif; font-size: clamp(0.7rem, 1.5vw, 1rem); letter-spacing: 0.4em; color: #C5A028; margin: 5px 0 0 0;">${artist}</p>
                             </div>
-                            <div class="time-display-large" style="font-family: 'Orbitron', sans-serif; font-size: clamp(2rem, 6vw, 4rem); font-weight: 1000; color: #fff; text-shadow: 0 0 30px rgba(255, 255, 255, 0.4);">00 : 00</div>
+                            <div class="time-display-large" style="font-family: 'Michroma', sans-serif; font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 400; color: #fff; text-shadow: 0 0 30px rgba(255, 255, 255, 0.4); font-variant-numeric: tabular-nums; width: 6em; text-align: right; line-height: 1.2;">00 : 00</div>
                         </div>
 
                         <div class="visualizer-placeholder" style="width: 100%; height: 150px; position: relative;">
@@ -139,7 +139,7 @@ export class MagazineAudioPlayer extends HTMLElement {
             const barWidth = 1.5;
             const actualBarCount = Math.min(barCount, Math.floor(totalWidth / (barWidth + spacing))) - 8;
             const startX = (totalWidth - (actualBarCount * (barWidth + spacing))) / 2;
-            const centerY = canvas.height / 2;
+            const centerY = canvas.height * 0.65; // Moved down to ensure text stays above
 
             this.ctx.strokeStyle = 'rgba(197, 160, 40, 0.2)'; // Gold line
             this.ctx.lineWidth = 1;
