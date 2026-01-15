@@ -1,0 +1,146 @@
+<html>
+<head>
+  <title>Document your code with GPT-4</title>
+  <style>
+    body {
+      margin: 0 auto;
+      width: 744px;
+      font-family: Source Serif Pro, serif;
+      line-height: 32px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 21px;
+    }
+    h1, h2, h3 {
+      font-family: Source Sans Pro, Helvetica, Arial, sans-serif;
+    }
+    h1 a, h1 a:visited {
+      color: inherit;
+      text-decoration: none;
+    }
+    h1 {
+      line-height: 48px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 42px;
+      margin: 32px 0 20px;
+    }
+    h2 {
+      line-height: 32px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 26px;
+      margin: 28px 0;
+    }
+    h3 {
+      line-height: 28px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 21px;
+      margin: 24px 0;
+    }
+    p {
+      margin: 32px 0;
+    }
+    .created, .published {
+      color: rgba(0, 0, 0, 0.55);
+      font-size: 15px;
+      line-height: 15px;
+      margin: 20px 0;
+    }
+    .created + .published {
+      margin-top: -12px;
+    }
+    blockquote {
+      font-family: Georgia, Source Serif Pro, serif;
+      font-style: italic;
+      font-size: 24px;
+      line-height: 36px;
+      margin: 48px 120px;
+      text-align: center;
+    }
+    a {
+      word-wrap: break-word;
+      outline: none;
+      text-decoration: none;
+      background-color: transparent;
+      border: 0;
+      color: #008CC9;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    a:visited {
+      color: #8C68CB;
+    }
+    .center {
+      text-align: center;
+    }
+    iframe {
+      display: block;
+      margin: 44px auto;
+    }
+    *:not(pre) + pre, pre:first-of-type {
+      margin-top: 32px;
+      padding-top: 32px;
+    }
+    pre:only-of-type {
+      margin: 32px 0;
+      padding: 32px;
+    }
+    pre {
+      background: #F3F6F8;
+      overflow-x: auto;
+      display: block;
+      font-size: 13px;
+      font-family: monospace;
+      line-height: 13px;
+      padding: 0 32px 32px;
+      white-space: pre;
+    }
+    a.embedded {
+      background: #F3F6F8;
+      display: block;
+      padding: 32px;
+      margin: 32px 0;
+    }
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+    .slate-image-embed__resize-full-width img {
+      width: 100%;
+    }
+    .series-logo {
+      width: 48px;
+      height: 48px;
+      box-sizing: border-box;
+      background-clip: content-box;
+      border: 4px solid transparent;
+      border-radius: 6px;
+      object-fit: scale-down;
+      float: left;
+    }
+    .series-title {
+      font-size: 16px;
+      font-weight: 600;
+      vertical-align: top;
+    }
+    .series-description {
+      color: rgba(0,0,0,.6);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    div {
+      margin: 32px 0;
+    }
+  </style>
+</head>
+<body>
+      <h1>Document your code with GPT-4</h1>
+    <p class="created">Created on 2024-05-17 22:31</p>
+  <p class="published">Published on ---</p>
+  <div><h3>Introducing Code-Narrator: Simplifying Documentation with GPT-4</h3><p>Documentation is a critical aspect of any sizeable project, yet it often poses a significant challenge for developers. The advent of ChatGPT has revolutionized this process, providing an innovative solution that streamlines the creation of comprehensive documentation. After extensive experimentation, it was discovered that ChatGPT can generate high-quality documentation for code files, surpassing the quality of manual efforts. This realization led to the development of <a href="https://github.com/ingig/code-narrator" target="_blank">Code-Narrator</a>, a client designed to simplify the documentation process.</p><h3>What is Code-Narrator?</h3><p>Code-Narrator is a self-documenting tool that leverages GPT-4 to analyze code files and automatically generate documentation. This tool is language-agnostic and has been tested with various programming languages such as TypeScript, GraphQL, Solidity, C#, Kotlin, and more. As long as the files are in plain text, Code-Narrator can work its magic seamlessly.</p><h3>Transforming Developers from Writers to Editors</h3><p>The primary goal of Code-Narrator is to simplify the documentation process for developers, transforming them from writers to editors. While developers are still responsible for verifying the accuracy of the generated documentation, the initial writing is handled by the AI. If GPT-4 produces incorrect documentation, it often indicates that the code needs clarification or that a brief comment should be added to guide the AI. Essentially, if GPT-4 cannot comprehend the code, it may be too complex for the next developer.</p><h3>Key Features and Limitations</h3><ul><li><p><strong>Token Limit Constraint:</strong> Code-Narrator is constrained by GPT-4’s 8192-token limit, which can be problematic for extensive code files. Those with access to the gpt-4-32k variant should expect better results, as the quality of the generated documentation heavily depends on the length of the input (question + file content).</p></li><li><p><strong>Configuration:</strong> Upon its first run, Code-Narrator creates a configuration file by analyzing the project and prompts for review and accuracy. Key configuration aspects include the “include,” “config_files,” and “source_path” settings.</p></li><li><p><strong>Documentation Generation:</strong> In its second run, Code-Narrator generates documentation for the entire project. The process takes approximately 45 minutes to complete from scratch but is highly flexible, allowing for custom pages such as How-To guides, tutorials, FAQs, READMEs, and more.</p></li></ul><h3>Supported Features</h3><ul><li><p><strong>Multilingual:</strong> Code-Narrator supports 25+ languages (as many as GPT-4 supports).</p></li><li><p><strong>Versatile Formats:</strong> Capable of generating documentation in various formats (LaTeX, HTML, with Markdown being the default).</p></li><li><p><strong>Custom Content Creation:</strong> Easily create How-To guides, tutorials, FAQs, READMEs, and other bespoke content.</p></li></ul><h3>Cost Efficiency</h3><p>Code-Narrator consists of 45 files and 1712 lines of code, with the total cost of generating documentation for the entire project being approximately $2.5. This represents a significant saving compared to manual documentation.</p><h3>Benefits Observed During Development</h3><ul><li><p><strong>Improved Function Naming:</strong> Reading the generated documentation can lead to revising vague or overly general function names, resulting in better code and documentation.</p></li><li><p><strong>Concise Input:</strong> Focusing on reducing the size of the input file (liquid) becomes a fun challenge, helping to optimize the process.</p></li><li><p><strong>Enjoyable Interaction:</strong> Working with ChatGPT proves more enjoyable than manually writing documentation.</p></li><li><p><strong>Minimal Input for Tutorials:</strong> It is pleasantly surprising how little input is required to create How-To guides and tutorials using GPT-4.</p></li><li><p><strong>Encouragement to Refactor:</strong> The 8K token limitation may be restrictive, but it also encourages developers to refactor their code for improved readability and structure.</p></li></ul><h3>Future Improvements</h3><p>As a prototype and proof of concept, Code-Narrator has some limitations. Future improvements and features planned include:</p><ul><li><p>Documenting only diffs in files.</p></li><li><p>Building a static website using Jekyll or Docusaurus.</p></li><li><p>Adding unit tests for the project.</p></li><li><p>Generating comprehensive documentation for unit tests.</p></li><li><p>Enhancing the generation of Mermaid charts using GPT-4.</p></li><li><p>Implementing better caching to reduce costs.</p></li></ul><p>The future of Code-Narrator is bright, and feedback from the community is invaluable. Explore the project on <a href="https://github.com/ingig/code-narrator" target="_blank">GitHub</a> and contribute to its development.</p></div>
+</body>
+</html>

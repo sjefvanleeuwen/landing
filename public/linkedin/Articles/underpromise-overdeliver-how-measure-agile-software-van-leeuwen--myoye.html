@@ -1,0 +1,147 @@
+<html>
+<head>
+  <title>Underpromise & Overdeliver: How to Measure It in Agile Software Delivery</title>
+  <style>
+    body {
+      margin: 0 auto;
+      width: 744px;
+      font-family: Source Serif Pro, serif;
+      line-height: 32px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 21px;
+    }
+    h1, h2, h3 {
+      font-family: Source Sans Pro, Helvetica, Arial, sans-serif;
+    }
+    h1 a, h1 a:visited {
+      color: inherit;
+      text-decoration: none;
+    }
+    h1 {
+      line-height: 48px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 42px;
+      margin: 32px 0 20px;
+    }
+    h2 {
+      line-height: 32px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 26px;
+      margin: 28px 0;
+    }
+    h3 {
+      line-height: 28px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 21px;
+      margin: 24px 0;
+    }
+    p {
+      margin: 32px 0;
+    }
+    .created, .published {
+      color: rgba(0, 0, 0, 0.55);
+      font-size: 15px;
+      line-height: 15px;
+      margin: 20px 0;
+    }
+    .created + .published {
+      margin-top: -12px;
+    }
+    blockquote {
+      font-family: Georgia, Source Serif Pro, serif;
+      font-style: italic;
+      font-size: 24px;
+      line-height: 36px;
+      margin: 48px 120px;
+      text-align: center;
+    }
+    a {
+      word-wrap: break-word;
+      outline: none;
+      text-decoration: none;
+      background-color: transparent;
+      border: 0;
+      color: #008CC9;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    a:visited {
+      color: #8C68CB;
+    }
+    .center {
+      text-align: center;
+    }
+    iframe {
+      display: block;
+      margin: 44px auto;
+    }
+    *:not(pre) + pre, pre:first-of-type {
+      margin-top: 32px;
+      padding-top: 32px;
+    }
+    pre:only-of-type {
+      margin: 32px 0;
+      padding: 32px;
+    }
+    pre {
+      background: #F3F6F8;
+      overflow-x: auto;
+      display: block;
+      font-size: 13px;
+      font-family: monospace;
+      line-height: 13px;
+      padding: 0 32px 32px;
+      white-space: pre;
+    }
+    a.embedded {
+      background: #F3F6F8;
+      display: block;
+      padding: 32px;
+      margin: 32px 0;
+    }
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+    .slate-image-embed__resize-full-width img {
+      width: 100%;
+    }
+    .series-logo {
+      width: 48px;
+      height: 48px;
+      box-sizing: border-box;
+      background-clip: content-box;
+      border: 4px solid transparent;
+      border-radius: 6px;
+      object-fit: scale-down;
+      float: left;
+    }
+    .series-title {
+      font-size: 16px;
+      font-weight: 600;
+      vertical-align: top;
+    }
+    .series-description {
+      color: rgba(0,0,0,.6);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    div {
+      margin: 32px 0;
+    }
+  </style>
+</head>
+<body>
+    <img src="https://media.licdn.com/mediaD4E12AQEEgv4eZqCoQw" alt="Overpromise and Underdeliver" title="Overpromise and Underdeliver" />
+      <h1><a href="https://www.linkedin.com/pulse/underpromise-overdeliver-how-measure-agile-software-van-leeuwen--myoye">Underpromise & Overdeliver: How to Measure It in Agile Software Delivery</a></h1>
+    <p class="created">Created on 2025-04-11 17:08</p>
+  <p class="published">Published on 2025-04-11 18:25</p>
+  <div><blockquote><p><em>“Anyone can make a promise. The real magic happens when you go beyond it.”</em></p></blockquote><p>“Underpromise and overdeliver” is a phrase you hear often in leadership meetings and client calls. It sounds good—safe, strategic, even noble. But in the world of <strong>Agile delivery, Scrum velocity, and software quality</strong>, how do you actually make it <strong>work</strong>?</p><p>More importantly: <strong>How do you measure it</strong>?</p><p>This article will explore how modern software teams can <em>quantify and operationalize</em> this principle to consistently <strong>exceed expectations—without breaking trust, timelines, or their own team</strong>.</p><hr><h3>🎯 What “Underpromise and Overdeliver” Actually Means in Agile</h3><p>Let’s clear one thing up—it doesn’t mean <strong>lowballing commitments</strong> so you can look good later. That leads to mistrust and sandbagging.</p><p>What it <em>does</em> mean is:</p><ul><li><p>Setting <strong>realistic expectations</strong> based on historical team data</p></li><li><p>Keeping <strong>commitments lean and achievable</strong></p></li><li><p>Building in room for <strong>quality and stretch work</strong></p></li><li><p>Delivering small surprises that add value beyond the original ask</p></li></ul><blockquote><p><em>“Expectation is the root of customer satisfaction. Manage it well, and you’ve already won half the battle.”</em></p></blockquote><hr><h3>📐 1. Calibrate Scrum Velocity with Realistic Sizing</h3><p>Your <strong>velocity</strong> is your team’s average delivery capacity per sprint. Use it as your foundation for forecasting—not your ambition.</p><p><strong>How to get it right:</strong></p><ul><li><p>Use a <strong>rolling average</strong> of the past 3–5 sprints</p></li><li><p>Factor in <strong>team time off, tech debt, and interruptions</strong></p></li><li><p><strong>Never</strong> inflate it to impress stakeholders</p></li></ul><blockquote><p><em>“Your velocity isn’t what you hope to deliver. It’s what your team consistently delivers.”</em></p></blockquote><h3>✅ Pro tip:</h3><p>Include a <strong>10–15% buffer</strong> when committing to sprint goals. This isn’t wasted space—it’s your opportunity to exceed expectations.</p><hr><h3>🐛 2. Track Bugs to Measure Quality of Overdelivery</h3><p>Overdelivery without quality is just technical debt. You need to measure what’s <em>actually</em> happening behind the scenes.</p><p>Key metrics:</p><ul><li><p><strong>Bug Count per Sprint</strong> (new + reopened)</p></li><li><p><strong>Bug Severity Levels</strong> (how many are P0/P1s?)</p></li><li><p><strong>Bug-to-Story Ratio</strong> (bugs divided by completed story points)</p></li></ul><blockquote><p><em>“Overdelivery without quality is a balloon—big on the outside, fragile underneath.”</em></p></blockquote><p>If you’re delivering more points but your bug count is spiking, that’s not success—it’s a warning light.</p><hr><h3>🧠 3. Get the Whole Team Involved in Sizing</h3><blockquote><p><em>“You can’t overdeliver on something you didn’t understand well to begin with.”</em></p></blockquote><p>If you want reliable overdelivery, your sizing and planning must be collaborative. This prevents surprises mid-sprint and sets the stage for exceeding expectations.</p><p>How to involve the team:</p><ul><li><p>Include <strong>QA, Devs, Designers, and Product</strong> in backlog refinement</p></li><li><p>Use <strong>Planning Poker</strong> or t-shirt sizing to build consensus</p></li><li><p>Surface <strong>risks and unknowns early</strong>, before commitment</p></li></ul><h3>✅ Result:</h3><p>When everyone understands the work, stories are sized more accurately—and scope creep gets replaced by scope confidence.</p><hr><h3>🎯 4. Plan for Stretch Work—Quietly</h3><p>Once your sprint is scoped based on realistic velocity, identify <strong>1–2 uncommitted tasks</strong> that could be tackled <em>if things go smoothly</em>. These are <strong>stretch goals</strong>.</p><p>But here’s the key: <strong>don’t promise them</strong>.</p><p>If you hit them, that’s your overdelivery moment. If you don’t, no one is disappointed.</p><blockquote><p><em>“Stretch goals aren’t promises—they’re invitations to go further if the road is clear.”</em></p></blockquote><p>Examples of healthy stretch goals:</p><ul><li><p>Non-critical improvements</p></li><li><p>Documentation upgrades</p></li><li><p>Low-effort tech debt cleanup</p></li><li><p>Feature polish that wasn’t scoped</p></li></ul><hr><h3>🔁 5. Sprint Retros: Reflect, Adjust, Repeat</h3><p>Retros aren’t just for venting. They’re where you <strong>track patterns and progress</strong>.</p><p>Ask your team:</p><ul><li><p>Did we meet our forecast?</p></li><li><p>Did we deliver more than expected?</p></li><li><p>What was the bug count like?</p></li><li><p>Were stories sized better this time?</p></li></ul><blockquote><p><em>“Great teams don’t just deliver features—they deliver trust, sprint after sprint.”</em></p></blockquote><p>Use the data to <strong>tighten your forecast and delivery rhythm</strong> over time.</p><hr><h3>📊 The Simple Scorecard: Make Underpromise/Overdeliver Measurable</h3><p>Here’s a lightweight scorecard you can use to track your delivery health and success:</p><p>MetricWhy It MattersUnderpromise/Overdeliver Impact<strong>Velocity (3–5 sprint avg)</strong>Realistic forecast baselineUse to set achievable sprint goals<strong>Bug-to-Story Ratio</strong>Measures quality vs. quantityKeep bugs low while delivering more<strong>Stretch Goal Completion Rate</strong>True overdelivery indicatorTracks bonus value beyond commitment<strong>% of Stories Pre-Sized by Team</strong>Forecast accuracy + shared ownershipMore = fewer sprint disruptions</p><hr><h3>💬 Final Thought</h3><p>“Underpromise and overdeliver” isn’t a fluffy ideal. With the right mix of <strong>data, discipline, and team alignment</strong>, it becomes a <em>strategic advantage</em>.</p><p>When your stakeholders know that what you promise is solid—and what you deliver is <em>often more</em>—you earn something even better than velocity:</p><p><strong>Trust.</strong></p><blockquote><p><em>“Don’t just meet expectations. Be the reason someone recalibrates what’s possible.”</em></p></blockquote><hr><p><strong>What’s worked for your team when it comes to managing delivery expectations? Have you used stretch goals, sizing techniques, or story buffers to deliver better? Share your insights in the comments! 👇</strong></p><p>#AgileDelivery #Scrum #TeamVelocity #SoftwareQuality #EngineeringLeadership #UnderpromiseOverdeliver #DevExcellence #StretchGoals</p></div>
+</body>
+</html>

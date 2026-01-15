@@ -32,9 +32,9 @@ class MagazineNav extends HTMLElement {
       <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="blog.html">Blog</a>
+        <a href="journal.html">Journal</a>
         <a href="about.html">About</a>
-        <a href="elements.html">Elements</a>
-        <a href="creator.html">Creator</a>
+        <a href="cv.html">CV</a>
       </div>
     `;
 

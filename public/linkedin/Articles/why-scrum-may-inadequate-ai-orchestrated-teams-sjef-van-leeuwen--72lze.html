@@ -1,0 +1,147 @@
+<html>
+<head>
+  <title>Why Scrum May Be Inadequate for AI-Orchestrated Teams</title>
+  <style>
+    body {
+      margin: 0 auto;
+      width: 744px;
+      font-family: Source Serif Pro, serif;
+      line-height: 32px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 21px;
+    }
+    h1, h2, h3 {
+      font-family: Source Sans Pro, Helvetica, Arial, sans-serif;
+    }
+    h1 a, h1 a:visited {
+      color: inherit;
+      text-decoration: none;
+    }
+    h1 {
+      line-height: 48px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 42px;
+      margin: 32px 0 20px;
+    }
+    h2 {
+      line-height: 32px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 26px;
+      margin: 28px 0;
+    }
+    h3 {
+      line-height: 28px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 21px;
+      margin: 24px 0;
+    }
+    p {
+      margin: 32px 0;
+    }
+    .created, .published {
+      color: rgba(0, 0, 0, 0.55);
+      font-size: 15px;
+      line-height: 15px;
+      margin: 20px 0;
+    }
+    .created + .published {
+      margin-top: -12px;
+    }
+    blockquote {
+      font-family: Georgia, Source Serif Pro, serif;
+      font-style: italic;
+      font-size: 24px;
+      line-height: 36px;
+      margin: 48px 120px;
+      text-align: center;
+    }
+    a {
+      word-wrap: break-word;
+      outline: none;
+      text-decoration: none;
+      background-color: transparent;
+      border: 0;
+      color: #008CC9;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    a:visited {
+      color: #8C68CB;
+    }
+    .center {
+      text-align: center;
+    }
+    iframe {
+      display: block;
+      margin: 44px auto;
+    }
+    *:not(pre) + pre, pre:first-of-type {
+      margin-top: 32px;
+      padding-top: 32px;
+    }
+    pre:only-of-type {
+      margin: 32px 0;
+      padding: 32px;
+    }
+    pre {
+      background: #F3F6F8;
+      overflow-x: auto;
+      display: block;
+      font-size: 13px;
+      font-family: monospace;
+      line-height: 13px;
+      padding: 0 32px 32px;
+      white-space: pre;
+    }
+    a.embedded {
+      background: #F3F6F8;
+      display: block;
+      padding: 32px;
+      margin: 32px 0;
+    }
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+    .slate-image-embed__resize-full-width img {
+      width: 100%;
+    }
+    .series-logo {
+      width: 48px;
+      height: 48px;
+      box-sizing: border-box;
+      background-clip: content-box;
+      border: 4px solid transparent;
+      border-radius: 6px;
+      object-fit: scale-down;
+      float: left;
+    }
+    .series-title {
+      font-size: 16px;
+      font-weight: 600;
+      vertical-align: top;
+    }
+    .series-description {
+      color: rgba(0,0,0,.6);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    div {
+      margin: 32px 0;
+    }
+  </style>
+</head>
+<body>
+    <img src="https://media.licdn.com/mediaD4E12AQHPYtbmTPfkcw" alt="" title="" />
+      <h1><a href="https://www.linkedin.com/pulse/why-scrum-may-inadequate-ai-orchestrated-teams-sjef-van-leeuwen--72lze">Why Scrum May Be Inadequate for AI-Orchestrated Teams</a></h1>
+    <p class="created">Created on 2025-05-21 07:27</p>
+  <p class="published">Published on 2025-05-21 07:33</p>
+  <div><hr><h3>Executive Summary</h3><p>AI development introduces volatility, exploration, and continuous iteration that clash with Scrum's fixed cadence and roles. This document explores why traditional Scrum may no longer be the best fit for AI-driven teams and presents modern, flexible alternatives rooted in flow, DevOps, and Team Topologies.</p><p><strong>Key Takeaways:</strong></p><ul><li><p>Scrum’s structured sprints and ceremonies often misalign with the exploratory, data-centric nature of AI work.</p></li><li><p>Experts compare Scrum to outdated tech: revolutionary in its time but surpassed by leaner, more automated approaches.</p></li><li><p>Kanban, CI/CD, and flow-based methodologies better accommodate AI’s unpredictable pace.</p></li><li><p>Team Topologies enables organizations to embed AI into structures that reduce cognitive load and increase delivery agility.</p></li><li><p>Case studies show massive productivity gains from AI tools like GitHub Copilot, Spinach.ai, and Ask Emma.</p></li><li><p>Hybrid methods—such as using Scrum for integration phases and Kanban for research—are emerging as pragmatic solutions.</p></li></ul><p>The future of Agile isn’t about abandoning its principles—but adapting them to a world where AI collaborates with humans, drives workflows, and reshapes how we deliver value.</p><hr><h3>Scrum Under Scrutiny</h3><p>Scrum has long been the face of Agile, but researchers and practitioners are questioning its fit in AI-driven environments. Scrum’s fixed-length sprints and predefined ceremonies often clash with the unpredictability and speed of AI projects. In data science and machine learning, "Scrum often seems inappropriate because it forces a data-driven project into a framework that naturally does not fit" (<a href="https://medium.com/data-science/machine-learning-projects-and-scrum-a-major-mismatch-c155ad8e2eee" target="_blank">Freischlag, 2021</a>).</p><p>Christian Freischlag highlights that the research nature of modeling and uncertainty makes it inappropriate to embed data science into Scrum. Developing a machine learning model is not a linear feature task that reliably produces deliverables each iteration.</p><p>Some experts argue Scrum is outdated in the era of continuous delivery and AI automation. Agile coach Prateek Singh compares Scrum to the iPod: once revolutionary, now surpassed (<a href="https://singhpr.medium.com/killing-the-ipod-and-scrum-f9fd716723fe" target="_blank">Singh, 2023</a>). DevOps practices like continuous integration and deployment introduced instant feedback loops, yet Scrum stuck to multi-week sprints. AI is accelerating this change: "AI is helping developers create features and deploy them in the order of minutes... all without the need of a Sprint Review or a Daily Scrum."</p><p>Still, not everyone believes Scrum is obsolete. Analysts like Tony Mauro suggest Scrum’s emphasis on feedback and communication remains valuable, especially to inspect how AI tools impact workflow (<a href="https://www.linkedin.com/pulse/scrum-vs-kanban-which-agile-framework-makes-sense-ai-driven-mauro-6nikc" target="_blank">Mauro, 2024</a>). However, Mauro also admits that "the rigid sprint structure can feel like it’s holding you back" in fast-paced AI environments.</p><h3>Cultural and Ethical Dimensions</h3><p>AI’s integration into teams raises critical questions:</p><ul><li><p>Can a team still be considered self-organizing if an AI orchestrator dynamically reallocates work?</p></li><li><p>Are psychological safety and shared ownership preserved if team members defer to AI recommendations without discussion?</p></li></ul><blockquote><p><em>“What happens when AI agents become the primary decision-makers? How do we ensure these decisions align with human values and ethics?”</em> </p></blockquote><p>Agile experts suggest treating AI as a servant-leader—one that enhances team coordination without overriding autonomy. (<a href="https://teamtopologies.com/news-blogs-newsletters/2025/1/14/the-future-of-team-topologies-when-ai-agents-dominate" target="_blank"><strong>Team Topologies, 2025</strong></a>)</p><h3>Kanban, Flow, and DevOps for AI Work</h3><p>Kanban’s continuous flow model is highly adaptive to AI workflows. Mauro explains, "In a world where AI can suddenly speed up or slow down your workflow, Kanban’s flexibility is hard to beat."</p><p>DevOps practices—CI/CD pipelines, automated testing, infrastructure as code—allow models to be deployed immediately. DevOps supports rapid iteration, with some teams shifting toward "NoOps": pipelines requiring minimal human input (<a href="https://singhpr.medium.com/killing-the-ipod-and-scrum-f9fd716723fe" target="_blank">Singh, 2023</a>).</p><p>Flow-based development, including the Flow Framework by Mik Kersten, focuses on cycle time, throughput, and WIP limits—often outperforming Scrum's velocity metrics in value delivery.</p><h3>Team Topologies and AI-Enabled Structures</h3><p>Team Topologies by Skelton and Pais provides structural guidance for modern software teams. It defines team types (<a href="https://teamtopologies.com/news-blogs-newsletters/2025/1/14/the-future-of-team-topologies-when-ai-agents-dominate" target="_blank">Team Topologies, 2025</a>):</p><ul><li><p><strong>Stream-aligned Teams</strong></p></li><li><p><strong>Platform Teams</strong></p></li><li><p><strong>Enabling Teams</strong></p></li><li><p><strong>Complicated Subsystem Teams</strong></p></li></ul><p>AI-aware designs allow AI capabilities to be centralized, reducing redundancy and boosting delivery speed.</p><h3>Case Studies: AI in the Field</h3><ul><li><p><strong>Software</strong>: GitHub Copilot increased developer task speed by 55% (<a href="https://futurumgroup.com/insights/github-copilot-research-is-automated-code-development-the-killer-genai-app" target="_blank">Futurum, 2023</a>).</p></li><li><p><strong>Fintech</strong>: PensionLab cut onboarding time by 95% using AI for document processing (<a href="https://tsh.io/portfolio/pension-lab-ai-app-case-study" target="_blank">SoftwareHut, 2023</a>).</p></li><li><p><strong>Healthtech</strong>: AI forecasts patient intake and automates compliance (<a href="https://www.zignuts.com/blog/ai-project-management-case-studies-success-stories" target="_blank">Zignuts, 2024</a>).</p></li><li><p><strong>SaaS</strong>: Ask Emma and Spinach.ai act as AI Scrum Masters (<a href="https://www.spinach.ai/content/ai-scrum-master" target="_blank">Spinach, 2025</a>).</p></li></ul><h3>AI’s Impact on Scrum Rituals</h3><ul><li><p><strong>Sprint Planning</strong>: AI tools suggest plans based on historical performance (<a href="https://www.spinach.ai/content/ai-use-cases-for-scrum-masters" target="_blank">Spinach, 2025</a>).</p></li><li><p><strong>Backlog Management</strong>: Natural language processing clusters stories and reprioritizes dynamically.</p></li><li><p><strong>Daily Stand-ups</strong>: AI logs, transcribes, and identifies blockers.</p></li><li><p><strong>Self-Organization</strong>: When used transparently, AI enhances visibility and trust rather than control.</p></li></ul><h3>Hybrid Agile in AI Teams</h3><ul><li><p><strong>Part-Time Scrum</strong>: Teams alternate between Kanban and Scrum depending on project phase (<a href="https://medium.com/data-science/machine-learning-projects-and-scrum-a-major-mismatch-c155ad8e2eee" target="_blank">Freischlag, 2021</a>).</p></li><li><p><strong>Hybrid Agile (Scrum + XP + AI)</strong>: Combines TDD, pair programming (human + AI), and agile events (<a href="https://www.virginiamacefletcher.com/post/why-a-hybrid-agile-approach-is-the-best-choice-for-ai-product-development" target="_blank">Fletcher, 2025</a>).</p></li><li><p><strong>Flow-Based Agile</strong>: Minimizes rituals, optimizes for continuous value flow (<a href="https://singhpr.medium.com/killing-the-ipod-and-scrum-f9fd716723fe" target="_blank">Singh, 2023</a>).</p></li></ul><h3>New and Emerging Frameworks</h3><ul><li><p><strong>AIADD</strong>: Teams write stories for AI agents like coders or reviewers (<a href="https://forum.cursor.com/t/introducing-the-agile-ai-workflow-aiadd-a-new-way-to-build-complex-apps-with-cursor" target="_blank">Cursor, 2025</a>).</p></li><li><p><strong>Flash Teams</strong>: AI dynamically assembles expert groups on demand (<a href="https://hci.stanford.edu/publications/2014/flashteams/flashteams-uist2014.pdf" target="_blank">Stanford HCI</a>).</p></li><li><p><strong>Scaled Agile (SAFe)</strong>: Now includes predictive AI and flow insights (<a href="https://framework.scaledagile.com/ai" target="_blank">SAFe, 2025</a>).</p></li></ul><h3>Conclusion</h3><p>Agile isn’t dead—but it’s evolving. Scrum helped shape Agile, but in the AI era, many teams are modifying, blending, or replacing it to meet the needs of continuous delivery, real-time orchestration, and hybrid collaboration.</p><blockquote><p><em>"If you're clinging to old methods just because they worked in the past, you might want to rethink that."</em></p></blockquote><p>Scrum 2010 may not fit AI teams of 2025—and that’s okay. The spirit of agility lives on through adaptability, experimentation, and flow.</p><hr><p>#AIteams #Agile #Scrum #TeamTopologies #DevOps #Kanban #Flow #FutureOfWork #Productivity #EngineeringLeadership #HybridAgile #Agile3.0 #AIinAgile</p></div>
+</body>
+</html>

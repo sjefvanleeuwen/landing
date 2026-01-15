@@ -1,0 +1,147 @@
+<html>
+<head>
+  <title>Comparing AKS, AKS Automatic, and Container Apps</title>
+  <style>
+    body {
+      margin: 0 auto;
+      width: 744px;
+      font-family: Source Serif Pro, serif;
+      line-height: 32px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 21px;
+    }
+    h1, h2, h3 {
+      font-family: Source Sans Pro, Helvetica, Arial, sans-serif;
+    }
+    h1 a, h1 a:visited {
+      color: inherit;
+      text-decoration: none;
+    }
+    h1 {
+      line-height: 48px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 42px;
+      margin: 32px 0 20px;
+    }
+    h2 {
+      line-height: 32px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 26px;
+      margin: 28px 0;
+    }
+    h3 {
+      line-height: 28px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 21px;
+      margin: 24px 0;
+    }
+    p {
+      margin: 32px 0;
+    }
+    .created, .published {
+      color: rgba(0, 0, 0, 0.55);
+      font-size: 15px;
+      line-height: 15px;
+      margin: 20px 0;
+    }
+    .created + .published {
+      margin-top: -12px;
+    }
+    blockquote {
+      font-family: Georgia, Source Serif Pro, serif;
+      font-style: italic;
+      font-size: 24px;
+      line-height: 36px;
+      margin: 48px 120px;
+      text-align: center;
+    }
+    a {
+      word-wrap: break-word;
+      outline: none;
+      text-decoration: none;
+      background-color: transparent;
+      border: 0;
+      color: #008CC9;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    a:visited {
+      color: #8C68CB;
+    }
+    .center {
+      text-align: center;
+    }
+    iframe {
+      display: block;
+      margin: 44px auto;
+    }
+    *:not(pre) + pre, pre:first-of-type {
+      margin-top: 32px;
+      padding-top: 32px;
+    }
+    pre:only-of-type {
+      margin: 32px 0;
+      padding: 32px;
+    }
+    pre {
+      background: #F3F6F8;
+      overflow-x: auto;
+      display: block;
+      font-size: 13px;
+      font-family: monospace;
+      line-height: 13px;
+      padding: 0 32px 32px;
+      white-space: pre;
+    }
+    a.embedded {
+      background: #F3F6F8;
+      display: block;
+      padding: 32px;
+      margin: 32px 0;
+    }
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+    .slate-image-embed__resize-full-width img {
+      width: 100%;
+    }
+    .series-logo {
+      width: 48px;
+      height: 48px;
+      box-sizing: border-box;
+      background-clip: content-box;
+      border: 4px solid transparent;
+      border-radius: 6px;
+      object-fit: scale-down;
+      float: left;
+    }
+    .series-title {
+      font-size: 16px;
+      font-weight: 600;
+      vertical-align: top;
+    }
+    .series-description {
+      color: rgba(0,0,0,.6);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    div {
+      margin: 32px 0;
+    }
+  </style>
+</head>
+<body>
+    <img src="https://media.licdn.com/mediaD4E12AQHFsW54enNbaw" alt="" title="" />
+      <h1><a href="https://www.linkedin.com/pulse/comparing-aks-automatic-container-apps-sjef-van-leeuwen--ijh5e">Comparing AKS, AKS Automatic, and Container Apps</a></h1>
+    <p class="created">Created on 2024-05-22 08:06</p>
+  <p class="published">Published on 2024-05-22 08:15</p>
+  <div><h2>Choosing the Right Solution for Your Containerized Workloads</h2><p>In the evolving landscape of containerized applications, Azure offers multiple solutions tailored to different needs: Azure Kubernetes Service (AKS), AKS Automatic, and Azure Container Apps. Understanding their unique features and use cases is crucial for making an informed decision.</p><h3>Azure Kubernetes Service (AKS)</h3><p><strong>Overview:</strong> AKS is a managed Kubernetes service that simplifies the deployment, management, and scaling of containerized applications. It offers a balance of control and automation, ideal for those with Kubernetes expertise.</p><p><strong>Key Features:</strong></p><ul><li><p>Managed Kubernetes control plane</p></li><li><p>Integration with Azure Monitor</p></li><li><p>Supports both Linux and Windows containers</p></li><li><p>Advanced networking options</p></li></ul><p><strong>Use Cases:</strong></p><ul><li><p>Migrating existing applications to containers</p></li><li><p>Building microservices-based applications</p></li><li><p>Implementing secure DevOps practices</p></li></ul><p>Learn more about <a href="https://learn.microsoft.com/en-us/azure/aks/what-is-aks" target="_blank">Azure AKS</a>.</p><h3>Azure AKS Automatic</h3><p><strong>Overview:</strong> Currently in preview, AKS Automatic aims to further reduce operational overhead by automating cluster operations like scaling, upgrades, and security patches.</p><p><strong>Key Features:</strong></p><ul><li><p>Automated cluster scaling and upgrades</p></li><li><p>Automatic security patches and compliance updates</p></li><li><p>Simplified Kubernetes management</p></li></ul><p><strong>Use Cases:</strong></p><ul><li><p>Organizations looking to minimize Kubernetes management tasks</p></li><li><p>Environments requiring automatic scaling and updates</p></li><li><p>Prioritizing security and compliance with minimal manual intervention</p></li></ul><p>Discover more about <a href="https://learn.microsoft.com/en-us/azure/aks/intro-aks-automatic" target="_blank">Azure AKS Automatic</a>.</p><h3>Azure Container Apps</h3><p><strong>Overview:</strong> Azure Container Apps is a fully managed serverless container service designed for microservices and event-driven applications. It abstracts the underlying Kubernetes infrastructure, offering a simplified deployment model with built-in scaling.</p><p><strong>Key Features:</strong></p><ul><li><p>Serverless container infrastructure</p></li><li><p>Built-in scaling and microservices support</p></li><li><p>Kubernetes-based event-driven autoscaling (KEDA)</p></li><li><p>Managed Dapr for building resilient microservices</p></li></ul><p><strong>Use Cases:</strong></p><ul><li><p>Building serverless applications</p></li><li><p>Developing microservices without managing Kubernetes infrastructure</p></li><li><p>Rapid scaling based on events or demand</p></li></ul><p>Explore more about <a href="https://learn.microsoft.com/en-us/azure/container-apps/overview" target="_blank">Azure Container Apps</a>.</p><h3>Comparative Analysis</h3><p><strong>Management Complexity:</strong></p><ul><li><p><strong>AKS</strong>: Requires Kubernetes expertise but reduces operational overhead by managing the control plane.</p></li><li><p><strong>AKS Automatic</strong>: Further simplifies management by automating many operational tasks.</p></li><li><p><strong>Azure Container Apps</strong>: Provides the most abstraction, offering a serverless experience.</p></li></ul><p><strong>Use Cases:</strong></p><ul><li><p><strong>AKS</strong>: Suitable for diverse workloads, including lift-and-shift, microservices, and data-intensive applications.</p></li><li><p><strong>AKS Automatic</strong>: Ideal for environments needing automated scaling, updates, and security compliance.</p></li><li><p><strong>Azure Container Apps</strong>: Perfect for serverless and event-driven applications, as well as microservices needing rapid deployment and scaling.</p></li></ul><p><strong>Scalability:</strong></p><ul><li><p><strong>AKS</strong>: Offers manual and automatic scaling options.</p></li><li><p><strong>AKS Automatic</strong>: Provides fully automated scaling.</p></li><li><p><strong>Azure Container Apps</strong>: Features built-in event-driven autoscaling (KEDA).</p></li></ul><p><strong>Security and Compliance:</strong></p><ul><li><p><strong>AKS</strong>: Compliant with major standards (SOC, ISO, PCI DSS, HIPAA).</p></li><li><p><strong>AKS Automatic</strong>: Ensures compliance through automated updates.</p></li><li><p><strong>Azure Container Apps</strong>: Managed security, suitable for serverless workloads.</p></li></ul><h3>Conclusion</h3><p>Choosing the right containerization solution depends on your organization's needs and expertise. AKS offers robust features for those comfortable managing Kubernetes, while AKS Automatic simplifies management further. Azure Container Apps provide the most abstraction, ideal for serverless and microservices applications. Each service caters to different operational preferences and application requirements, ensuring you can select the best tool for your containerized workloads.</p><p><strong>Sources:</strong></p><ul><li><p><a href="https://learn.microsoft.com/en-us/azure/aks/intro-aks-automatic" target="_blank">Introduction to Azure AKS Automatic</a></p></li><li><p><a href="https://learn.microsoft.com/en-us/azure/container-apps/overview" target="_blank">Azure Container Apps Overview</a></p></li><li><p><a href="https://learn.microsoft.com/en-us/azure/aks/what-is-aks" target="_blank">What is Azure Kubernetes Service (AKS)?</a></p></li></ul></div>
+</body>
+</html>

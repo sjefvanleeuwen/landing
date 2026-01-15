@@ -1,0 +1,147 @@
+<html>
+<head>
+  <title>AI Trading Robot</title>
+  <style>
+    body {
+      margin: 0 auto;
+      width: 744px;
+      font-family: Source Serif Pro, serif;
+      line-height: 32px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 21px;
+    }
+    h1, h2, h3 {
+      font-family: Source Sans Pro, Helvetica, Arial, sans-serif;
+    }
+    h1 a, h1 a:visited {
+      color: inherit;
+      text-decoration: none;
+    }
+    h1 {
+      line-height: 48px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 42px;
+      margin: 32px 0 20px;
+    }
+    h2 {
+      line-height: 32px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 26px;
+      margin: 28px 0;
+    }
+    h3 {
+      line-height: 28px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 21px;
+      margin: 24px 0;
+    }
+    p {
+      margin: 32px 0;
+    }
+    .created, .published {
+      color: rgba(0, 0, 0, 0.55);
+      font-size: 15px;
+      line-height: 15px;
+      margin: 20px 0;
+    }
+    .created + .published {
+      margin-top: -12px;
+    }
+    blockquote {
+      font-family: Georgia, Source Serif Pro, serif;
+      font-style: italic;
+      font-size: 24px;
+      line-height: 36px;
+      margin: 48px 120px;
+      text-align: center;
+    }
+    a {
+      word-wrap: break-word;
+      outline: none;
+      text-decoration: none;
+      background-color: transparent;
+      border: 0;
+      color: #008CC9;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    a:visited {
+      color: #8C68CB;
+    }
+    .center {
+      text-align: center;
+    }
+    iframe {
+      display: block;
+      margin: 44px auto;
+    }
+    *:not(pre) + pre, pre:first-of-type {
+      margin-top: 32px;
+      padding-top: 32px;
+    }
+    pre:only-of-type {
+      margin: 32px 0;
+      padding: 32px;
+    }
+    pre {
+      background: #F3F6F8;
+      overflow-x: auto;
+      display: block;
+      font-size: 13px;
+      font-family: monospace;
+      line-height: 13px;
+      padding: 0 32px 32px;
+      white-space: pre;
+    }
+    a.embedded {
+      background: #F3F6F8;
+      display: block;
+      padding: 32px;
+      margin: 32px 0;
+    }
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+    .slate-image-embed__resize-full-width img {
+      width: 100%;
+    }
+    .series-logo {
+      width: 48px;
+      height: 48px;
+      box-sizing: border-box;
+      background-clip: content-box;
+      border: 4px solid transparent;
+      border-radius: 6px;
+      object-fit: scale-down;
+      float: left;
+    }
+    .series-title {
+      font-size: 16px;
+      font-weight: 600;
+      vertical-align: top;
+    }
+    .series-description {
+      color: rgba(0,0,0,.6);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    div {
+      margin: 32px 0;
+    }
+  </style>
+</head>
+<body>
+    <img src="https://media.licdn.com/mediaD4E12AQHr0LsTlvKo1w" alt="" title="" />
+      <h1>AI Trading Robot</h1>
+    <p class="created">Created on 2024-01-20 10:57</p>
+  <p class="published">Published on ---</p>
+  <div><p>Labeling in the context of machine learning and financial data is the process of assigning predefined categories or values to data points in order to train a model. In the provided code and explanation, the author discusses various methods for labeling financial time series data for machine learning. Here are the main labeling methods discussed:</p><p><strong>Binary Labeling</strong></p><ul><li><p>Assigns labels based on the sign of the returns.</p></li><li><p>Positive returns are labeled as class 1, while negative returns are labeled class 0.</p></li></ul><p><strong>Fixed-Time Horizon Labeling</strong></p><ul><li><p>Uses a threshold parameter (threshold) to compute labels.</p></li><li><p>Labels are assigned as follows: -1 for returns below the negative threshold, 0 for returns within the threshold, and 1 for returns above the positive threshold.</p></li></ul><p><strong>Quantitative Labeling</strong></p><ul><li><p>This involves bucketing returns into categories based on quantile values.</p></li><li><p>Quantiles can be computed using a sliding or expanding window, resulting in dynamic behavior that responds to market changes.</p></li></ul><p><strong>Labeling For Regression</strong></p><ul><li><p>Converts data into a regression problem.</p></li><li><p>Creates feature and label sets using a rolling window. Each set's features are made up of a fixed number of past returns (look_back), while the label is a future return.</p></li></ul><p>Each labeling method serves a distinct purpose and has unique advantages and disadvantages. Binary labeling is simple, but it may not accurately reflect the magnitude of returns. Fixed-time horizon labeling introduces a threshold while assuming a static market. Quantized labeling uses quantiles to dynamically adapt to market changes. Labeling for regression converts the problem into a regression task, which allows for continuous labeling.</p><p>It is critical to select a labeling method that is consistent with the characteristics of the financial data and the goals of the machine learning model being developed.</p><p></p><p></p><p></p></div>
+</body>
+</html>

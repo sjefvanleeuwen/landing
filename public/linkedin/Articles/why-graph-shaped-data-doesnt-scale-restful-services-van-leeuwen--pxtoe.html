@@ -1,0 +1,147 @@
+<html>
+<head>
+  <title>Why Graph-Shaped Data Doesn't Scale on RESTful Services</title>
+  <style>
+    body {
+      margin: 0 auto;
+      width: 744px;
+      font-family: Source Serif Pro, serif;
+      line-height: 32px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 21px;
+    }
+    h1, h2, h3 {
+      font-family: Source Sans Pro, Helvetica, Arial, sans-serif;
+    }
+    h1 a, h1 a:visited {
+      color: inherit;
+      text-decoration: none;
+    }
+    h1 {
+      line-height: 48px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 42px;
+      margin: 32px 0 20px;
+    }
+    h2 {
+      line-height: 32px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 26px;
+      margin: 28px 0;
+    }
+    h3 {
+      line-height: 28px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 21px;
+      margin: 24px 0;
+    }
+    p {
+      margin: 32px 0;
+    }
+    .created, .published {
+      color: rgba(0, 0, 0, 0.55);
+      font-size: 15px;
+      line-height: 15px;
+      margin: 20px 0;
+    }
+    .created + .published {
+      margin-top: -12px;
+    }
+    blockquote {
+      font-family: Georgia, Source Serif Pro, serif;
+      font-style: italic;
+      font-size: 24px;
+      line-height: 36px;
+      margin: 48px 120px;
+      text-align: center;
+    }
+    a {
+      word-wrap: break-word;
+      outline: none;
+      text-decoration: none;
+      background-color: transparent;
+      border: 0;
+      color: #008CC9;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    a:visited {
+      color: #8C68CB;
+    }
+    .center {
+      text-align: center;
+    }
+    iframe {
+      display: block;
+      margin: 44px auto;
+    }
+    *:not(pre) + pre, pre:first-of-type {
+      margin-top: 32px;
+      padding-top: 32px;
+    }
+    pre:only-of-type {
+      margin: 32px 0;
+      padding: 32px;
+    }
+    pre {
+      background: #F3F6F8;
+      overflow-x: auto;
+      display: block;
+      font-size: 13px;
+      font-family: monospace;
+      line-height: 13px;
+      padding: 0 32px 32px;
+      white-space: pre;
+    }
+    a.embedded {
+      background: #F3F6F8;
+      display: block;
+      padding: 32px;
+      margin: 32px 0;
+    }
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+    .slate-image-embed__resize-full-width img {
+      width: 100%;
+    }
+    .series-logo {
+      width: 48px;
+      height: 48px;
+      box-sizing: border-box;
+      background-clip: content-box;
+      border: 4px solid transparent;
+      border-radius: 6px;
+      object-fit: scale-down;
+      float: left;
+    }
+    .series-title {
+      font-size: 16px;
+      font-weight: 600;
+      vertical-align: top;
+    }
+    .series-description {
+      color: rgba(0,0,0,.6);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    div {
+      margin: 32px 0;
+    }
+  </style>
+</head>
+<body>
+    <img src="https://media.licdn.com/mediaD4E12AQHgbNqgv8JjIQ" alt="" title="" />
+      <h1><a href="https://www.linkedin.com/pulse/why-graph-shaped-data-doesnt-scale-restful-services-van-leeuwen--pxtoe">Why Graph-Shaped Data Doesn't Scale on RESTful Services</a></h1>
+    <p class="created">Created on 2025-12-21 10:55</p>
+  <p class="published">Published on 2025-12-21 11:16</p>
+  <div><p><em>A technical perspective for engineers and architects building modern distributed systems.</em></p><hr><h3>The Hidden Cost of "Simple"</h3><p>Many engineering teams have heard it: <em>"Let's just use REST, it's simpler."</em></p><p>And in the beginning, it is. A few endpoints, clean URLs, familiar patterns. But here's what nobody tells you: <strong>REST optimizes for early velocity at the cost of sustained scale.</strong></p><blockquote><p><strong>"REST defers complexity until it becomes unmanageable. GraphQL absorbs complexity early and then caps it."</strong></p></blockquote><p>I've spent years watching organizations build REST-first architectures, only to hit a wall when their data models grow beyond a handful of entities. The problem isn't REST itself. It's what happens when you try to represent <strong>graph-shaped data</strong> through a fundamentally <strong>resource-centric paradigm</strong>.</p><hr><h3>The Aggregation Problem</h3><p>Consider a typical e-commerce scenario: You need to display a product with its reviews, shipping options, and inventory status. In REST, this requires:</p><ul><li><p>GET /products/123</p></li><li><p>GET /products/123/reviews</p></li><li><p>GET /shipping/estimate?productId=123</p></li><li><p>GET /inventory/123</p></li></ul><p>Four round trips. Four endpoints to maintain. Four contracts to version. And this is a <em>simple</em> example.</p><blockquote><p><strong>"REST pushes composition outward to consumers. GraphQL centralizes composition inside the graph."</strong></p></blockquote><p>The moment your data has relationships (and real-world data <em>always</em> has relationships) you're fighting against REST's fundamental assumption that resources are isolated.</p><h3>"But can't we solve this at the gateway?"</h3><p>Yes, and many teams try. REST gateways offer request composition and aggregation policies. You can configure the gateway to make multiple downstream calls and merge the responses into one payload for the client.</p><p>But here's what you're actually doing:</p><ul><li><p><strong>Building a BFF in gateway configuration</strong>: Hard to test, version, and debug</p></li><li><p><strong>Hiding N+1, not solving it</strong>: The calls still happen downstream; you've just moved them</p></li><li><p><strong>Creating custom compositions per use case</strong>: Each aggregation is bespoke; none are reusable</p></li></ul><p>Other common workarounds:</p><ul><li><p><strong>Custom batch endpoints</strong> (/products/batch?ids=1,2,3): More endpoints to maintain, and consumers must know to use them</p></li><li><p><strong>OData-style </strong>$expand: Essentially adding GraphQL semantics to REST, with less tooling support</p></li><li><p><strong>Response caching</strong>: Masks the problem temporarily; doesn't solve it</p></li></ul><blockquote><p><strong>"If you're going to build batching, composition, and query optimization anyway—why not use the paradigm that has it built in?"</strong></p></blockquote><p>The real difference: in GraphQL, aggregation is the <strong>default behavior</strong>. In REST, it's a retrofit.</p><hr><h3>The N+1 Surprise</h3><p>Here's a pattern I see repeatedly in REST architectures:</p><pre></pre><p>In REST, the N+1 problem is a <strong>runtime surprise</strong>. You discover it in production when your API suddenly makes 500 database calls for what should be a simple list.</p><blockquote><p><strong>"In REST, N+1 is a surprise. In GraphQL, it is a first-class concern."</strong></p></blockquote><p>GraphQL doesn't magically solve N+1, but it makes it <strong>visible and governable</strong>. Tools like DataLoader exist specifically because the pattern is anticipated, not accidental.</p><hr><h3>The Cognitive Load Curve</h3><p>This is where the real cost becomes clear. As your system grows, complexity follows different trajectories:</p><figure><img data-media-urn="urn:li:digitalmediaAsset:D4E12AQFagLW6k4QDNg" src="https://media.licdn.com/dms/image/v2/D4E12AQFagLW6k4QDNg/article-inline_image-shrink_400_744/B4EZtAkalnKMAc-/0/1766314846943?e=1769040000&amp;v=beta&amp;t=AGks5G2j0TAYteovCELVGZVy9thjhgjcV5jZyGpTQt0"><figcaption></figcaption></figure><p></p><blockquote><p><strong>"Discipline does not scale."</strong></p></blockquote><p>I've watched teams try to maintain REST quality through code reviews, architectural guidelines, and constant policing. It works until it doesn't. Team growth, consultant churn, and organizational transitions all erode discipline. What remains is entropy.</p><hr><h3>The Versioning Trap</h3><p>REST's approach to backward compatibility typically means versioned endpoints:</p><ul><li><p>/v1/products</p></li><li><p>/v2/products</p></li><li><p>/v3/products</p></li></ul><p>Each version is a full copy of your contract. Each consumer pins to a version. Each team maintains multiple versions simultaneously.</p><blockquote><p><strong>"REST requires coordination and discipline per endpoint. GraphQL enforces contracts once, centrally."</strong></p></blockquote><p>GraphQL's deprecation model allows you to evolve schemas incrementally. Mark a field as deprecated, give consumers time to migrate, then remove it. No version explosion. No parallel maintenance burden.</p><hr><h3>When REST Makes Sense</h3><p>I'm not arguing that REST should be abandoned. It excels in specific contexts:</p><ul><li><p><strong>Public APIs with simple resource access</strong> — CRUD operations on isolated entities</p></li><li><p><strong>Industry protocol compliance</strong> — Many domain standards mandate specific transports (REST, gRPC, SOAP). These define <em>how you communicate externally</em>, not how you structure your internal architecture. A lightweight protocol adapter on top of GraphQL handles this cleanly.</p></li><li><p><strong>Third-party integrations</strong> — Translating between external systems and your internal graph</p></li></ul><blockquote><p><strong>"External standards dictate your edges, not your core."</strong></p></blockquote><p>The key insight is understanding where REST belongs in your architecture: at the <strong>boundaries</strong>, not at the <strong>center</strong>.</p><hr><h3>The Framework Advantage</h3><p>Here's what I've learned building distributed systems:</p><blockquote><p><strong>"REST depends on human discipline. GraphQL depends on framework constraints."</strong></p></blockquote><p>When you choose GraphQL with a mature framework (like Hot Chocolate in .NET), you get:</p><ul><li><p><strong>Native strong typing</strong>: enforced by schema, not by convention</p></li><li><p><strong>Built-in cost control</strong>: query depth limits, complexity analysis</p></li><li><p><strong>Introspection</strong>: consumers discover capabilities without documentation</p></li><li><p><strong>Field-level authorization</strong>: security at the data level, not the endpoint level</p></li></ul><p>These aren't features you <em>could</em> build in REST. They're constraints that are <strong>built into the paradigm</strong>.</p><hr><h3>The Real Question</h3><p>Before your next architecture decision, ask yourself:</p><ol><li><p>Does your data have relationships? (It does.)</p></li><li><p>Will you have multiple consumers with different needs? (You will.)</p></li><li><p>Do you expect your domain model to grow? (It will.)</p></li></ol><p>If you answered yes to any of these, you're not building a collection of resources. <strong>You're building a graph.</strong></p><blockquote><p><strong>"GraphQL is not chosen for flexibility alone, but for organizational scalability."</strong></p></blockquote><hr><h3>Final Thought</h3><p>The choice between REST and GraphQL isn't about technology preferences. It's about where you want complexity to live:</p><ul><li><p><strong>Distributed and hidden</strong>: where it compounds silently until it's unmanageable</p></li><li><p><strong>Centralized and visible</strong>: where it can be governed, measured, and controlled</p></li></ul><blockquote><p><strong>"Freedom inside constraints scales. Freedom without constraints collapses."</strong></p></blockquote><p>Choose your constraints wisely.</p><hr><h3>Questions I Hear From Solution Architects</h3><p>When I present these ideas to solution architects, I often hear the same concerns. These are valid questions from experienced professionals who may not have deep GraphQL experience but understand the organizational realities of technology adoption.</p><h3>"We don't have GraphQL expertise in-house. Is the adoption curve as steep as it looks?"</h3><p>The learning curve is real, but it's <strong>front-loaded</strong>, and it's getting shorter.</p><p>Here's what I've observed:</p><ul><li><p>Teams with strong backend experience typically need <strong>6-8 weeks</strong> to become confident with GraphQL, including federation, gateway patterns, and authentication integration</p></li><li><p>With AI-assisted development, this timeline can be <strong>significantly reduced</strong> because these are all standard patterns well-documented in mature frameworks like Hot Chocolate, Apollo, and others</p></li></ul><blockquote><p><strong>"REST spreads learning across years of accumulated tribal knowledge. GraphQL makes it explicit upfront."</strong></p></blockquote><p>The real question isn't whether your team can learn GraphQL. It's whether you want that learning to compound into organizational capability or dissipate into endpoint-specific knowledge that walks out the door with each team member.</p><hr><h3>"We can ship faster with REST given what we know today. Why overcomplicate this?"</h3><p>On a 3-month timeline? Absolutely. On a 3-year timeline? Almost never.</p><p>Let me be direct: <strong>if your only goal is shipping something quickly with existing skills, REST will get you there faster today.</strong></p><p>But here's the hidden cost:</p><ul><li><p>Every REST endpoint you build now is a contract you'll maintain forever</p></li><li><p>Integration patterns established early become organizational habits</p></li><li><p>The "quick implementation" often becomes the permanent architecture by default</p></li></ul><blockquote><p><strong>"The fastest path to your first release is rarely the fastest path to your tenth."</strong></p></blockquote><p>If you're building a proof-of-concept or a bounded utility service, REST is fine. If you're building core data infrastructure that will serve multiple consumers over years, the calculus changes dramatically.</p><hr><h3>"What if we just expose the data layer directly through REST endpoints and skip the gateway complexity entirely?"</h3><p>This is a nuanced question that deserves a nuanced answer. A "thin API layer" approach can work, but you're accepting specific trade-offs:</p><p><strong>What you lose:</strong></p><ul><li><p><strong>Centralized query optimization</strong>: Each endpoint becomes its own performance problem</p></li><li><p><strong>Unified access control</strong>: Authorization logic duplicates across services</p></li><li><p><strong>Contract governance</strong>: No single source of truth for your data model</p></li><li><p><strong>Consumer flexibility</strong>: You pre-define what consumers can request</p></li></ul><p><strong>What you keep:</strong></p><ul><li><p>Faster initial delivery</p></li><li><p>Familiar patterns for existing teams</p></li><li><p>Lower upfront learning investment</p></li></ul><p><strong>The hidden risk:</strong></p><blockquote><p><strong>"You're not avoiding complexity—you're distributing it across endpoints where it's harder to see and govern."</strong></p></blockquote><p>I've seen this pattern create what I call "implicit graphs"—relationships managed through convention rather than contract. They work until they don't, usually when a new team joins or a key engineer leaves.</p><hr><h3>"What are the technical risks we might be underestimating?"</h3><p>Fair question. Here's my honest assessment of risks that often get underestimated in either approach:</p><figure><img data-media-urn="urn:li:digitalmediaAsset:D4E12AQFTbSoUEOuwvw" src="https://media.licdn.com/dms/image/v2/D4E12AQFTbSoUEOuwvw/article-inline_image-shrink_1000_1488/B4EZtAkuB2J4AQ-/0/1766314926669?e=1769040000&amp;v=beta&amp;t=hH92Izs8YSyDF9MrG5H0TWLVYyFmc503J-OClq602D8"><figcaption></figcaption></figure><p>The biggest risk I see organizations underestimate:</p><blockquote><p><strong>"Without a unified layer, you have no single point where you can observe, measure, or govern your data access patterns."</strong></p></blockquote><p>Debugging becomes archaeology. Performance issues become detective work. Security audits become service-by-service reviews.</p><hr><h3>My Recommendation for Architects Navigating This Decision</h3><p>If your organization is genuinely uncertain, <strong>build a proof-of-concept that includes the hard parts</strong>, not just the easy ones.</p><p>Specifically, your POC should include:</p><ol><li><p><strong>Authorization integration</strong>: Don't skip auth "for the POC." It's where half the complexity lives. Wire up JWT validation, role-based access, and field-level permissions.</p></li><li><p><strong>Schema composition</strong>: Test how multiple domains come together. Whether you use schema stitching, federation, or newer approaches like Hot Chocolate Fusion's type merging, this is where GraphQL proves its value (or doesn't).</p></li><li><p><strong>A realistic data shape</strong>: Pick a slice that has relationships. Products with reviews. Orders with customers and line items. If your POC is a single flat entity, you've learned nothing.</p></li><li><p><strong>Multiple consumers</strong>: Have at least two different clients query the same graph with different needs. This is where the "consumer-driven queries" benefit becomes tangible.</p></li></ol><blockquote><p><strong>"A GraphQL POC without auth and schema composition is like test-driving a car without leaving the parking lot."</strong></p></blockquote><p>Give a small team <strong>6-8 weeks</strong> to build this vertical slice. Measure where they struggle. Document what takes longer than expected. Then compare honestly: could you build the same capability in REST, and what would maintenance look like in year two?</p><p>The worst outcome is choosing REST "for now" with the intention of migrating "later." That migration rarely happens, and when it does, it's far more expensive than starting correctly.</p><blockquote><p><strong>"The best time to centralize your data architecture was at the beginning. The second best time is before it gets any bigger."</strong></p></blockquote><hr><p><em>What's been your experience making these architectural trade-offs? I'd love to hear your stories in the comments.</em></p><p>#GraphQL #REST #APIDesign #SoftwareArchitecture #DistributedSystems #Engineering</p></div>
+</body>
+</html>

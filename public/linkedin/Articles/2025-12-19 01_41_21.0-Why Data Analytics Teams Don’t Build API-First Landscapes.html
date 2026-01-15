@@ -1,0 +1,147 @@
+<html>
+<head>
+  <title>Why Data Analytics Teams Don’t Build API-First Landscapes</title>
+  <style>
+    body {
+      margin: 0 auto;
+      width: 744px;
+      font-family: Source Serif Pro, serif;
+      line-height: 32px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 21px;
+    }
+    h1, h2, h3 {
+      font-family: Source Sans Pro, Helvetica, Arial, sans-serif;
+    }
+    h1 a, h1 a:visited {
+      color: inherit;
+      text-decoration: none;
+    }
+    h1 {
+      line-height: 48px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 42px;
+      margin: 32px 0 20px;
+    }
+    h2 {
+      line-height: 32px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 26px;
+      margin: 28px 0;
+    }
+    h3 {
+      line-height: 28px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 21px;
+      margin: 24px 0;
+    }
+    p {
+      margin: 32px 0;
+    }
+    .created, .published {
+      color: rgba(0, 0, 0, 0.55);
+      font-size: 15px;
+      line-height: 15px;
+      margin: 20px 0;
+    }
+    .created + .published {
+      margin-top: -12px;
+    }
+    blockquote {
+      font-family: Georgia, Source Serif Pro, serif;
+      font-style: italic;
+      font-size: 24px;
+      line-height: 36px;
+      margin: 48px 120px;
+      text-align: center;
+    }
+    a {
+      word-wrap: break-word;
+      outline: none;
+      text-decoration: none;
+      background-color: transparent;
+      border: 0;
+      color: #008CC9;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    a:visited {
+      color: #8C68CB;
+    }
+    .center {
+      text-align: center;
+    }
+    iframe {
+      display: block;
+      margin: 44px auto;
+    }
+    *:not(pre) + pre, pre:first-of-type {
+      margin-top: 32px;
+      padding-top: 32px;
+    }
+    pre:only-of-type {
+      margin: 32px 0;
+      padding: 32px;
+    }
+    pre {
+      background: #F3F6F8;
+      overflow-x: auto;
+      display: block;
+      font-size: 13px;
+      font-family: monospace;
+      line-height: 13px;
+      padding: 0 32px 32px;
+      white-space: pre;
+    }
+    a.embedded {
+      background: #F3F6F8;
+      display: block;
+      padding: 32px;
+      margin: 32px 0;
+    }
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+    .slate-image-embed__resize-full-width img {
+      width: 100%;
+    }
+    .series-logo {
+      width: 48px;
+      height: 48px;
+      box-sizing: border-box;
+      background-clip: content-box;
+      border: 4px solid transparent;
+      border-radius: 6px;
+      object-fit: scale-down;
+      float: left;
+    }
+    .series-title {
+      font-size: 16px;
+      font-weight: 600;
+      vertical-align: top;
+    }
+    .series-description {
+      color: rgba(0,0,0,.6);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    div {
+      margin: 32px 0;
+    }
+  </style>
+</head>
+<body>
+    <img src="https://media.licdn.com/mediaD4E12AQGyF06boh_K2Q" alt="" title="" />
+      <h1>Why Data Analytics Teams Don’t Build API-First Landscapes</h1>
+    <p class="created">Created on 2025-12-19 01:41</p>
+  <p class="published">Published on ---</p>
+  <div><blockquote><p>"When you build APIs through ingestion tooling, you step outside the core skillset of backend engineering."</p></blockquote><p>Before anything else, this needs to be stated plainly.</p><p>When you build APIs primarily through data ingestion tooling, you step outside the core skillset of a backend engineer.</p><p>Data ingestion tooling optimizes for moving and reshaping data. Backend engineering optimizes for behavior, contracts, latency, correctness, and long term change.</p><p>When ingestion tooling becomes the backbone of an API landscape, particularly for external or long lived contracts, you are no longer practicing backend engineering. You are practicing data plumbing and hoping it behaves like a product surface.</p><blockquote><p>"Using ingestion tooling as an API strategy is data plumbing pretending to be product engineering."</p></blockquote><p>That distinction matters.</p><hr><h3>The familiar shortcut</h3><p>In many organizations, a familiar shortcut appears when pressure mounts.</p><p>"Let BI ingest the data and we can expose APIs from there."</p><p>It sounds efficient. It feels pragmatic. And for certain use cases internal dashboards, exploratory analytics, loosely coupled data sharing between teams it can work reasonably well.</p><p>But for public facing APIs, partner integrations, or any contract that must remain stable over years, this approach is almost always wrong.</p><blockquote><p>"What works for analytics rarely works for long lived contracts."</p></blockquote><p>Not because BI teams are not capable, but because they optimize for a fundamentally different problem.</p><hr><h3>BI thinking and API first thinking solve opposite constraints</h3><p>A BI team is excellent at:</p><p>Ingesting large volumes of data Normalizing, denormalizing, reshaping Optimizing for analytics, reporting, hindsight Working with state, not intent Batch processing, eventual consistency, and tool driven flows</p><p>An API first landscape must optimize for:</p><p>Consumer facing contracts Business semantics, not source schemas Stability over time Latency, freshness, and SLAs Versioning and backward compatibility Explicit ownership of meaning</p><p>These are not adjacent skills. They are orthogonal optimization targets.</p><blockquote><p>"BI optimizes for insight after the fact. APIs optimize for trust at the moment of use."</p></blockquote><p>This does not mean the two cannot coexist. In mature platforms they often do, but only when there is an intentional boundary between them.</p><blockquote><p>"Coexistence only works when boundaries are explicit and ownership is clear."</p></blockquote><hr><h3>Ingestion is not integration when it pretends to be</h3><p>BI pipelines usually start with a question like: "How do we get the data in?"</p><p>API first systems start with a very different question: "What promise are we making to consumers?"</p><p>That difference is everything.</p><p>Ingestion thinking:</p><p>Mirrors source systems Preserves technical structure Pushes semantic responsibility downstream Encourages we will fix it later transformations</p><p>API first thinking:</p><p>Protects consumers from internal volatility Introduces canonical or domain models Treats contracts as products Makes breaking changes explicit and rare</p><blockquote><p>"If ingestion defines your API shape, your consumers inherit your internal chaos."</p></blockquote><p>The problem is not that ingestion pipelines cannot have semantic discipline. They can.</p><p>The problem is that ingestion tooling is optimized for throughput and schema flexibility, not contract stability.</p><p>When these tools become the primary design methodology for consumer facing contracts, predictable patterns emerge:</p><p>Dataverse shaped APIs ERP shaped payloads Accidental public contracts Fragile evolution paths</p><blockquote><p>"If your API shape is dictated by ingestion tooling rather than domain modeling, you no longer have an API. You have a data leak with an endpoint."</p></blockquote><h3>An important exception</h3><p>Sometimes exposing relatively raw structures is exactly right. Financial transaction APIs, webhook payloads, or data products designed explicitly for analytical consumption may legitimately look ingestion like.</p><p>The difference is intentionality.</p><blockquote><p>"Raw is not wrong when it is chosen. It is wrong when it is accidental."</p></blockquote><hr><h3>Tools amplify the problem, they do not solve it</h3><p>When BI teams struggle with upstream complexity, the response is predictable.</p><p>Add tooling Add connectors Add transformation layers Add orchestration suites</p><p>This increases movement, not clarity.</p><p>Tools are powerful, but they encode assumptions about latency, ownership, schema evolution, and who is allowed to change what.</p><p>Once APIs sit on top of BI tooling:</p><p>Architecture debates collapse into tool debates Semantics become an afterthought Engineers compensate downstream Consumers pay the price</p><blockquote><p>"Buying more tools to fix a semantic problem only makes the semantic problem harder to see."</p></blockquote><p>None of these tools are bad. They are excellent at what they are designed for.</p><blockquote><p>"The failure is not the tool. The failure is using infrastructure as strategy."</p></blockquote><hr><h3>The ownership vacuum is the real failure mode</h3><p>When BI is involved in API design, a critical question often has no clear answer.</p><p>Who owns the contract?</p><p>BI owns pipelines Architects own diagrams Cloud teams own platforms Source systems own the data</p><p>But no one owns the promise to the consumer.</p><p>Without ownership:</p><p>Stability is not protected Trade offs are never resolved Temporary decisions become permanent</p><blockquote><p>"APIs without owners drift toward the loudest system, not the clearest domain."</p></blockquote><p>This is not a technical problem. It is a structural incentive problem.</p><blockquote><p>"Reach and speed create delivery. They do not create accountability."</p></blockquote><hr><h3>How to solve this without blaming BI</h3><p>This is not about excluding BI. It is about placing BI where it creates the most value.</p><blockquote><p>"Strong BI is a strategic asset, but it is not a substitute for API ownership."</p></blockquote><h3>1. Explicitly separate purposes</h3><p>BI pipelines serve analytics, reporting, hindsight, and exploratory work.</p><p>APIs serve products, contracts, real time interaction, and external consumption.</p><p>These paths may share sources. They must not share responsibility.</p><hr><h3>2. Make contracts upstream, not downstream</h3><p>Design APIs before data movement.</p><p>Define canonical or domain models.</p><p>Treat schemas as long lived assets.</p><p>BI can consume these models, not define them.</p><blockquote><p>"Contracts are decisions. Pipelines are implementations."</p></blockquote><hr><h3>3. Introduce a single accountable API owner</h3><p>Not a committee. Not a working group.</p><p>One role or small team that owns:</p><p>Semantics Versioning Consumer impact Long term integrity</p><p>Consensus is optional. Accountability is not.</p><blockquote><p>"Alignment without ownership is just prolonged disagreement."</p></blockquote><hr><h3>4. Use ingestion after meaning is fixed</h3><p>Ingestion should implement architectural decisions, not replace them.</p><p>Pipelines should serve architecture, not quietly become architecture.</p><blockquote><p>"Tooling is powerful when it follows intent. Dangerous when it defines it."</p></blockquote><hr><h3>Where hybrid approaches work</h3><p>Not everything is black and white.</p><p>Internal APIs between trusted teams can tolerate more ingestion style flexibility.</p><p>Data products designed for analytical consumers may intentionally look BI shaped.</p><p>Event streaming architectures can serve both operational and analytical needs when schemas are treated with discipline.</p><p>The key question is always the same.</p><blockquote><p>"Is this a conscious design choice, or the path of least resistance?"</p></blockquote><hr><h3>Closing thought</h3><p>BI teams are essential.</p><p>APIs are essential.</p><p>Confusing the two creates systems that function, but do not endure.</p><blockquote><p>"An API first landscape is not about moving data faster. It is about deciding what the business is willing to promise, and keeping that promise over time."</p></blockquote><p>The real failure is not technical. It is structural.</p><blockquote><p>"Asking teams to own outcomes they are not equipped to own, and hoping tools will compensate."</p></blockquote></div>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<html>
+<head>
+  <title>Why Splitting Front- and Back-Office in E2E Teams Can Actually Improve Flow</title>
+  <style>
+    body {
+      margin: 0 auto;
+      width: 744px;
+      font-family: Source Serif Pro, serif;
+      line-height: 32px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 21px;
+    }
+    h1, h2, h3 {
+      font-family: Source Sans Pro, Helvetica, Arial, sans-serif;
+    }
+    h1 a, h1 a:visited {
+      color: inherit;
+      text-decoration: none;
+    }
+    h1 {
+      line-height: 48px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 42px;
+      margin: 32px 0 20px;
+    }
+    h2 {
+      line-height: 32px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 26px;
+      margin: 28px 0;
+    }
+    h3 {
+      line-height: 28px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 21px;
+      margin: 24px 0;
+    }
+    p {
+      margin: 32px 0;
+    }
+    .created, .published {
+      color: rgba(0, 0, 0, 0.55);
+      font-size: 15px;
+      line-height: 15px;
+      margin: 20px 0;
+    }
+    .created + .published {
+      margin-top: -12px;
+    }
+    blockquote {
+      font-family: Georgia, Source Serif Pro, serif;
+      font-style: italic;
+      font-size: 24px;
+      line-height: 36px;
+      margin: 48px 120px;
+      text-align: center;
+    }
+    a {
+      word-wrap: break-word;
+      outline: none;
+      text-decoration: none;
+      background-color: transparent;
+      border: 0;
+      color: #008CC9;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    a:visited {
+      color: #8C68CB;
+    }
+    .center {
+      text-align: center;
+    }
+    iframe {
+      display: block;
+      margin: 44px auto;
+    }
+    *:not(pre) + pre, pre:first-of-type {
+      margin-top: 32px;
+      padding-top: 32px;
+    }
+    pre:only-of-type {
+      margin: 32px 0;
+      padding: 32px;
+    }
+    pre {
+      background: #F3F6F8;
+      overflow-x: auto;
+      display: block;
+      font-size: 13px;
+      font-family: monospace;
+      line-height: 13px;
+      padding: 0 32px 32px;
+      white-space: pre;
+    }
+    a.embedded {
+      background: #F3F6F8;
+      display: block;
+      padding: 32px;
+      margin: 32px 0;
+    }
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+    .slate-image-embed__resize-full-width img {
+      width: 100%;
+    }
+    .series-logo {
+      width: 48px;
+      height: 48px;
+      box-sizing: border-box;
+      background-clip: content-box;
+      border: 4px solid transparent;
+      border-radius: 6px;
+      object-fit: scale-down;
+      float: left;
+    }
+    .series-title {
+      font-size: 16px;
+      font-weight: 600;
+      vertical-align: top;
+    }
+    .series-description {
+      color: rgba(0,0,0,.6);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    div {
+      margin: 32px 0;
+    }
+  </style>
+</head>
+<body>
+    <img src="https://media.licdn.com/mediaD4E12AQEtQrUWhcK84w" alt="" title="" />
+      <h1>Why Splitting Front- and Back-Office in E2E Teams Can Actually Improve Flow</h1>
+    <p class="created">Created on 2025-10-14 22:36</p>
+  <p class="published">Published on ---</p>
+  <div><p>Modern software teams love the idea of <strong>end-to-end ownership</strong> one team delivering a complete customer journey from click to invoice. It sounds lean, empowered, and efficient.</p><p>But here’s the catch: <em>not every end-to-end dream should live in one team.</em></p><blockquote><p>💬 “End-to-end delivery doesn’t mean one team should own everything — it means the value flow must stay visible.”</p></blockquote><hr><h3>🧩 Different Worlds, Different Speeds</h3><p>Front-office and back-office systems often live in completely different universes. Your customer-facing team might work with <strong>React, GraphQL, and APIs</strong>, while the back-office depends on <strong>Dynamics CE, SAP, or HubSpot</strong></p><p>Expecting these to live and breathe under one agile rhythm is like asking a Formula 1 car and a freight train to share a track.</p><blockquote><p>⚡ “Front-office runs on experimentation and iteration. Back-office runs on compliance, accuracy, and control.”</p></blockquote><p>When you force both into a single E2E team, you inherit every mismatch — release cadences, testing frameworks, and even team vocabulary. The result? Friction instead of flow.</p><hr><h3>🕹️ The Autonomy Factor</h3><p>Front-office teams thrive on <strong>rapid delivery and UX testing</strong> — shipping, learning, and pivoting fast. Back-office systems evolve slower because they’re tied to <strong>billing, CRM, and regulatory processes</strong>.</p><p>Splitting teams by domain allows each to operate at their <strong>own velocity</strong>, without blocking one another or compromising quality.</p><blockquote><p>💬 “Autonomy is not fragmentation. It’s the ability to move at the right speed for the right purpose.”</p></blockquote><hr><h3>🧭 Ownership Without Chaos</h3><p>When one team owns both sides of the chain, accountability gets fuzzy:</p><ul><li><p>Who maintains the API contracts?</p></li><li><p>Who owns the data quality or versioning?</p></li><li><p>Who decides when to deploy?</p></li></ul><p>Splitting creates <strong>explicit ownership boundaries</strong> — clear contracts, well-defined responsibilities, and more maintainable systems.</p><blockquote><p>💡 “Good fences make good neighbours — especially between APIs.”</p></blockquote><hr><h3>🧠 Complexity Isn’t Collaboration</h3><p>End-to-end visibility doesn’t require one mega-team doing everything. It requires <strong>collaboration and alignment</strong> across specialized teams.</p><p>Use shared artifacts — journey maps, joint backlog refinement, integration reviews — to connect the flow without merging the codebases.</p><blockquote><p>🪞 “E2E visibility matters more than E2E structure.”</p></blockquote><hr><h3>⚖️ When You Shouldn’t Split</h3><p>There are exceptions — moments when keeping the journey together truly makes sense:</p><ul><li><p>When your tech stack is <strong>uniform and decoupled</strong>.</p></li><li><p>When the UI-to-data feedback loop is <strong>tight and experimental</strong>.</p></li><li><p>When <strong>coordination overhead</strong> outweighs the benefit of separation.</p></li></ul><p>In those cases, one cross-functional E2E team can outperform a split model — as long as boundaries and ownership remain crystal clear.</p><hr><h3>🧩 The Balanced Model</h3><p>Most mature organizations find balance here:</p><ul><li><p><strong>Front-office team</strong> → Customer experience, APIs, performance</p></li><li><p><strong>Back-office team</strong> → Business logic, data integrity, process automation</p></li><li><p><strong>Integration layer</strong> → Shared architecture, contracts, and event models</p></li><li><p><strong>Joint rituals</strong> → Shared PI planning, refinement, triage, and journey alignment</p></li></ul><blockquote><p>🔁 “The best flow comes from clarity, not control.”</p></blockquote><hr><h3>🏁 Final Thought</h3><p>Splitting front- and back-office isn’t about breaking teams apart — it’s about <strong>respecting how work flows naturally</strong> through different systems and disciplines.</p><p>You don’t lose end-to-end visibility by splitting. You gain <strong>clarity, cadence, and coherence</strong>.</p><blockquote><p>🌱 “E2E isn’t about owning everything — it’s about understanding how everything connects.”</p></blockquote></div>
+</body>
+</html>

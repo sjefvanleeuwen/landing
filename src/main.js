@@ -4,6 +4,9 @@ import './js/color-thief.js';
 import './js/diagrams.js';
 import { Router } from './js/router.js';
 import { initCreator } from './js/creator.js';
+import { initCV } from './js/cv-fetcher.js';
+import { initBlog } from './js/blog-fetcher.js';
+import { initArticleViewer } from './js/article-viewer.js';
 
 // Prevent Font Flickering (FOUT)
 document.documentElement.classList.add('fonts-loading');
@@ -23,7 +26,6 @@ if ('fonts' in document) {
 // Initialize SPA Router
 const routes = {
   'home': { template: 'home.html' },
-  'blog': { template: 'blog.html' },
   'diagrams': { template: 'diagrams.html' },
   'about': { template: 'about.html' },
   'elements': { template: 'elements.html' },
@@ -36,6 +38,11 @@ const routes = {
   'article-6': { template: 'article-6.html' },
   'noise-floor': { template: 'noise-floor.html' },
   'creator': { template: 'creator.html' },
+  'cv': { template: 'cv.html' },
+  'blog': { template: 'blog.html' },
+  'journal': { template: 'journal.html' },
+  'blog-backup': { template: 'blog-backup.html' },
+  'article-viewer': { template: 'article-viewer.html' },
   '404': { template: '404.html' }
 };
 
@@ -45,6 +52,15 @@ new Router(routes, 'app-root');
 document.addEventListener('page-loaded', (e) => {
     if (e.detail.path === 'creator') {
         initCreator();
+    }
+    if (e.detail.path === 'cv') {
+        initCV();
+    }
+    if (e.detail.path === 'journal') {
+        initBlog();
+    }
+    if (e.detail.path === 'article-viewer') {
+        initArticleViewer();
     }
 });
 

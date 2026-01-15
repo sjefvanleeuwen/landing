@@ -1,0 +1,147 @@
+<html>
+<head>
+  <title>The Big Book of Generative AI</title>
+  <style>
+    body {
+      margin: 0 auto;
+      width: 744px;
+      font-family: Source Serif Pro, serif;
+      line-height: 32px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 21px;
+    }
+    h1, h2, h3 {
+      font-family: Source Sans Pro, Helvetica, Arial, sans-serif;
+    }
+    h1 a, h1 a:visited {
+      color: inherit;
+      text-decoration: none;
+    }
+    h1 {
+      line-height: 48px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 42px;
+      margin: 32px 0 20px;
+    }
+    h2 {
+      line-height: 32px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 26px;
+      margin: 28px 0;
+    }
+    h3 {
+      line-height: 28px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 21px;
+      margin: 24px 0;
+    }
+    p {
+      margin: 32px 0;
+    }
+    .created, .published {
+      color: rgba(0, 0, 0, 0.55);
+      font-size: 15px;
+      line-height: 15px;
+      margin: 20px 0;
+    }
+    .created + .published {
+      margin-top: -12px;
+    }
+    blockquote {
+      font-family: Georgia, Source Serif Pro, serif;
+      font-style: italic;
+      font-size: 24px;
+      line-height: 36px;
+      margin: 48px 120px;
+      text-align: center;
+    }
+    a {
+      word-wrap: break-word;
+      outline: none;
+      text-decoration: none;
+      background-color: transparent;
+      border: 0;
+      color: #008CC9;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    a:visited {
+      color: #8C68CB;
+    }
+    .center {
+      text-align: center;
+    }
+    iframe {
+      display: block;
+      margin: 44px auto;
+    }
+    *:not(pre) + pre, pre:first-of-type {
+      margin-top: 32px;
+      padding-top: 32px;
+    }
+    pre:only-of-type {
+      margin: 32px 0;
+      padding: 32px;
+    }
+    pre {
+      background: #F3F6F8;
+      overflow-x: auto;
+      display: block;
+      font-size: 13px;
+      font-family: monospace;
+      line-height: 13px;
+      padding: 0 32px 32px;
+      white-space: pre;
+    }
+    a.embedded {
+      background: #F3F6F8;
+      display: block;
+      padding: 32px;
+      margin: 32px 0;
+    }
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+    .slate-image-embed__resize-full-width img {
+      width: 100%;
+    }
+    .series-logo {
+      width: 48px;
+      height: 48px;
+      box-sizing: border-box;
+      background-clip: content-box;
+      border: 4px solid transparent;
+      border-radius: 6px;
+      object-fit: scale-down;
+      float: left;
+    }
+    .series-title {
+      font-size: 16px;
+      font-weight: 600;
+      vertical-align: top;
+    }
+    .series-description {
+      color: rgba(0,0,0,.6);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    div {
+      margin: 32px 0;
+    }
+  </style>
+</head>
+<body>
+    <img src="https://media.licdn.com/mediaD4E12AQFU-BhAa9RDig" alt="" title="" />
+      <h1><a href="https://www.linkedin.com/pulse/big-book-generative-ai-sjef-van-leeuwen--f3fge">The Big Book of Generative AI</a></h1>
+    <p class="created">Created on 2024-05-21 17:34</p>
+  <p class="published">Published on 2024-05-21 17:40</p>
+  <div><h3>Unlocking the Power of Generative AI: Insights from Databricks</h3><p>Generative AI is transforming the landscape of business and technology, opening up new possibilities for automation, creativity, and efficiency. As organizations strive to integrate AI into their operations, understanding the deployment of production-quality GenAI applications becomes crucial. Databricks' "The Big Book of Generative AI" offers a comprehensive guide to navigate this complex yet rewarding journey. Here's an overview of the key insights and practical applications from this must-read resource.</p><h3>Foundation Models: Building the Core</h3><p>The journey begins with an understanding of foundation models, which are the building blocks of generative AI applications. Databricks introduces DBRX, a state-of-the-art open large language model (LLM) that rivals leading proprietary models in performance. DBRX is particularly noted for its efficiency and scalability, making it an ideal choice for enterprises looking to build robust AI applications without the constraints of proprietary models.</p><p><strong>Example from the Book:</strong></p><blockquote><p><em>“DBRX advances the state-of-the-art in efficiency among open models thanks to its fine-grained mixture-of-experts (MoE) architecture. Inference is up to 2x faster than LLaMA2-70B, and DBRX is about 40% of the size of Grok-1 in terms of both total and active parameter-counts.”</em></p></blockquote><h3>Prompt Engineering: Crafting Effective Interactions</h3><p>Effective prompt engineering is essential for guiding the behavior of AI models. The book explores techniques for crafting specialized prompts that enhance the performance of LLMs. One practical application is the automated analysis of product reviews, where LLMs are used to summarize customer feedback and extract actionable insights.</p><p><strong>Example from the Book:</strong></p><blockquote><p><em>“By using an LLM, issues of scale and consistency can be easily addressed. All we need to do is bring the product reviews to the model and ask: What are the top three points of negative feedback found across these reviews? What features do our customers like best about this product?”</em></p></blockquote><h3>Retrieval Augmented Generation (RAG): Enhancing Intelligence</h3><p>RAG integrates supplementary knowledge resources to improve the accuracy and relevance of AI-generated responses. This approach reduces hallucinations and ensures that responses are more aligned with the specific context and data of the enterprise. Databricks highlights how RAG can be used effectively in customer service chatbots to provide more accurate and helpful responses.</p><p><strong>Example from the Book:</strong></p><blockquote><p><em>“Imagine a GenAI tool on a retail website where customers inquire, 'Where’s my recent order?' This AI must understand that the query is about a specific purchase, gather up-to-date shipment information for line items, and then use LLMs to generate a response.”</em></p></blockquote><h3>Fine-Tuning Models: Customizing for Specific Needs</h3><p>Fine-tuning allows businesses to customize general-purpose models using their proprietary data, enhancing the model’s relevance and performance for specific tasks. Databricks shares a compelling case study on creating a bespoke LLM for AI-generated documentation, demonstrating the efficiency and cost-effectiveness of this approach.</p><p><strong>Example from the Book:</strong></p><blockquote><p><em>“In this example, we share our experience from prototyping a hackathon project using off-the-shelf SaaS-based LLMs to creating a bespoke LLM that is better, faster, and cheaper. The new model took 2 engineers, 1 month, and less than $1,000 in compute cost to develop.”</em></p></blockquote><h3>Pretraining and Evaluation: Ensuring Quality and Efficiency</h3><p>Pretraining and evaluation are critical stages that ensure the quality and efficiency of AI models. Databricks offers insights into cost-effective strategies for training models from scratch and best practices for evaluating LLM performance. This includes detailed methodologies to assess the reliability and accuracy of AI applications.</p><p><strong>Example from the Book:</strong></p><blockquote><p><em>“We found training mixture-of-experts models to provide substantial improvements in compute-efficiency for training. For example, training a smaller member of the DBRX family called DBRX MoE-B (23.5B total parameters, 6.6B active parameters) required 1.7x fewer FLOPs to reach a score of 45.5% on the Databricks LLM Gauntlet than LLaMA2-13B required to reach 43.8%.”</em></p></blockquote><h3>Conclusion</h3><p>Databricks' "The Big Book of Generative AI" is an invaluable resource for anyone looking to harness the power of generative AI. From foundational concepts to advanced deployment techniques, this guide provides the insights and tools needed to implement AI solutions that drive significant operational gains. As generative AI continues to evolve, staying informed and prepared with resources like this will be key to maintaining a competitive edge.</p><p>For more in-depth insights and practical applications, I highly recommend diving into the full text of "The Big Book of Generative AI" by Databricks. It's a transformative read that could very well shape the future of your AI initiatives.</p><p>The ebook can be downloaded here: <a href="https://www.databricks.com/resources/ebook/big-book-generative-ai" target="_blank">https://www.databricks.com/resources/ebook/big-book-generative-ai</a></p></div>
+</body>
+</html>

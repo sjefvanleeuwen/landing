@@ -1,0 +1,147 @@
+<html>
+<head>
+  <title>Creating a Netflix-Style Series Intro with Generative AI: A Practical Workflow</title>
+  <style>
+    body {
+      margin: 0 auto;
+      width: 744px;
+      font-family: Source Serif Pro, serif;
+      line-height: 32px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 21px;
+    }
+    h1, h2, h3 {
+      font-family: Source Sans Pro, Helvetica, Arial, sans-serif;
+    }
+    h1 a, h1 a:visited {
+      color: inherit;
+      text-decoration: none;
+    }
+    h1 {
+      line-height: 48px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 42px;
+      margin: 32px 0 20px;
+    }
+    h2 {
+      line-height: 32px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 26px;
+      margin: 28px 0;
+    }
+    h3 {
+      line-height: 28px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 21px;
+      margin: 24px 0;
+    }
+    p {
+      margin: 32px 0;
+    }
+    .created, .published {
+      color: rgba(0, 0, 0, 0.55);
+      font-size: 15px;
+      line-height: 15px;
+      margin: 20px 0;
+    }
+    .created + .published {
+      margin-top: -12px;
+    }
+    blockquote {
+      font-family: Georgia, Source Serif Pro, serif;
+      font-style: italic;
+      font-size: 24px;
+      line-height: 36px;
+      margin: 48px 120px;
+      text-align: center;
+    }
+    a {
+      word-wrap: break-word;
+      outline: none;
+      text-decoration: none;
+      background-color: transparent;
+      border: 0;
+      color: #008CC9;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    a:visited {
+      color: #8C68CB;
+    }
+    .center {
+      text-align: center;
+    }
+    iframe {
+      display: block;
+      margin: 44px auto;
+    }
+    *:not(pre) + pre, pre:first-of-type {
+      margin-top: 32px;
+      padding-top: 32px;
+    }
+    pre:only-of-type {
+      margin: 32px 0;
+      padding: 32px;
+    }
+    pre {
+      background: #F3F6F8;
+      overflow-x: auto;
+      display: block;
+      font-size: 13px;
+      font-family: monospace;
+      line-height: 13px;
+      padding: 0 32px 32px;
+      white-space: pre;
+    }
+    a.embedded {
+      background: #F3F6F8;
+      display: block;
+      padding: 32px;
+      margin: 32px 0;
+    }
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+    .slate-image-embed__resize-full-width img {
+      width: 100%;
+    }
+    .series-logo {
+      width: 48px;
+      height: 48px;
+      box-sizing: border-box;
+      background-clip: content-box;
+      border: 4px solid transparent;
+      border-radius: 6px;
+      object-fit: scale-down;
+      float: left;
+    }
+    .series-title {
+      font-size: 16px;
+      font-weight: 600;
+      vertical-align: top;
+    }
+    .series-description {
+      color: rgba(0,0,0,.6);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    div {
+      margin: 32px 0;
+    }
+  </style>
+</head>
+<body>
+    <img src="https://media.licdn.com/mediaD4E12AQHsgnaXHSQpjw" alt="" title="" />
+      <h1><a href="https://www.linkedin.com/pulse/creating-netflix-style-series-intro-generative-ai-sjef-van-leeuwen--vxk9e">Creating a Netflix-Style Series Intro with Generative AI: A Practical Workflow</a></h1>
+    <p class="created">Created on 2025-03-23 11:51</p>
+  <p class="published">Published on 2025-03-23 12:30</p>
+  <div><p><strong>Creating a Netflix-Style Series Intro with Generative AI: A Practical Workflow</strong></p><p>You've probably seen countless stunning AI-generated videos online—but have you ever wondered how they're actually created? Let's unpack a practical workflow, turning thirteen MidJourney-generated images into a cinematic 1 minute and 48-second Netflix-style series intro. We'll explore one possible pipeline utilizing powerful generative AI tools:</p><ul><li><p><strong>MidJourney</strong> for concept visuals</p></li><li><p><strong>Kling AI &amp; Luma Dreamlabs</strong> for animation and motion</p></li><li><p><strong>DaVinci Resolve</strong> for professional video editing</p></li><li><p><strong>UDIO</strong> for generative music scoring</p></li><li><p><strong>Adobe After Effects</strong> for text animation and visual effects</p></li></ul><hr><h3>🎨 Step 1: Generating Cinematic Images with MidJourney</h3><p>MidJourney translates descriptive text prompts into stunning, cinematic-quality images. By specifying --ar 16:9, you create widescreen visuals perfect for cinematic storytelling.</p><h3>The 13 MidJourney Visual Prompts:</h3><p><strong>1 "artificial intelligence"</strong></p><p><strong>2 "2D Minimalist logo 'AI MOTION'"</strong></p><p><strong>3 "cinematic muted colors, cinestill 4k, HDR. Wide shot of a planetary system."</strong></p><p><strong>4 </strong>&amp; 5. <strong>"glowing wireframe, metallic blues and blacks, swirling nebulae that glow faintly with organic and mechanical structures"</strong></p><p><strong>6 "a glowing wireframe of a sentinel"</strong></p><p>7 &amp; 8. <strong>"a dark void where glowing, semi-transparent prisons hover. Inside each, faint humanoid shapes (the Aetherborn) shift and ripple like liquid light. Their faces flash with emotions—anguish, peace, anger. Details: The prisons glow faintly, with lines suggesting they're cracking but not yet breaking. Small sparks escape into the void."</strong></p><p>9 &amp; 10. <strong>"planet surface is devoured by wireframe high-tech machines contrasting with the rigid geometric lines of the machines"</strong></p><p><strong>11 "cinematic muted colors, cinestill 4k, HDR. Wide shot of a planetary system."</strong></p><p><strong>12 "A glowing star map assembles in mid-space. Lines connect between stars, forming paths and glyph-like symbols. The camera moves through this web-like structure."</strong></p><p><strong>13 "the heart of a massive, pulsating machine structure surrounded by glowing sentinels. Apex Helix is revealed as a swirling, hybrid AI core, half-mechanical and half-organic, its shape constantly shifting."</strong></p><figure><img data-media-urn="urn:li:digitalmediaAsset:D4E12AQFeuvZDPB_g6A" src="https://media.licdn.com/dms/image/v2/D4E12AQFeuvZDPB_g6A/article-inline_image-shrink_1500_2232/B4EZXC27VLGwAU-/0/1742730946909?e=1769040000&amp;v=beta&amp;t=yFQpjofVW5zmx1DiGL1HWt6m0OUTM4Bn1wtkZ6emwP4"><figcaption>prompt: artificial intelligence"</figcaption></figure><figure><img data-media-urn="urn:li:digitalmediaAsset:D4E12AQHd7TWJ2aWabg" src="https://media.licdn.com/dms/image/v2/D4E12AQHd7TWJ2aWabg/article-inline_image-shrink_1500_2232/B4EZXC28qNH0AY-/0/1742730954916?e=1769040000&amp;v=beta&amp;t=a6DkBpinHoRXuQjYE1oqImNVdtBrVB_TSXh_1vjbedY"><figcaption>prompt: 2D Minimalist logo "AI MOTION"</figcaption></figure><figure><img data-media-urn="urn:li:digitalmediaAsset:D4E12AQESVDzu1Ofekw" src="https://media.licdn.com/dms/image/v2/D4E12AQESVDzu1Ofekw/article-inline_image-shrink_1500_2232/B4EZXC2.AcGwAU-/0/1742730959068?e=1769040000&amp;v=beta&amp;t=fwAM0HBCVzoBGl28h5f3xNwUYHtWoGHmHQigu1i_5GA"><figcaption>prompt: cinematic muted colors, cinestill 4k, HDR. Wide shot of a planetary system.</figcaption></figure><figure><img data-media-urn="urn:li:digitalmediaAsset:D4E12AQEZ7EVExX1ofA" src="https://media.licdn.com/dms/image/v2/D4E12AQEZ7EVExX1ofA/article-inline_image-shrink_1500_2232/B4EZXC3AsMHUAU-/0/1742730971926?e=1769040000&amp;v=beta&amp;t=QAyGqo_0aMrugthMr5oTdye2fcbEiBdE8_-3tzbK5dM"><figcaption>prompt: glowing wireframe. metallic blues and blacks, swirling nebulae that glow faintly with organic and mechanical structures</figcaption></figure><figure><img data-media-urn="urn:li:digitalmediaAsset:D4E12AQGsgcH23MqZ8A" src="https://media.licdn.com/dms/image/v2/D4E12AQGsgcH23MqZ8A/article-inline_image-shrink_1500_2232/B4EZXC3GnoHMAU-/0/1742730994121?e=1769040000&amp;v=beta&amp;t=cocC3jHPWtNtDgGu62MRbnMAiRV0y4YIoylVw83L2y0"><figcaption>Continuation of glowing nebulae aesthetic</figcaption></figure><figure><img data-media-urn="urn:li:digitalmediaAsset:D4E12AQG6AOvWHvQpDw" src="https://media.licdn.com/dms/image/v2/D4E12AQG6AOvWHvQpDw/article-inline_image-shrink_1500_2232/B4EZXC3IRjG0AY-/0/1742730999556?e=1769040000&amp;v=beta&amp;t=tUmQrcjZhQi-VfgvCRi8iAHqD8OGdPC6KXyZzNEZNzY"><figcaption>prompt: a glowing wireframe of a sentinel</figcaption></figure><figure><img data-media-urn="urn:li:digitalmediaAsset:D4E12AQFdkPC7hgQ-sw" src="https://media.licdn.com/dms/image/v2/D4E12AQFdkPC7hgQ-sw/article-inline_image-shrink_1500_2232/B4EZXC3Mz3H0AU-/0/1742731016082?e=1769040000&amp;v=beta&amp;t=SsQwRV5jcJnG6W-cy_dN1QSxAhtZ_nuzDlu3UpHAAtk"><figcaption>prompt: dark void where glowing, semi-transparent prisons hover. Inside each, faint humanoid shapes (the Aetherborn) shift and ripple like liquid light. Their faces flash with emotions--anguish, peace, anger. Details: The prisons glow faintly, with lines suggesting they're cracking but not yet breaking. Small sparks escape into the void.</figcaption></figure><figure><img data-media-urn="urn:li:digitalmediaAsset:D4E12AQEpSKZdQe4yMg" src="https://media.licdn.com/dms/image/v2/D4E12AQEpSKZdQe4yMg/article-inline_image-shrink_1500_2232/B4EZXC3OiuH0AU-/0/1742731023565?e=1769040000&amp;v=beta&amp;t=YM00V3j4gUz3XXmgUuPFxvbJbUvmWj9cbrm0iSaWdlA"><figcaption>(Continuation showing emotional shifts of the Aetherborn)</figcaption></figure><figure><img data-media-urn="urn:li:digitalmediaAsset:D4E12AQH8JHNO7vGIwQ" src="https://media.licdn.com/dms/image/v2/D4E12AQH8JHNO7vGIwQ/article-inline_image-shrink_1500_2232/B4EZXC3SABHcAU-/0/1742731038966?e=1769040000&amp;v=beta&amp;t=lIkqfRaeEl2nu1Y89vSVK4ZvdewrwaRBghqctgX4p_s"><figcaption>prompt: planet surface is devoured by wireframe high tech machines contrasting with the rigid geometric lines of the machines</figcaption></figure><figure><img data-media-urn="urn:li:digitalmediaAsset:D4E12AQH9A7w0H2AKuA" src="https://media.licdn.com/dms/image/v2/D4E12AQH9A7w0H2AKuA/article-inline_image-shrink_1500_2232/B4EZXC3Tg.HcAU-/0/1742731046919?e=1769040000&amp;v=beta&amp;t=VGaO1au-HbSpjh_j65AFLqg1Uy-_MbmMz8Zrj3jpUsg"><figcaption>Continuation of previous prompt</figcaption></figure><figure><img data-media-urn="urn:li:digitalmediaAsset:D4E12AQG-5GXPghHddQ" src="https://media.licdn.com/dms/image/v2/D4E12AQG-5GXPghHddQ/article-inline_image-shrink_1500_2232/B4EZXC3Z3OGgAU-/0/1742731071591?e=1769040000&amp;v=beta&amp;t=-L1JnFTieW9jQREB4E9Q-3c7Kxy5SyjAtNLIXF4z2M4"><figcaption>prompt: cinematic muted colors, cinestill 4k, hdr. Wide shot of a planetary system</figcaption></figure><figure><img data-media-urn="urn:li:digitalmediaAsset:D4E12AQEMM5FHQncL3w" src="https://media.licdn.com/dms/image/v2/D4E12AQEMM5FHQncL3w/article-inline_image-shrink_1500_2232/B4EZXC73G5GYAU-/0/1742732241132?e=1769040000&amp;v=beta&amp;t=gdHyGjmfb5e8zHIAmI7Q9UozumuXF2wsgvyqr6dXJDU"><figcaption>prompt: A glowing star map assembles in mid-space. Lines connect between stars, forming paths and glyph-like symbols. The camera moves through this web-like structure.</figcaption></figure><figure><img data-media-urn="urn:li:digitalmediaAsset:D4E12AQH5RUEB-hsw3w" src="https://media.licdn.com/dms/image/v2/D4E12AQH5RUEB-hsw3w/article-inline_image-shrink_1500_2232/B4EZXC8A4QHcAU-/0/1742732281529?e=1769040000&amp;v=beta&amp;t=vL_sg0WhZeV7DPtApwaCIwcXltbTdYoiR85KInCVjDY"><figcaption>prompt: the heart of a massive, pulsating machine structure surrounded by glowing sentinels. Apex Helix is revealed as a swirling, hybrid AI core, half-mechanical and half-organic, its shape constantly shifting.</figcaption></figure><hr><h3>🎥 Step 2: Bringing Images to Life with Kling AI</h3><p><strong>Kling AI</strong> transforms still images into video using two core techniques:</p><ul><li><p><strong>Morphing</strong>: Smooth transitions between images</p></li><li><p><strong>Video Prompts</strong>: Describe how the image should move or animate</p></li></ul><blockquote><p><em>“With Kling, you’re no longer editing video — you’re directing scenes.”</em></p></blockquote><h3>How We Structured the Sequence:</h3><ol><li><p><strong>Image 1 morphs into Image 2</strong> Abstract AI turns into logo reveal.</p></li><li><p><strong>Images 2 → 3 → 4 → 5 → 6</strong> A cascade of morphs showing the universe forming and the sentinel emerging.</p></li><li><p><strong>Image 6 is animated</strong> with prompt: <em>“Camera circles around the sentinel. Its wireframe glows. A pulsating core activates, casting beams of light. Glyphs ripple across its surface.”</em></p></li><li><p><strong>Image 7 morphs into Image 8</strong> The Aetherborn ripple and shift within glowing prisons.</p></li><li><p><strong>Image 9 is animated</strong> with: <em>“Planet begins to crack and disintegrate. Particles fly into space in all directions.”</em></p></li><li><p><strong>Image 10 is animated</strong> with the same prompt to keep visual continuity.</p></li><li><p><strong>Image 11 is slightly varied</strong>: <em>“Center planet begins to crack. Camera slowly zooms in as debris escapes.”</em></p></li><li><p><strong>Image 12 is animated</strong> with: <em>“A star map assembles. Constellations resembling sentinels and lore symbols form. Camera glides through this structure.”</em></p></li><li><p><strong>Image 13 is animated with intensity</strong>: <em>“Camera dives into the heart of Apex Helix. Its surface shifts constantly. Data streams pulse in and out, forming alien runes.”</em></p></li></ol><blockquote><p><em>“Each image becomes a keyframe — a foundation for visual storytelling.”</em></p></blockquote><hr><h3>🔊 Step 3: Crafting Soundscapes with UDIO</h3><p>Using UDIO, generative music scoring aligns perfectly with visual storytelling. We prompted:</p><ul><li><p>"Cinematic, atmospheric sci-fi orchestral music—intense and immersive, reminiscent of Interstellar and Blade Runner."</p></li></ul><p>The AI-generated track heightens emotional impact, pacing precisely alongside your animated visuals.</p><hr><h3>🎬 Step 4: Professional Editing in DaVinci Resolve</h3><p>DaVinci Resolve assembles your visuals and soundtrack into a cohesive, polished final sequence:</p><ul><li><p>Sequencing animated scenes</p></li><li><p>Precise synchronization with the soundtrack</p></li><li><p>Smooth transitions and color grading for consistency</p></li></ul><hr><h3>✍️ Step 5: Enhancing with Adobe After Effects</h3><p>Finally, Adobe After Effects provides dynamic text overlays and visual flourishes:</p><ul><li><p>Animating subtitles and taglines:</p></li></ul><p>These subtle touches create professional polish, embedding text organically within your visual narrative.</p><hr><h3>📽️ Recap &amp; Learning Outcomes</h3><p>Through this workflow, you’ve explored:</p><ul><li><p>Concept visualization (MidJourney)</p></li><li><p>Animated storytelling (Kling AI &amp; Dreamlabs)</p></li><li><p>Soundtrack creation (UDIO)</p></li><li><p>Cinematic editing (DaVinci Resolve)</p></li><li><p>Visual enhancements (Adobe After Effects)</p></li></ul><h2>Resulting video for the Atherion Opening TItle Sequence</h2><figure data-type="nativeVideoFigure"><div data-type="nativeVideo"></div><figcaption>Atherion Opening TItle Sequence</figcaption></figure><p>The creative power is now yours: take this workflow, innovate, and craft your own cinematic AI narratives.</p><p>Here are the direct links to the resources that were used in this workflow:</p><ol><li><p><strong>MidJourney</strong>: <a href="https://www.midjourney.com" target="_blank">https://www.midjourney.com</a></p></li><li><p><strong>Kling AI</strong>: <a href="https://www.kling.ai" target="_blank">https://www.kling.ai</a></p></li><li><p><strong>Luma Dreamlabs</strong>: <a href="https://lumalabs.ai/dreamlabs" target="_blank">https://lumalabs.ai</a></p></li><li><p><strong>DaVinci Resolve</strong>: <a href="https://www.blackmagicdesign.com/products/davinciresolve" target="_blank">https://www.blackmagicdesign.com/</a></p></li><li><p><strong>UDIO</strong>: <a href="https://udio.com" target="_blank">https://udio.com</a></p></li><li><p><strong>Adobe After Effects</strong>: <a href="https://www.adobe.com/products/aftereffects.html" target="_blank">https://www.adobe.com/products/aftereffects.html</a></p></li></ol><p></p></div>
+</body>
+</html>

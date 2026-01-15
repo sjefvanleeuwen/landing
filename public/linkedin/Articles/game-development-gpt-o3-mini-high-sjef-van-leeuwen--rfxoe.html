@@ -1,0 +1,147 @@
+<html>
+<head>
+  <title>Game Development in GPT-o3-mini-high</title>
+  <style>
+    body {
+      margin: 0 auto;
+      width: 744px;
+      font-family: Source Serif Pro, serif;
+      line-height: 32px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 21px;
+    }
+    h1, h2, h3 {
+      font-family: Source Sans Pro, Helvetica, Arial, sans-serif;
+    }
+    h1 a, h1 a:visited {
+      color: inherit;
+      text-decoration: none;
+    }
+    h1 {
+      line-height: 48px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 42px;
+      margin: 32px 0 20px;
+    }
+    h2 {
+      line-height: 32px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 26px;
+      margin: 28px 0;
+    }
+    h3 {
+      line-height: 28px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 21px;
+      margin: 24px 0;
+    }
+    p {
+      margin: 32px 0;
+    }
+    .created, .published {
+      color: rgba(0, 0, 0, 0.55);
+      font-size: 15px;
+      line-height: 15px;
+      margin: 20px 0;
+    }
+    .created + .published {
+      margin-top: -12px;
+    }
+    blockquote {
+      font-family: Georgia, Source Serif Pro, serif;
+      font-style: italic;
+      font-size: 24px;
+      line-height: 36px;
+      margin: 48px 120px;
+      text-align: center;
+    }
+    a {
+      word-wrap: break-word;
+      outline: none;
+      text-decoration: none;
+      background-color: transparent;
+      border: 0;
+      color: #008CC9;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    a:visited {
+      color: #8C68CB;
+    }
+    .center {
+      text-align: center;
+    }
+    iframe {
+      display: block;
+      margin: 44px auto;
+    }
+    *:not(pre) + pre, pre:first-of-type {
+      margin-top: 32px;
+      padding-top: 32px;
+    }
+    pre:only-of-type {
+      margin: 32px 0;
+      padding: 32px;
+    }
+    pre {
+      background: #F3F6F8;
+      overflow-x: auto;
+      display: block;
+      font-size: 13px;
+      font-family: monospace;
+      line-height: 13px;
+      padding: 0 32px 32px;
+      white-space: pre;
+    }
+    a.embedded {
+      background: #F3F6F8;
+      display: block;
+      padding: 32px;
+      margin: 32px 0;
+    }
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+    .slate-image-embed__resize-full-width img {
+      width: 100%;
+    }
+    .series-logo {
+      width: 48px;
+      height: 48px;
+      box-sizing: border-box;
+      background-clip: content-box;
+      border: 4px solid transparent;
+      border-radius: 6px;
+      object-fit: scale-down;
+      float: left;
+    }
+    .series-title {
+      font-size: 16px;
+      font-weight: 600;
+      vertical-align: top;
+    }
+    .series-description {
+      color: rgba(0,0,0,.6);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    div {
+      margin: 32px 0;
+    }
+  </style>
+</head>
+<body>
+    <img src="https://media.licdn.com/mediaD4E12AQE2zqxY0XovZg" alt="" title="" />
+      <h1><a href="https://www.linkedin.com/pulse/game-development-gpt-o3-mini-high-sjef-van-leeuwen--rfxoe">Game Development in GPT-o3-mini-high</a></h1>
+    <p class="created">Created on 2025-02-01 00:05</p>
+  <p class="published">Published on 2025-02-01 00:58</p>
+  <div><h2>From "Space Invaders" to "GPT Galaxy Quest": A Comprehensive Journey of Collaborative Game Development</h2><p>In one of my most exciting projects to date, I partnered with ChatGPT to build an HTML5 canvas game that evolved from a simple Space Invaders clone into a dynamic, Galaxian-inspired shooter—<strong>"GPT Galaxy Quest.".</strong></p><p>Introducing the <strong>03-Mini-High Model</strong>—a compact, efficient GPT model that delivers high-quality language generation while using fewer resources. Ideal for fast, context-aware responses in resource-constrained environments.</p><p>What began as a straightforward coding request quickly turned into an iterative, collaborative process filled with creative challenges, incremental improvements, and insightful design decisions. In this article, I’ll share the complete story of how we developed this game step by step, including my example prompts and key code excerpts that highlight our evolution from concept to a full-featured game.</p><figure data-type="nativeVideoFigure"><div data-type="nativeVideo"></div><figcaption></figcaption></figure><hr><h3>1. The Beginning: A Basic Space Invaders Clone</h3><blockquote><p><strong>My Prompt:</strong> <em>"create space invaders in HTML canvas"</em></p></blockquote><p>Our journey started with a classic challenge: develop a Space Invaders-style game using the HTML5 canvas. ChatGPT responded with a clean, basic implementation featuring a player-controlled rectangle, a grid of aliens, and rudimentary collision detection. This initial code laid the groundwork for further enhancements. Although the game was simple, it provided a solid base upon which to build more complex dynamics.</p><p></p><figure><img data-media-urn="urn:li:digitalmediaAsset:D4E12AQEg62JgrAmm1w" src="https://media.licdn.com/dms/image/v2/D4E12AQEg62JgrAmm1w/article-inline_image-shrink_1000_1488/article-inline_image-shrink_1000_1488/0/1738370695154?e=1769644800&amp;v=beta&amp;t=apmnF4-FGNR80Q10PS_EMLKmykjPjmULC_I_7CedMOM"><figcaption>Begin State</figcaption></figure><hr><h3>2. Refining Alien Movement</h3><p>After reviewing the initial code, I noticed an issue: when aliens reached the right edge, instead of moving down one row and reversing direction, they simply fell off the screen. I prompted:</p><blockquote><p><strong>My Prompt:</strong> <em>"when the aliens arrive at the right of the screen they dont go one position down and scroll to the left. instead they fall down until they are off the screen."</em></p></blockquote><p>ChatGPT revised the alien movement logic to detect the screen edge and trigger a single downward move before reversing horizontal movement. This change was subtle but essential for mimicking classic arcade behavior. The improvement ensured the alien formation maintained a cohesive, predictable pattern while still challenging the player.</p><hr><h3>3. Transforming into a Galaxian-Style Game</h3><p>With the movement fixed, I wanted to add more flair and dynamic behavior:</p><blockquote><p><strong>My Prompt:</strong> <em>"cool, now turn it into galaxian"</em></p></blockquote><p>At this stage, the game evolved into a Galaxian-inspired shooter. Instead of static aliens, our new design featured a formation that gently oscillated horizontally. Most importantly, aliens were given the ability to break formation and dive toward the player. This introduced a new state system—each alien could be in either a <strong>"formation"</strong> state or a <strong>"diving"</strong> state. ChatGPT explained:</p><blockquote><p><em>"When an alien is selected to dive, it leaves its formation and moves downwards while gradually steering toward the player."</em></p></blockquote><p>This shift added an element of unpredictability and intensity, setting the stage for even more advanced behavior.</p><hr><h3>4. Adding Counterattacks: Dive and Shoot</h3><p>To up the ante, I challenged ChatGPT further:</p><blockquote><p><strong>My Prompt:</strong> <em>"make it dive shoot back at you"</em></p></blockquote><p>We enhanced the game by giving diving aliens the ability to shoot enemy bullets at the player. The diving aliens now not only advanced toward the player but also fired projectiles, forcing the player to dodge both the aliens and their bullets. ChatGPT introduced an enemy bullet system complete with vector calculations that allowed bullets to be aimed directly at the player’s current position. </p><p></p><figure><img data-media-urn="urn:li:digitalmediaAsset:D4E12AQHd1FXaNIE06g" src="https://media.licdn.com/dms/image/v2/D4E12AQHd1FXaNIE06g/article-inline_image-shrink_1000_1488/article-inline_image-shrink_1000_1488/0/1738370791130?e=1769644800&amp;v=beta&amp;t=QWai660wxnyWmwF9G6rED_6oUFsafNQex5wNMwNGfvE"><figcaption></figcaption></figure><p>A snippet of the enemy shooting logic is shown below:</p><pre></pre><p>This change not only increased the game’s challenge but also introduced a strategic element that forced me to rethink the enemy attack patterns.</p><hr><h3>5. Enhancing Attack Patterns and Shooting Frequency</h3><p>Eager to refine the experience even further, I issued the next prompt:</p><blockquote><p><strong>My Prompt:</strong> <em>"make it shoot earlier and more bullets, and start with 1 attacker then 2, then 3 and repeat that."</em></p></blockquote><p></p><figure><img data-media-urn="urn:li:digitalmediaAsset:D4E12AQHq6M10YLtJpg" src="https://media.licdn.com/dms/image/v2/D4E12AQHq6M10YLtJpg/article-inline_image-shrink_1000_1488/article-inline_image-shrink_1000_1488/0/1738371112481?e=1769644800&amp;v=beta&amp;t=S0Pu8ZaJj_8xYjHKvn_OtzcjV9rzAwXnb4Z672AzLVo"><figcaption></figcaption></figure><p>Here, we implemented several improvements:</p><ul><li><p><strong>Earlier Shooting:</strong> Diving aliens were modified to shoot their first burst after only 500 milliseconds.</p></li><li><p><strong>Burst Fire:</strong> Each shooting event now fires a burst of three bullets (with a slight angular spread) instead of a single bullet.</p></li><li><p><strong>Attack Cycle:</strong> We introduced a cycling mechanism where the game starts with 1 attacker, then increases to 2, then 3, before repeating the cycle.</p></li></ul><p>These enhancements significantly increased the game’s intensity and visual excitement. The burst fire code snippet above played a key role in achieving this dynamic behavior.</p><hr><h3>6. Balancing the Game: Smart Shooting Threshold</h3><p>I wanted to ensure the game remained fair, so I provided further feedback:</p><blockquote><p><strong>My Prompt:</strong> <em>"to improve gameplay do not let the aliens shoot when they are too low."</em></p></blockquote><p>ChatGPT introduced a shooting threshold (set at 70% of the canvas height), so that diving aliens would stop shooting when they got too close to the bottom of the screen. This adjustment maintained balance by preventing the player from being overwhelmed by enemy fire when the enemies were already in close proximity.</p><hr><h3>7. Adding Score, Leveling, and Difficulty Scaling</h3><p>Next, I aimed to create a complete game experience with progression:</p><blockquote><p><strong>My Prompt:</strong> <em>"when all the aliens are shot reset. also show score, increase the difficulty."</em></p></blockquote><p>The game was updated to:</p><ul><li><p><strong>Track the Score:</strong> Each alien destroyed added 10 points to the score.</p></li><li><p><strong>Level Up:</strong> When all aliens were eliminated, the game reset the formation, increased the level, and ramped up difficulty.</p></li><li><p><strong>Difficulty Scaling:</strong> With each new level, the dive speed, enemy bullet speed, and dive interval were adjusted to provide a progressively challenging experience.</p></li></ul><p>This progression system transformed the game from a static challenge into a dynamic, evolving experience that rewarded players for their skill.</p><hr><h3>8. Polishing the User Experience: Start Screen and Game Over</h3><p>A professional game needs a polished user interface, so I prompted:</p><blockquote><p><strong>My Prompt:</strong> <em>"great now start the game displaying GPT Galaxy Quest and press enter to start the game when the player loses, display game over and show press enter for a new game, reset the score."</em></p></blockquote><p>We added:</p><ul><li><p><strong>A Splash Screen:</strong> Displaying “GPT Galaxy Quest” with instructions to press <strong>Enter</strong> to start.</p></li><li><p><strong>A Game Over Screen:</strong> Displaying a “Game Over” message, the final score, and a prompt to press <strong>Enter</strong> for a new game.</p></li><li><p><strong>State Management:</strong> The game state was managed with distinct modes—"start", "playing", and "gameover"—to control the flow and reset the game cleanly.</p></li></ul><hr><h3>9. Ensuring Robustness: Resetting Keyboard Controls</h3><p>Finally, I noticed some unexpected behavior when restarting the game, so I provided one last prompt:</p><blockquote><p><strong>My Prompt:</strong> <em>"reset the game controls keyboard make sure its in good state there is some behavior after pressing enter again for next game."</em></p></blockquote><p>ChatGPT updated the resetGame() function to explicitly reset keyboard state variables, ensuring no lingering key presses would affect the new session. Here’s the crucial part of the reset logic:</p><pre></pre><p>This final adjustment ensured that every new game began with a completely fresh state, free from any unintended input or glitches.</p><hr><h3>Conclusion: A Collaborative Triumph</h3><p>Building <strong>"GPT Galaxy Quest"</strong> was an enlightening journey that showcased the power of collaborative development. From the initial Space Invaders clone to the intricately designed Galaxian-inspired shooter, every step of the process involved iterative improvements, detailed discussions, and thoughtful reasoning.</p><p>Some of my favorite reflections from our collaboration include:</p><blockquote><p><em>"We needed to ensure that the burst fire not only created a visual impact but also demanded more precise player movement."</em> <em>"Resetting the keyboard state prevented unwanted carryover from the previous game session."</em></p></blockquote><p>These insights—and the entire development process—have not only resulted in a game that I’m proud to share but have also deepened my understanding of game dynamics, state management, and the iterative nature of creative coding.</p><p>I invite you to explore the working game and view the complete session transcript (links provided separately) to see every step of this collaborative journey in action. Whether you’re a developer or simply a fan of innovative game design, I hope this story inspires you to embrace iterative development and the possibilities of AI-assisted coding.</p><p>The entire interaction with GPT-o3-mini-high</p><p><a href="https://chatgpt.com/share/679d63b8-952c-8002-b792-58059034818c" target="_blank">https://chatgpt.com/share/679d63b8-952c-8002-b792-58059034818c</a></p><p>The game can be played at:</p><p><a href="https://syncfiddle.net/fiddle/-OHysmq2t7fNodSAYKUw" target="_blank">https://syncfiddle.net/fiddle/-OHysmq2t7fNodSAYKUw</a></p><p><em>Stay curious, keep coding, and may your galaxy quests be epic!</em></p></div>
+</body>
+</html>

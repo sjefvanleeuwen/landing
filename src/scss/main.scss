@@ -4,6 +4,8 @@
 @import 'article';
 @import 'diagrams';
 @import 'creator';
+@import 'cv';
+@import 'blog';
 
 // SPA Loader
 #app-root {
@@ -344,9 +346,7 @@ footer {
 .content {
   h2 {
     font-size: clamp(1.4rem, 4vw, 2.2rem);
-    margin: 0;
-    border-bottom: 2px solid $color-header-text;
-    display: inline-block;
+    margin: 0 0 1em 0;
     padding-bottom: 5px;
   }
 }
@@ -370,7 +370,7 @@ footer {
   }
 
   .contact-info {
-    h2 { border-bottom-color: #fff; }
+    h2 { color: #fff; margin-bottom: 20px; }
     p { font-size: 1.2rem; opacity: 0.7; line-height: 1.8; }
   }
 

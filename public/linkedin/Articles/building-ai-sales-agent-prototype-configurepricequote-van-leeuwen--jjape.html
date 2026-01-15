@@ -1,0 +1,147 @@
+<html>
+<head>
+  <title>Building an AI Sales Agent Prototype for Configure‑Price‑Quote — My MIT Course Project</title>
+  <style>
+    body {
+      margin: 0 auto;
+      width: 744px;
+      font-family: Source Serif Pro, serif;
+      line-height: 32px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 21px;
+    }
+    h1, h2, h3 {
+      font-family: Source Sans Pro, Helvetica, Arial, sans-serif;
+    }
+    h1 a, h1 a:visited {
+      color: inherit;
+      text-decoration: none;
+    }
+    h1 {
+      line-height: 48px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 42px;
+      margin: 32px 0 20px;
+    }
+    h2 {
+      line-height: 32px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 26px;
+      margin: 28px 0;
+    }
+    h3 {
+      line-height: 28px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 21px;
+      margin: 24px 0;
+    }
+    p {
+      margin: 32px 0;
+    }
+    .created, .published {
+      color: rgba(0, 0, 0, 0.55);
+      font-size: 15px;
+      line-height: 15px;
+      margin: 20px 0;
+    }
+    .created + .published {
+      margin-top: -12px;
+    }
+    blockquote {
+      font-family: Georgia, Source Serif Pro, serif;
+      font-style: italic;
+      font-size: 24px;
+      line-height: 36px;
+      margin: 48px 120px;
+      text-align: center;
+    }
+    a {
+      word-wrap: break-word;
+      outline: none;
+      text-decoration: none;
+      background-color: transparent;
+      border: 0;
+      color: #008CC9;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    a:visited {
+      color: #8C68CB;
+    }
+    .center {
+      text-align: center;
+    }
+    iframe {
+      display: block;
+      margin: 44px auto;
+    }
+    *:not(pre) + pre, pre:first-of-type {
+      margin-top: 32px;
+      padding-top: 32px;
+    }
+    pre:only-of-type {
+      margin: 32px 0;
+      padding: 32px;
+    }
+    pre {
+      background: #F3F6F8;
+      overflow-x: auto;
+      display: block;
+      font-size: 13px;
+      font-family: monospace;
+      line-height: 13px;
+      padding: 0 32px 32px;
+      white-space: pre;
+    }
+    a.embedded {
+      background: #F3F6F8;
+      display: block;
+      padding: 32px;
+      margin: 32px 0;
+    }
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+    .slate-image-embed__resize-full-width img {
+      width: 100%;
+    }
+    .series-logo {
+      width: 48px;
+      height: 48px;
+      box-sizing: border-box;
+      background-clip: content-box;
+      border: 4px solid transparent;
+      border-radius: 6px;
+      object-fit: scale-down;
+      float: left;
+    }
+    .series-title {
+      font-size: 16px;
+      font-weight: 600;
+      vertical-align: top;
+    }
+    .series-description {
+      color: rgba(0,0,0,.6);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    div {
+      margin: 32px 0;
+    }
+  </style>
+</head>
+<body>
+    <img src="https://media.licdn.com/mediaD4E12AQGwBOUWtHkaBQ" alt="" title="" />
+      <h1><a href="https://www.linkedin.com/pulse/building-ai-sales-agent-prototype-configurepricequote-van-leeuwen--jjape">Building an AI Sales Agent Prototype for Configure‑Price‑Quote — My MIT Course Project</a></h1>
+    <p class="created">Created on 2025-03-18 08:08</p>
+  <p class="published">Published on 2025-03-18 08:17</p>
+  <div><blockquote><p>“Imagine a world where an AI sales assistant instantly understands customer needs and delivers tailored EV charging recommendations in seconds.”</p></blockquote><p>As part of my coursework at MIT, I set out to build a proof‑of‑concept AI agent that functions as a Configure‑Price‑Quote (CPQ) sales assistant for a fictitious electric vehicle (EV) charging solutions provider. This prototype demonstrates how modern language models, combined with lightweight tooling, can transform the way sales teams engage customers — even in complex technical domains.</p><hr><h3>Why an AI‑Powered Sales Agent?</h3><blockquote><p>“Sales conversations should focus on customer needs, not data lookups.”</p></blockquote><p>In today’s fast‑moving EV market, customers demand fast, accurate answers about product specifications, installation requirements, and pricing comparisons. Manually searching spreadsheets or static catalogs slows down response times and risks inconsistency. My goal was to show how an AI agent can serve as a first‑line sales consultant, freeing human teams to focus on relationship building and closing deals.</p><hr><h3>The Prototype at a Glance</h3><p>This is a <strong>prototype</strong> — a working command‑line tool built with JavaScript, LangChain, and Ollama — designed to illustrate core CPQ capabilities:</p><ul><li><p>✅ <strong>Product Discovery</strong>: Provide detailed specs for home, commercial, and fast‑charge EV chargers</p></li><li><p>✅ <strong>Comparisons</strong>: Highlight differences between models (e.g., budget vs. enterprise offerings)</p></li><li><p>✅ <strong>Recommendations</strong>: Suggest optimal solutions based on customer use case and electrical setup</p></li><li><p>✅ <strong>Contextual Memory</strong>: Maintain conversation context so follow‑up questions feel natural</p></li></ul><blockquote><p>“Think of it as a virtual sales rep that never sleeps — always ready to answer the next question.”</p></blockquote><hr><h3>How It Works (High Level)</h3><ol><li><p><strong>Structured Product Catalog</strong> All fictional EV charger models are stored in a JSON‑style data source, complete with power ratings, pricing, and feature details.</p></li><li><p><strong>Natural Language Understanding</strong> User queries trigger intent detection: product lookup, comparison, or recommendation. LangChain routes each request to the appropriate chain.</p></li><li><p><strong>Dynamic Prompt Engineering</strong> For comparisons, the agent constructs a side‑by‑side product summary prompt so the underlying language model can generate a clear, concise analysis.</p></li><li><p><strong>Interactive CLI Interface</strong> Users interact via a simple command‑line interface: ask questions, compare chargers, or request installation guidance.</p></li></ol><hr><h3>Key Learnings &amp; Future Opportunities</h3><blockquote><p>“A prototype isn’t perfect — it’s proof that transformation is possible.”</p></blockquote><p>Building this prototype reinforced several takeaways for anyone exploring AI‑driven CPQ solutions:</p><p></p><figure><img data-media-urn="urn:li:digitalmediaAsset:D4E12AQHD1c4f2Dtnzg" src="https://media.licdn.com/dms/image/v2/D4E12AQHD1c4f2Dtnzg/article-inline_image-shrink_1500_2232/B4EZWoXWCtGYAY-/0/1742286447198?e=1769644800&amp;v=beta&amp;t=xEu3J5RYcRf-uU9VmaucbFQyZAOzc4SYuTURCXc6kWM"><figcaption></figcaption></figure><hr><h3>Why It Matters</h3><p>AI‑powered CPQ tools can drastically reduce time‑to‑quote, improve quote accuracy, and enhance customer experience. While my MIT project remains a <strong>prototype</strong> using a <strong>fictitious product catalog</strong>, it demonstrates a clear path toward scalable sales automation — from simple CLI demos to integrated CRM plugins or web‑based chat assistants.</p><blockquote><p>“This prototype is proof that even the most technical sales processes can be streamlined with AI — and it’s only the beginning.”</p></blockquote><p>I’m excited to iterate further: integrating live pricing feeds, vehicle compatibility checks, and omnichannel deployment. For anyone curious about the intersection of AI, sales, and product configurators, I hope this project inspires new ideas — and sparks conversation about the future of intelligent sales support.</p><p>The AI Sales Agent can be found here:</p><p> <a href="https://github.com/sjefvanleeuwen/sales-support-agent" target="_blank">https://github.com/sjefvanleeuwen/sales-support-agent</a></p></div>
+</body>
+</html>

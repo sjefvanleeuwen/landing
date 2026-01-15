@@ -1,0 +1,147 @@
+<html>
+<head>
+  <title>Observability in IT Landscape: Beyond General Monitoring</title>
+  <style>
+    body {
+      margin: 0 auto;
+      width: 744px;
+      font-family: Source Serif Pro, serif;
+      line-height: 32px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 21px;
+    }
+    h1, h2, h3 {
+      font-family: Source Sans Pro, Helvetica, Arial, sans-serif;
+    }
+    h1 a, h1 a:visited {
+      color: inherit;
+      text-decoration: none;
+    }
+    h1 {
+      line-height: 48px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 42px;
+      margin: 32px 0 20px;
+    }
+    h2 {
+      line-height: 32px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 26px;
+      margin: 28px 0;
+    }
+    h3 {
+      line-height: 28px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 21px;
+      margin: 24px 0;
+    }
+    p {
+      margin: 32px 0;
+    }
+    .created, .published {
+      color: rgba(0, 0, 0, 0.55);
+      font-size: 15px;
+      line-height: 15px;
+      margin: 20px 0;
+    }
+    .created + .published {
+      margin-top: -12px;
+    }
+    blockquote {
+      font-family: Georgia, Source Serif Pro, serif;
+      font-style: italic;
+      font-size: 24px;
+      line-height: 36px;
+      margin: 48px 120px;
+      text-align: center;
+    }
+    a {
+      word-wrap: break-word;
+      outline: none;
+      text-decoration: none;
+      background-color: transparent;
+      border: 0;
+      color: #008CC9;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    a:visited {
+      color: #8C68CB;
+    }
+    .center {
+      text-align: center;
+    }
+    iframe {
+      display: block;
+      margin: 44px auto;
+    }
+    *:not(pre) + pre, pre:first-of-type {
+      margin-top: 32px;
+      padding-top: 32px;
+    }
+    pre:only-of-type {
+      margin: 32px 0;
+      padding: 32px;
+    }
+    pre {
+      background: #F3F6F8;
+      overflow-x: auto;
+      display: block;
+      font-size: 13px;
+      font-family: monospace;
+      line-height: 13px;
+      padding: 0 32px 32px;
+      white-space: pre;
+    }
+    a.embedded {
+      background: #F3F6F8;
+      display: block;
+      padding: 32px;
+      margin: 32px 0;
+    }
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+    .slate-image-embed__resize-full-width img {
+      width: 100%;
+    }
+    .series-logo {
+      width: 48px;
+      height: 48px;
+      box-sizing: border-box;
+      background-clip: content-box;
+      border: 4px solid transparent;
+      border-radius: 6px;
+      object-fit: scale-down;
+      float: left;
+    }
+    .series-title {
+      font-size: 16px;
+      font-weight: 600;
+      vertical-align: top;
+    }
+    .series-description {
+      color: rgba(0,0,0,.6);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    div {
+      margin: 32px 0;
+    }
+  </style>
+</head>
+<body>
+    <img src="https://media.licdn.com/mediaD4E12AQHX_0Q-Oi_oXA" alt="" title="" />
+      <h1><a href="https://www.linkedin.com/pulse/observability-landscape-beyond-general-monitoring-sjef-van-leeuwen--pzgee">Observability in IT Landscape: Beyond General Monitoring</a></h1>
+    <p class="created">Created on 2024-07-21 11:23</p>
+  <p class="published">Published on 2024-07-21 12:04</p>
+  <div><h2>Introduction</h2><p>In today's rapidly evolving digital landscape, the efficiency of IT infrastructure directly influences business performance. Observability has emerged as a critical capability for IT systems, providing deep insights beyond traditional monitoring. It allows businesses to not only detect issues but also to swiftly drill down into the problem areas, ensuring minimal disruption and enhanced operational efficiency. This article delves into the importance of observability, contrasts it with general monitoring, and highlights the business impacts of lacking fine-grained proactive alarming and monitoring.</p><h2>Personal Experience with Real-time Observability in the Aerospace Industry</h2><p>15 Years ago, as the Architect behind the RIVOPS (Remote Intuitive Operations) software incubation at the European Space Agency (ESA) for EATOPS, I delved into the intricacies of real-time observability, monitoring, and alarming systems. Our focus was on ergonomic monitoring for operators, significantly enhancing safety and efficiency.</p><p>We tackled the challenge of increasing alarm rates by enabling operators to consolidate their screens, improving situational awareness and reducing cognitive load. A major innovation was incorporating real-time observability through 3D visualization of a digital twin. This provided a dynamic, three-dimensional view of systems, allowing operators to quickly diagnose and resolve issues.</p><p>After space certification, RIVOPS's success led to its commercialization, applying our real-time observability, monitoring, and alarming solutions to other industries. The principles and technologies we developed for space operations proved invaluable for ensuring reliable and efficient operations in these new contexts.</p><p>This experience underscored the universal value of robust real-time observability, monitoring, and alarming systems, showing how space-developed innovations can enhance safety and efficiency across various industries. Here, the principles of ergonomic observability and 3D digital twins we developed for space operations proved invaluable in ensuring the reliable and efficient operation and improved safety of critical energy resources.</p><blockquote><p>The principles of ergonomic observability and 3D digital twins we developed for space operations proved invaluable in ensuring the reliable and efficient operation and improved safety of critical energy resources.</p></blockquote><div><iframe allowfullscreen="true" frameborder="0" height="405" src="https://www.linkedin.com/embeds/publishingEmbed.html?articleId=9077425542807810137" width="720"></iframe></div><h2>Understanding Observability vs. Monitoring</h2><p><strong>Monitoring</strong> typically involves collecting predefined sets of metrics, logs, and traces to track the health and performance of systems. It alerts when something goes wrong but often lacks the depth to diagnose the underlying issues without extensive manual intervention.</p><p><strong>Observability</strong>, on the other hand, is about providing comprehensive insights into the internal states of systems by examining outputs. It leverages a combination of metrics, logs, and traces to offer a holistic view, enabling quick identification and resolution of problems.</p><h2>The Critical Components of Observability</h2><ol><li><p><strong>Metrics</strong>: Quantitative data points that measure system performance over time.</p></li><li><p><strong>Logs</strong>: Detailed records of system events and transactions.</p></li><li><p><strong>Traces</strong>: Records of requests or processes as they move through various components of the system.</p></li></ol><h2>Business Impact of Effective Observability</h2><h3>1. Reduced Downtime and Faster Incident Resolution</h3><p>According to Gartner, the average cost of IT downtime is $5,600 per minute. Companies with robust observability frameworks can reduce Mean Time to Resolution (MTTR) significantly, thus saving substantial costs and preserving business continuity.</p><blockquote><p><em>"The average cost of IT downtime is $5,600 per minute." - Gartner</em></p></blockquote><h3>2. Improved Customer Experience</h3><p>A report by Digital Enterprise Journal states that 70% of customers' perception of a brand is influenced by the quality of their digital experience. With effective observability, businesses can ensure smoother and more reliable user experiences, leading to higher customer satisfaction and retention.</p><blockquote><p><em>"70% of customers' perception of a brand is influenced by the quality of their digital experience." - Digital Enterprise Journal</em></p></blockquote><h3>3. Enhanced Productivity</h3><p>IDC estimates that IT staff spend 30% of their time dealing with system issues. Fine-grained proactive monitoring reduces the time IT teams spend troubleshooting, allowing them to focus on strategic initiatives that drive business growth.</p><blockquote><p><em>"IT staff spend 30% of their time dealing with system issues." - IDC</em></p></blockquote><h3>4. Prevention of Revenue Loss</h3><p>A Forrester report highlights that 43% of businesses face significant revenue loss due to slow problem identification and resolution. Proactive monitoring helps in early detection of potential issues, preventing disruptions that could lead to revenue loss.</p><blockquote><p><em>"43% of businesses face significant revenue loss due to slow problem identification and resolution." - Forrester</em></p></blockquote><h2>Case Studies</h2><h3>Case Study 1: E-commerce Giant (Source: Datadog)</h3><p>An e-commerce giant implemented an observability platform integrating real-time monitoring, logging, and tracing. The result was a 40% reduction in MTTR and a 25% increase in system uptime, leading to a notable boost in customer satisfaction and sales. MTTR, or Mean Time to Resolution, is a key performance metric in IT and other industries. It measures the average time required to repair a system, resolve an issue, or restore service after a failure or incident. MTTR encompasses the entire process from the moment an issue is detected until it is fully resolved and normal operations are restored.</p><h3>Case Study 2: Financial Services Firm (Source: New Relic)</h3><p>A financial services firm faced frequent service disruptions affecting their trading platform. By adopting a comprehensive observability strategy, they could detect anomalies early, resulting in a 50% reduction in downtime and a 30% increase in transaction throughput.</p><h2>Collaboration Between IT Operations and IT Development</h2><p>To gain a holistic view over the entire business landscape and effectively drill into technical anomalies, it is essential that IT Operations and IT Development departments collaborate in their selection of alarming, monitoring, and observability products. Often, logs get duplicated among multiple monitoring applications, making it difficult to maintain a comprehensive view. Unified observability tools can prevent these issues by centralizing data collection and analysis.</p><h2>Definition of Done for DevOps Teams</h2><p>A crucial aspect of implementing effective observability is defining clear criteria for when monitoring and observability tasks are considered complete. This "Definition of Done" should include:</p><ol><li><p><strong>Comprehensive Metrics Collection</strong>: Ensure that all relevant metrics are being collected, covering system performance, resource utilization, and user interactions.</p></li><li><p><strong>Detailed Logging</strong>: Implement detailed logging for all critical systems and applications, capturing sufficient detail to diagnose issues.</p></li><li><p><strong>End-to-End Tracing</strong>: Set up tracing for all critical transactions and processes to allow end-to-end visibility.</p></li><li><p><strong>Automated Alerts</strong>: Configure automated alerts for key metrics and logs to detect anomalies and potential issues early.</p></li><li><p><strong>Dashboards and Reports</strong>: Create and maintain dashboards and reports that provide at-a-glance visibility into system health and performance.</p></li><li><p><strong>Regular Reviews</strong>: Conduct regular reviews and updates of monitoring configurations to ensure they remain aligned with business goals and technical environments.</p></li><li><p><strong>Collaborative Tool Selection</strong>: Ensure that both IT Operations and IT Development teams are involved in selecting monitoring and observability tools to avoid duplication and ensure comprehensive coverage.</p></li><li><p><strong>Documentation</strong>: Maintain thorough documentation of monitoring setups, alert configurations, and troubleshooting procedures.</p></li></ol><h2>Implementing Observability: Best Practices</h2><ol><li><p><strong>Adopt a Holistic Approach</strong>: Integrate metrics, logs, and traces for a complete view of the system.</p></li><li><p><strong>Automate Incident Response</strong>: Use AI and machine learning to automate detection and response to anomalies.</p></li><li><p><strong>Foster a Culture of Collaboration</strong>: Encourage cross-team collaboration to quickly resolve issues.</p></li><li><p><strong>Unify Monitoring Tools</strong>: Select observability products that serve both IT Operations and IT Development to avoid data duplication and ensure seamless data integration.</p></li><li><p><strong>Regularly Update Observability Tools</strong>: Ensure tools are updated to handle the latest technologies and threats.</p></li></ol><h2>Conclusion</h2><p>Observability transcends traditional monitoring by providing deep, actionable insights into IT systems, enabling businesses to quickly identify and resolve issues. This not only enhances operational efficiency but also significantly impacts customer experience and business revenue. Investing in a robust observability framework is no longer optional but a necessity for businesses aiming to thrive in the digital era.</p><hr><h2>References:</h2><ol><li><p>Gartner: The Cost of IT Downtime</p></li><li><p>Digital Enterprise Journal: Customer Perception and Digital Experience</p></li><li><p>IDC: IT Staff Productivity</p></li><li><p>Forrester: Revenue Loss Due to IT Issues</p></li><li><p>Datadog: E-commerce Giant Case Study</p></li><li><p>New Relic: Financial Services Firm Case Study</p></li><li><p><a href="https://www.eatops.com/" target="_blank">EATOPS</a>: We Build Control Rooms</p></li></ol><p>By implementing the best practices outlined and understanding the profound business impacts, organizations can elevate their IT infrastructure's performance and reliability, ultimately driving success in today's competitive landscape.</p></div>
+</body>
+</html>

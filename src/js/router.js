@@ -36,7 +36,10 @@ export class Router {
           // Get just the filename (e.g., 'about.html' -> 'about')
           const filename = url.pathname.split('/').pop().replace('.html', '');
           const route = filename === 'index' ? 'home' : filename;
-          window.location.hash = `#/${route === 'home' ? '' : route}`;
+          
+          // Preserve search parameters (query string) when converting to hash
+          const search = url.search;
+          window.location.hash = `#/${route === 'home' ? '' : route}${search}`;
         }
       }
     });
@@ -46,8 +49,11 @@ export class Router {
     // 1. Immediately scroll to top when navigation begins
     window.scrollTo(0, 0);
 
-    let path = window.location.hash.slice(2) || 'home';
-    if (path === '') path = 'home';
+    let rawPath = window.location.hash.slice(2) || 'home';
+    if (rawPath === '') rawPath = 'home';
+    
+    // Strip query string for route matching
+    const path = rawPath.split('?')[0];
 
     const route = this.routes[path] || this.routes['404'] || this.routes['home'];
     

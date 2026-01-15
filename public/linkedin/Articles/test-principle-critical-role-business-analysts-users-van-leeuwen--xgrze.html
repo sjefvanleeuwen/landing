@@ -1,0 +1,147 @@
+<html>
+<head>
+  <title>A Test Principle: The Critical Role of Business Analysts in Bridging Users and Developers with Gherkin</title>
+  <style>
+    body {
+      margin: 0 auto;
+      width: 744px;
+      font-family: Source Serif Pro, serif;
+      line-height: 32px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 21px;
+    }
+    h1, h2, h3 {
+      font-family: Source Sans Pro, Helvetica, Arial, sans-serif;
+    }
+    h1 a, h1 a:visited {
+      color: inherit;
+      text-decoration: none;
+    }
+    h1 {
+      line-height: 48px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 42px;
+      margin: 32px 0 20px;
+    }
+    h2 {
+      line-height: 32px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 26px;
+      margin: 28px 0;
+    }
+    h3 {
+      line-height: 28px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 21px;
+      margin: 24px 0;
+    }
+    p {
+      margin: 32px 0;
+    }
+    .created, .published {
+      color: rgba(0, 0, 0, 0.55);
+      font-size: 15px;
+      line-height: 15px;
+      margin: 20px 0;
+    }
+    .created + .published {
+      margin-top: -12px;
+    }
+    blockquote {
+      font-family: Georgia, Source Serif Pro, serif;
+      font-style: italic;
+      font-size: 24px;
+      line-height: 36px;
+      margin: 48px 120px;
+      text-align: center;
+    }
+    a {
+      word-wrap: break-word;
+      outline: none;
+      text-decoration: none;
+      background-color: transparent;
+      border: 0;
+      color: #008CC9;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    a:visited {
+      color: #8C68CB;
+    }
+    .center {
+      text-align: center;
+    }
+    iframe {
+      display: block;
+      margin: 44px auto;
+    }
+    *:not(pre) + pre, pre:first-of-type {
+      margin-top: 32px;
+      padding-top: 32px;
+    }
+    pre:only-of-type {
+      margin: 32px 0;
+      padding: 32px;
+    }
+    pre {
+      background: #F3F6F8;
+      overflow-x: auto;
+      display: block;
+      font-size: 13px;
+      font-family: monospace;
+      line-height: 13px;
+      padding: 0 32px 32px;
+      white-space: pre;
+    }
+    a.embedded {
+      background: #F3F6F8;
+      display: block;
+      padding: 32px;
+      margin: 32px 0;
+    }
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+    .slate-image-embed__resize-full-width img {
+      width: 100%;
+    }
+    .series-logo {
+      width: 48px;
+      height: 48px;
+      box-sizing: border-box;
+      background-clip: content-box;
+      border: 4px solid transparent;
+      border-radius: 6px;
+      object-fit: scale-down;
+      float: left;
+    }
+    .series-title {
+      font-size: 16px;
+      font-weight: 600;
+      vertical-align: top;
+    }
+    .series-description {
+      color: rgba(0,0,0,.6);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    div {
+      margin: 32px 0;
+    }
+  </style>
+</head>
+<body>
+    <img src="https://media.licdn.com/mediaD4E12AQH4b49ilj2WXA" alt="" title="" />
+      <h1><a href="https://www.linkedin.com/pulse/test-principle-critical-role-business-analysts-users-van-leeuwen--xgrze">A Test Principle: The Critical Role of Business Analysts in Bridging Users and Developers with Gherkin</a></h1>
+    <p class="created">Created on 2024-10-26 17:06</p>
+  <p class="published">Published on 2024-10-26 17:46</p>
+  <div><p>Ensuring that applications meet user expectations while maintaining high quality is essential. A common challenge teams encounter is bridging the gap between <strong>User Acceptance Testing (UAT)</strong> and <strong>automated testing</strong>. <strong>Gherkin feature testing</strong>, when combined with <strong>Playwright</strong> and <strong>Cucumber</strong>, offers an effective approach to address this challenge. In this article, I’ll discuss how these technologies work together to improve collaboration, streamline testing processes, and align software development with user needs. Additionally, I’ll introduce the <a href="https://github.com/sjefvanleeuwen/GherkinWorkshop" target="_blank">GherkinWorkshop GitHub repository</a> authored by <a href="https://github.com/sjefvanleeuwen" target="_blank">Sjef van Leeuwen</a>, which provides a detailed workshop for Business Analysts (BAs) and testers.</p><blockquote><p><strong>“Effective testing bridges the technical and business worlds, ensuring that software not only works but truly serves its users.”</strong></p></blockquote><h3>The Foundation: Early Investment by Business Analysts</h3><p>The success of bridging UAT and automated testing begins with <strong>Business Analysts (BAs)</strong> taking an active role in the early stages of the project. By leveraging <strong>Gherkin</strong> to define UAT scenarios from the outset, BAs can ensure that:</p><ul><li><p><strong>Clear Communication:</strong> Requirements are documented in a consistent and understandable manner, facilitating seamless collaboration between business and technical teams.</p></li><li><p><strong>Aligned Objectives:</strong> Both development and testing teams have a shared understanding of the desired outcomes, minimizing misunderstandings and reducing rework.</p></li><li><p><strong>Foundation for Automation:</strong> Well-defined Gherkin scenarios provide a robust foundation for subsequent automation, ensuring that automated tests accurately reflect user requirements.</p></li></ul><blockquote><p><strong>“By investing in Gherkin early, Business Analysts lay the groundwork for effective collaboration and seamless integration of automated testing.”</strong></p></blockquote><h3>Understanding the Challenge: UAT vs. Automated Testing</h3><p><strong>User Acceptance Testing (UAT)</strong> is the final phase in the software testing lifecycle, where real users validate that the system meets their needs and requirements. While UAT is crucial for verifying usability and functionality from the user’s perspective, it can be time-consuming and may not integrate seamlessly with continuous development practices.</p><p>Conversely, <strong>automated testing</strong> uses scripts and tools to perform repetitive and regression tests efficiently. Automated tests are excellent for maintaining code quality and ensuring that new changes do not disrupt existing functionalities. However, they can sometimes miss the nuanced, user-centric aspects that UAT captures.</p><blockquote><p><strong>The primary challenge lies in aligning these two testing approaches—ensuring that automated tests reflect actual user requirements and that UAT benefits from the precision and efficiency of automation.</strong></p></blockquote><h3>The Solution: Gherkin Feature Testing with Playwright and Cucumber</h3><p><strong>Gherkin</strong> is a domain-specific language used in <strong>Behavior-Driven Development (BDD)</strong> to write test cases in a human-readable format. Utilizing a simple <strong>Given-When-Then</strong> syntax, Gherkin makes it easier for both technical and non-technical stakeholders to understand and contribute to test scenarios.</p><p><strong>Playwright</strong> is a versatile end-to-end testing framework that supports multiple browsers, offering reliable automation and robust debugging capabilities.</p><p><strong>Cucumber</strong> is a BDD framework that interprets Gherkin syntax and connects feature files to automated test code.</p><p>By integrating <strong>Gherkin</strong>, <strong>Playwright</strong>, and <strong>Cucumber</strong>, teams can develop clear, maintainable, and scalable automated tests that are directly aligned with user acceptance criteria. This integration facilitates better collaboration between technical and business teams, ensuring that the software developed meets user expectations.</p><h3>Key Benefits</h3><ul><li><p><strong>Enhanced Collaboration:</strong> Gherkin’s readable syntax promotes effective communication among business analysts, developers, and testers.</p></li><li><p><strong>Aligned Testing:</strong> Automated tests based on Gherkin scenarios ensure that technical validations are in line with user acceptance criteria.</p></li><li><p><strong>Efficiency and Speed:</strong> Automating user-centric tests reduces the time and effort required for manual UAT, enabling quicker feedback and more frequent releases.</p></li><li><p><strong>Comprehensive Documentation:</strong> Feature files act as living documentation, providing a clear reference for both current and future team members.</p></li><li><p><strong>Scalability:</strong> Gherkin’s structured format allows easy maintenance and updates of test scenarios as requirements evolve, particularly in agile environments.</p></li></ul><h3>Highlighting the GherkinWorkshop GitHub Repository</h3><p>To support teams in implementing Gherkin feature testing with Playwright and Cucumber, the <a href="https://github.com/sjefvanleeuwen/GherkinWorkshop" target="_blank">GherkinWorkshop GitHub repository</a> authored by <a href="https://github.com/sjefvanleeuwen" target="_blank">Sjef van Leeuwen</a> offers comprehensive resources, including a hands-on workshop designed for BAs and testers. Key components of the repository include:</p><h3>Demo</h3><p>The repository features a demo that illustrates the integration of Gherkin, Cucumber, and Playwright. The demo includes:</p><ul><li><p><strong>Feature Files:</strong> Predefined Gherkin scenarios that outline common user actions and acceptance criteria.</p></li><li><p><strong>Step Definitions:</strong> Implementations that connect Gherkin steps with Playwright for browser automation.</p></li><li><p><strong>Sample Application:</strong> A mock web application that the automated tests interact with, providing a realistic testing environment.</p></li></ul><figure><img data-media-urn="urn:li:digitalmediaAsset:D4E12AQHoRkWi1LcCGQ" src="https://media.licdn.com/dms/image/v2/D4E12AQHoRkWi1LcCGQ/article-inline_image-shrink_1000_1488/article-inline_image-shrink_1000_1488/0/1729967396778?e=1769644800&amp;v=beta&amp;t=Ijc4FXEK890ROSUDWVQyiA8Ve6SYJ9EwBDdrgzesd6A"><figcaption>In the Interactive Demo: An EV Driver Business Scenario Outline Described in Gherkin</figcaption></figure><p>Participants can observe how automated tests execute against the sample application, showcasing the seamless collaboration between Gherkin, Cucumber, and Playwright.</p><h3>Setup</h3><p>The setup guide in the repository ensures that participants can efficiently configure their environments to follow along with the workshop. This includes:</p><ol><li><p><strong>Prerequisites:</strong></p></li><li><p><strong>Installation Steps:</strong></p></li><li><p><strong>Running Initial Tests:</strong></p></li></ol><blockquote><p><strong>Experience a full testing workflow, including step debugging directly from the VS Code IDE, enhancing your ability to troubleshoot and refine tests effectively.</strong></p></blockquote><h3>Conducting a 2-Hour Workshop for BAs and Testers</h3><p>The <a href="https://github.com/sjefvanleeuwen/GherkinWorkshop" target="_blank">GherkinWorkshop GitHub repository</a> includes a detailed 2-hour workshop tailored for Business Analysts and testers. This workshop is designed to equip non-technical stakeholders with the skills needed to write effective Gherkin feature files and understand their role in automated testing.</p><p><strong>Workshop Agenda:</strong></p><ol><li><p><strong>Introduction to BDD and Gherkin (20 minutes)</strong></p></li><li><p><strong>Writing Effective Feature Files (30 minutes)</strong></p></li><li><p><strong>Understanding Step Definitions (20 minutes)</strong></p></li><li><p><strong>Hands-On Demo (30 minutes)</strong></p></li><li><p><strong>Interactive Q&amp;A and Discussion (20 minutes)</strong></p></li></ol><p><strong>Workshop Benefits:</strong></p><ul><li><p><strong>Empowered Stakeholders:</strong> Enable BAs and testers to contribute directly to the test automation process.</p></li><li><p><strong>Enhanced Collaboration:</strong> Foster a shared understanding between technical and non-technical team members.</p></li><li><p><strong>Improved Test Coverage:</strong> Ensure that user-centric scenarios are adequately covered in automated tests.</p></li><li><p><strong>Practical Skills:</strong> Provide hands-on experience and resources to implement Gherkin feature testing in projects.</p></li></ul><h3>Conclusion</h3><p>Integrating <strong>Gherkin feature testing</strong> with <strong>Playwright</strong> and <strong>Cucumber</strong> provides a structured approach to bridge the gap between User Acceptance Testing and automated testing. This methodology enhances collaboration across teams, ensures alignment with user expectations, and leverages the efficiency of automation to maintain high-quality software development.</p><p>I encourage you to explore the <a href="https://github.com/sjefvanleeuwen/GherkinWorkshop" target="_blank">GherkinWorkshop GitHub repository</a> authored by <a href="https://github.com/sjefvanleeuwen" target="_blank">Sjef van Leeuwen</a> to access practical resources and participate in the workshop designed for BAs and testers. Adopting these tools and practices can help your organization deliver reliable and user-focused software in today’s competitive environment.</p><blockquote><p><strong>Let’s bridge the gap and improve our testing practices together.</strong></p></blockquote></div>
+</body>
+</html>

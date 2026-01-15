@@ -1,0 +1,146 @@
+<html>
+<head>
+  <title>Uitdagingen van Common Ground</title>
+  <style>
+    body {
+      margin: 0 auto;
+      width: 744px;
+      font-family: Source Serif Pro, serif;
+      line-height: 32px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 21px;
+    }
+    h1, h2, h3 {
+      font-family: Source Sans Pro, Helvetica, Arial, sans-serif;
+    }
+    h1 a, h1 a:visited {
+      color: inherit;
+      text-decoration: none;
+    }
+    h1 {
+      line-height: 48px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 42px;
+      margin: 32px 0 20px;
+    }
+    h2 {
+      line-height: 32px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 26px;
+      margin: 28px 0;
+    }
+    h3 {
+      line-height: 28px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 21px;
+      margin: 24px 0;
+    }
+    p {
+      margin: 32px 0;
+    }
+    .created, .published {
+      color: rgba(0, 0, 0, 0.55);
+      font-size: 15px;
+      line-height: 15px;
+      margin: 20px 0;
+    }
+    .created + .published {
+      margin-top: -12px;
+    }
+    blockquote {
+      font-family: Georgia, Source Serif Pro, serif;
+      font-style: italic;
+      font-size: 24px;
+      line-height: 36px;
+      margin: 48px 120px;
+      text-align: center;
+    }
+    a {
+      word-wrap: break-word;
+      outline: none;
+      text-decoration: none;
+      background-color: transparent;
+      border: 0;
+      color: #008CC9;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    a:visited {
+      color: #8C68CB;
+    }
+    .center {
+      text-align: center;
+    }
+    iframe {
+      display: block;
+      margin: 44px auto;
+    }
+    *:not(pre) + pre, pre:first-of-type {
+      margin-top: 32px;
+      padding-top: 32px;
+    }
+    pre:only-of-type {
+      margin: 32px 0;
+      padding: 32px;
+    }
+    pre {
+      background: #F3F6F8;
+      overflow-x: auto;
+      display: block;
+      font-size: 13px;
+      font-family: monospace;
+      line-height: 13px;
+      padding: 0 32px 32px;
+      white-space: pre;
+    }
+    a.embedded {
+      background: #F3F6F8;
+      display: block;
+      padding: 32px;
+      margin: 32px 0;
+    }
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+    .slate-image-embed__resize-full-width img {
+      width: 100%;
+    }
+    .series-logo {
+      width: 48px;
+      height: 48px;
+      box-sizing: border-box;
+      background-clip: content-box;
+      border: 4px solid transparent;
+      border-radius: 6px;
+      object-fit: scale-down;
+      float: left;
+    }
+    .series-title {
+      font-size: 16px;
+      font-weight: 600;
+      vertical-align: top;
+    }
+    .series-description {
+      color: rgba(0,0,0,.6);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    div {
+      margin: 32px 0;
+    }
+  </style>
+</head>
+<body>
+      <h1>Uitdagingen van Common Ground</h1>
+    <p class="created">Created on 2024-05-03 11:05</p>
+  <p class="published">Published on ---</p>
+  <div><h3>Beperkingen in het Aggregeren van Data en Geavanceerde Regelengine</h3><p>Common Ground is een ambitieus initiatief van de Vereniging van Nederlandse Gemeenten (VNG) gericht op het moderniseren van de gemeentelijke informatievoorziening door middel van een modulaire, flexibele en open IT-architectuur. Dit initiatief streeft naar verbeterde interoperabiliteit en efficiëntie door gebruik te maken van API's. Hoewel het project veelbelovend is, zijn er enkele significante beperkingen die de functionaliteit en effectiviteit ervan kunnen beïnvloeden, vooral in het licht van complexe wet- en regelgeving en de noodzaak van geavanceerde dataverwerking.</p><h3>Beperkingen in Data Aggregatie via NLX</h3><p>Een van de kerncomponenten van Common Ground is de Nederlandse Landelijke Voorziening (NLX), een uitwisselingslaag die het mogelijk maakt voor verschillende systemen om gegevens uit te wisselen. Hoewel NLX nuttig is voor basale data-uitwisseling, loopt het tegen grenzen aan bij het aggregeren van complexe en interrelaterende datasets. Het ontbreekt NLX aan de mogelijkheid om diepgaand en dynamisch gegevens te aggregeren over verschillende domeinen en bronnen heen, wat essentieel is voor uitgebreide analyses en besluitvorming. Dit kan leiden tot een fragmentarisch overzicht van gegevens, wat vooral problematisch is bij het beheren van complexe casussen die integratie van meerdere databronnen vereisen.</p><h3>Tekortkomingen van RESTful API's in Complex Query Management</h3><p>Een significant probleem binnen het Common Ground framework is het gebrek aan een gestandaardiseerde methode voor complexe queries binnen RESTful API's. RESTful API's zijn niet optimaal voor scenario's waar complexe dataverzamelingen en -relaties moeten worden gemanaged en gequeryd. Hierbij zou een technologie zoals GraphQL een betere optie kunnen zijn. GraphQL biedt een krachtig en flexibel alternatief voor het omgaan met complexe datasets, doordat het ontwikkelaars in staat stelt om precieze en efficiënte queries te schrijven die exact ophalen wat nodig is. Dit minimaliseert de hoeveelheid data-overdracht en verhoogt de efficiëntie van de data-uitwisseling.</p><h3>Beperkingen van de Vijf-Laags Architectuur</h3><p>Een cruciaal aspect van het Common Ground-model is de vijf-laags architectuur, die ontworpen is om de modulariteit en flexibiliteit van gemeentelijke IT-systemen te verbeteren. Echter, ondanks deze structuur, gedragen de systemen zich interorganisatorisch nog steeds als silo-oplossingen. Deze silo-vorming beperkt de mate van echte interorganisatorische samenwerking en gegevensdeling. Het is essentieel voor de overheid om deze silo's te doorbreken om een naadloos geïntegreerd systeem te creëren dat in staat is om complexe, overheidsbrede uitdagingen aan te pakken.</p><h3>Het belang van Temporale Aspecten in Data</h3><p>Een belangrijk aspect dat momenteel onderbelicht is binnen Common Ground, is het gestandaardiseerd beheren van temporale aspecten van data, oftewel 'tijdsreizen'. Dit houdt in dat systemen in staat moeten zijn om te gaan met data die verandert over tijd en historische data te beheren en op te vragen zoals die bestond op elk gegeven moment. Deze functie is cruciaal voor taken zoals het terugzien van eerdere staat van gegevens voor auditdoeleinden, het traceren van wijzigingen in regelgeving en beleid, en het bieden van transparantie over overheidsbeslissingen. Het integreren van robuuste, gestandaardiseerde ondersteuning voor temporale data zou een grote stap voorwaarts zijn in het verhogen van de accountability en de nauwkeurigheid van de data binnen de overheid.</p><h3>Ontbreken van een Geavanceerde en Gestandaardiseerde Regelengine</h3><p>Een ander kritiek punt is het ontbreken van een geavanceerde, gestandaardiseerde regelengine binnen het Common Ground framework. Een dergelijke regelengine zou in staat moeten zijn om juridische profielen en rechten van burgers dynamisch te berekenen, ook wanneer er wijzigingen plaatsvinden in de wetgeving, zowel op centraal als decentraal niveau. De huidige opzet biedt geen ondersteuning voor een gestructureerd en strikt versiebeheer van regels, wat cruciaal is voor het accuraat doorberekenen van rechten onder veranderende wetgevende kaders.</p><h3>Gebruik van Homomorfe Encryptie voor Data-analyse</h3><p>Een innovatieve oplossing die nog ontbreekt in de Common Ground-aanpak is het gebruik van homomorfe encryptie. Deze vorm van encryptie maakt het mogelijk om berekeningen uit te voeren op gecodeerde gegevens zonder deze eerst te ontcijferen. De implementatie van dergelijke technologie zou een revolutie teweegbrengen in de manier waarop gegevens worden geanalyseerd en gedeeld binnen de overheid, aangezien het privacy en beveiliging zou garanderen terwijl toch nuttige inzichten worden gewonnen. Dit zou bijzonder waardevol zijn voor het detecteren van misstanden binnen overheidsinstanties zonder dat de onderliggende gegevens expliciet gedeeld hoeven te worden.</p><h3>Detectie van Ongewenste Clustervorming</h3><p>Bovendien zou de integratie van geavanceerde data-analytische tools, zoals die voor het detecteren van ongewenste clustervorming, aanzienlijk bijdragen aan het effectiever bestrijden van fraude. Door dergelijke tools in te zetten, kunnen overheidsinstanties patronen van fraude identificeren zonder burgers over één kam te scheren of ongegrond te wantrouwen. Dit zou een meer gerichte aanpak mogelijk maken, waarbij alleen de werkelijke risicogevallen worden aangepakt, wat zowel de efficiëntie als de rechtvaardigheid van overheidsinterventies zou verbeteren.</p><h3>Conclusie</h3><p>Hoewel Common Ground een stap in de goede richting is naar een meer geïntegreerde en efficiënte overheidsinfrastructuur, zijn er duidelijke beperkingen die moeten worden aangepakt om het volledige potentieel van dit initiatief te realiseren. Vooral de noodzaak voor geavanceerde dataverwerking, dynamische regelgeving en de mogelijkheid tot complexe datamanagement en -querying via technologieën zoals GraphQL zijn evident. Verdere innovatie en aanpassingen zijn nodig om de complexiteit van hedendaagse overheidsoperaties en de bijbehorende dataveiligheid en privacy te kunnen beheren, evenals om de silo-structuur die nog steeds heerst binnen de vijf-laags architectuur van Common Ground te doorbreken en de belangrijke integratie van gestandaardiseerde temporale datamanagement te implementeren.</p></div>
+</body>
+</html>

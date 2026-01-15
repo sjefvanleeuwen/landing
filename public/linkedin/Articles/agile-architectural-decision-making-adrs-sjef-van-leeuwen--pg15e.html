@@ -1,0 +1,147 @@
+<html>
+<head>
+  <title>Agile Architectural Decision-Making with ADRs</title>
+  <style>
+    body {
+      margin: 0 auto;
+      width: 744px;
+      font-family: Source Serif Pro, serif;
+      line-height: 32px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 21px;
+    }
+    h1, h2, h3 {
+      font-family: Source Sans Pro, Helvetica, Arial, sans-serif;
+    }
+    h1 a, h1 a:visited {
+      color: inherit;
+      text-decoration: none;
+    }
+    h1 {
+      line-height: 48px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 42px;
+      margin: 32px 0 20px;
+    }
+    h2 {
+      line-height: 32px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 26px;
+      margin: 28px 0;
+    }
+    h3 {
+      line-height: 28px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 21px;
+      margin: 24px 0;
+    }
+    p {
+      margin: 32px 0;
+    }
+    .created, .published {
+      color: rgba(0, 0, 0, 0.55);
+      font-size: 15px;
+      line-height: 15px;
+      margin: 20px 0;
+    }
+    .created + .published {
+      margin-top: -12px;
+    }
+    blockquote {
+      font-family: Georgia, Source Serif Pro, serif;
+      font-style: italic;
+      font-size: 24px;
+      line-height: 36px;
+      margin: 48px 120px;
+      text-align: center;
+    }
+    a {
+      word-wrap: break-word;
+      outline: none;
+      text-decoration: none;
+      background-color: transparent;
+      border: 0;
+      color: #008CC9;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    a:visited {
+      color: #8C68CB;
+    }
+    .center {
+      text-align: center;
+    }
+    iframe {
+      display: block;
+      margin: 44px auto;
+    }
+    *:not(pre) + pre, pre:first-of-type {
+      margin-top: 32px;
+      padding-top: 32px;
+    }
+    pre:only-of-type {
+      margin: 32px 0;
+      padding: 32px;
+    }
+    pre {
+      background: #F3F6F8;
+      overflow-x: auto;
+      display: block;
+      font-size: 13px;
+      font-family: monospace;
+      line-height: 13px;
+      padding: 0 32px 32px;
+      white-space: pre;
+    }
+    a.embedded {
+      background: #F3F6F8;
+      display: block;
+      padding: 32px;
+      margin: 32px 0;
+    }
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+    .slate-image-embed__resize-full-width img {
+      width: 100%;
+    }
+    .series-logo {
+      width: 48px;
+      height: 48px;
+      box-sizing: border-box;
+      background-clip: content-box;
+      border: 4px solid transparent;
+      border-radius: 6px;
+      object-fit: scale-down;
+      float: left;
+    }
+    .series-title {
+      font-size: 16px;
+      font-weight: 600;
+      vertical-align: top;
+    }
+    .series-description {
+      color: rgba(0,0,0,.6);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    div {
+      margin: 32px 0;
+    }
+  </style>
+</head>
+<body>
+    <img src="https://media.licdn.com/mediaD4E12AQFOWuINhJrEMg" alt="" title="" />
+      <h1><a href="https://www.linkedin.com/pulse/agile-architectural-decision-making-adrs-sjef-van-leeuwen--pg15e">Agile Architectural Decision-Making with ADRs</a></h1>
+    <p class="created">Created on 2024-04-26 12:26</p>
+  <p class="published">Published on 2024-04-26 12:37</p>
+  <div><h2>How to Enhance Agility in Your Engineering Culture</h2><h3>Introduction</h3><p>In today's fast-paced engineering environments, agility is key to innovation and staying competitive. At Eneco eMobility, we're embracing agile methodologies to create an engineering culture that thrives on continuous improvement. A crucial part of our process is the use of Architectural Design Records (ADRs), which play a significant role in ensuring agility in architectural decision-making. In this article, we explore the concept of ADRs, their benefits, and how they contribute to our agile practices.</p><h3>What Are ADRs?</h3><p>Architectural Design Records (ADRs) are documents that capture significant architectural decisions made during the software development process. They describe the choices the team makes about a significant aspect of the software architecture they're planning to build. They provide a historical record of why certain architectural choices were made, the context behind them, and the impact on the project. </p><p>ADRs are a <strong>living</strong> document that evolves with the project, allowing for continuous learning and adaptation.</p><h3>The Role of ADRs in Agile Development</h3><p>In agile development, flexibility and adaptability are essential. ADRs contribute to these principles in several ways:</p><h3>1. Transparency and Communication</h3><p>ADRs promote transparency by documenting architectural decisions in a way that is accessible to all team members. This transparency fosters better communication, as everyone understands the rationale behind architectural choices. It also reduces the risk of misinterpretation or knowledge silos.</p><h3>2. Consistency and Continuity</h3><p>In agile environments, teams often change, and project scopes evolve. ADRs ensure consistency by providing a reference point for architectural decisions. New team members can quickly get up to speed, reducing the learning curve and ensuring continuity throughout the project's lifecycle.</p><h3>3. Flexibility and Adaptability</h3><p>Agile practices emphasize the ability to respond to change. ADRs support this by allowing for quick adjustments to architectural decisions when needed. Since ADRs are part of our user stories' definition of readiness, they ensure that changes are documented and integrated into the project seamlessly.</p><h3>How We Use ADRs at Eneco eMobility</h3><p>At Eneco eMobility, ADRs are a crucial part of our engineering culture. We incorporate them into our agile processes in the following ways:</p><h3>As a Definition of Ready</h3><p>ADRs are part of our user stories' definition of readiness, ensuring that architectural considerations are addressed before development begins. This approach helps avoid delays and rework caused by unclear architectural decisions.</p><h3>Collaborative Decision-Making</h3><p>ADRs encourage collaboration among team members, allowing for collective decision-making. This collaboration fosters a sense of ownership and empowers teams to contribute to the architectural direction of the project.</p><h3>Continuous Improvement</h3><p>With ADRs, we have a framework for continuous improvement. We review and update ADRs regularly, learning from past decisions and applying those insights to future projects. This iterative approach aligns with our commitment to agile practices.</p><h3>Conclusion</h3><p>ADRs are an essential tool for promoting agility in architectural decision-making. At Eneco eMobility, they contribute to our engineering culture by enhancing transparency, consistency, and flexibility. By integrating ADRs into our agile processes, we create an environment that fosters innovation and continuous improvement.</p></div>
+</body>
+</html>

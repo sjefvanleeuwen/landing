@@ -1,6 +1,6 @@
 // Article Page - Magazine Style Layout
 
-.article-page {
+.article-page, .article-viewer-page {
   background: var(--theme-bg, $color-bg);
   transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: background-color;
@@ -14,24 +14,9 @@
     display: block; // Stop flex centering
     overflow: visible;
   }
-  
-  // Smoothly transition all dynamic color changes
-  &.article-dynamic {
-    h1, h2, h3, h4, h5, h6,
-    p, span, a, blockquote, div,
-    .sidebar-card, .sidebar-quote, .data-list li,
-    .drop-cap, .article-meta span, .btn-outline,
-    .dynamic-heading, .dynamic-drop, .dynamic-accent, .dynamic-title,
-    svg, path, button {
-      transition: color 0.6s ease, 
-                  background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
-                  border-color 0.6s ease, 
-                  fill 0.6s ease;
-    }
-  }
 }
 
-// Article Hero - Full Bleed Cover
+// Global Article Hero - Full Bleed Cover
 .article-hero {
   position: relative;
   height: 100vh;
@@ -119,12 +104,96 @@
 .article-content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 40px;
+}
+
+// Unified Article Body Text (Works for both manual and LinkedIn content)
+.article-body {
+  max-width: 800px;
+  margin: 40px auto 60px;
+  font-family: $font-classic;
+  font-size: 1.15rem;
+  line-height: 1.9;
+  color: rgba(255,255,255,0.85);
+
+  h1, h2, h3 {
+    font-family: $font-elegant;
+    color: #fff;
+    margin: 3rem 0 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: none !important; // Kill any inherited underlines
+    text-decoration: none !important;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  h2 { 
+    font-size: clamp(1.8rem, 4vw, 2.5rem); 
+    margin-bottom: 0.7em; 
+    line-height: 1.1;
+  }
+  
+  h3 { 
+    font-size: 1.6rem; 
+    color: $color-gold; 
+    margin-top: 1.5em;
+  }
+
+  p { 
+    margin-bottom: 1.25em;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  ul, ol {
+    margin: 2em 0;
+    padding-left: 1.5em;
+    
+    li { 
+      margin-bottom: 1em;
+      color: rgba(255,255,255,0.8);
+      
+      &::marker {
+        color: $color-gold;
+      }
+    }
+  }
+
+  blockquote {
+    font-family: $font-fashion;
+    font-size: 1.8rem;
+    font-style: italic;
+    border-left: 4px solid $color-gold;
+    padding: 30px 40px;
+    margin: 3em 0;
+    color: #fff;
+    background: rgba(255,255,255,0.03);
+    line-height: 1.5;
+  }
+
+  hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, $color-gold, transparent);
+    margin: 4em 0;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    margin: 3em 0;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
 }
 
 // Lead Section with Drop Cap
 .article-lead {
-  max-width: 750px;
+  max-width: 800px;
   margin: 60px auto 40px;
   
   .lead-text {
@@ -132,6 +201,8 @@
     font-size: clamp(1.2rem, 2.5vw, 1.5rem);
     line-height: 1.9;
     color: rgba(255,255,255,0.9);
+    text-align: justify;
+    hyphens: auto;
   }
   
   .drop-cap {
@@ -199,33 +270,7 @@
   }
 }
 
-// Article Body Text
-.article-body {
-  max-width: 750px;
-  margin: 0 auto 30px;
-  
-  h2 {
-    font-family: $font-serif;
-    font-size: clamp(1.8rem, 4vw, 2.5rem);
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 30px;
-    letter-spacing: 0.02em;
-  }
-  
-  p {
-    font-family: $font-classic;
-    font-size: 1.15rem;
-    line-height: 1.9;
-    color: rgba(255,255,255,0.85);
-    margin-bottom: 20px;
-    
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-}
-
+// Article End Marker
 .article-end {
   display: block;
   text-align: center;
@@ -770,10 +815,10 @@
 
     .article-body {
       p {
-        font-size: 1.05rem; // Slightly smaller text
-        line-height: 1.6; // Tighter line height
-        margin-bottom: 15px; // Less spacing between paragraphs
-        text-align: justify; // Newspaper look
+        font-size: 1.05rem; 
+        line-height: 1.5; // Tighter
+        margin-bottom: 12px; // Reduced
+        text-align: justify;
       }
       
       // Two-column text within the body
@@ -885,8 +930,8 @@
     .article-body {
       p {
         font-size: 1.1rem;
-        line-height: 1.6; 
-        margin-bottom: 20px;
+        line-height: 1.5; 
+        margin-bottom: 12px;
         text-align: justify;
       }
       
@@ -1214,7 +1259,7 @@
       width: 60px;
       height: 3px;
       background: var(--theme-gold, $color-gold);
-      margin-top: 15px;
+      margin-top: 10px;
     }
   }
   
