@@ -53,12 +53,12 @@ export async function initCV() {
     try {
         // Fetch All Data
         const [profile, positions, education, projects, certifications, courses] = await Promise.all([
-            fetch('/linkedin/Profile.csv').then(r => r.text()),
-            fetch('/linkedin/Positions.csv').then(r => r.text()),
-            fetch('/linkedin/Education.csv').then(r => r.text()),
-            fetch('/linkedin/Projects.csv').then(r => r.text()),
-            fetch('/linkedin/Certifications.csv').then(r => r.text()),
-            fetch('/linkedin/Courses.csv').then(r => r.text())
+            fetch('linkedin/Profile.csv').then(r => r.text()),
+            fetch('linkedin/Positions.csv').then(r => r.text()),
+            fetch('linkedin/Education.csv').then(r => r.text()),
+            fetch('linkedin/Projects.csv').then(r => r.text()),
+            fetch('linkedin/Certifications.csv').then(r => r.text()),
+            fetch('linkedin/Courses.csv').then(r => r.text())
         ]);
 
         renderProfile(parseCSV(profile)[0]);

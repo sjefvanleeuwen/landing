@@ -15,7 +15,7 @@ export async function initArticleViewer() {
     const dateEl = document.getElementById('view-date');
 
     try {
-        const response = await fetch(`/linkedin/articles/${fileName}`);
+        const response = await fetch(`linkedin/articles/${fileName}`);
         const html = await response.text();
         
         // Parse the HTML content

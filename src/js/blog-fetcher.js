@@ -66,6 +66,13 @@ export async function initBlog() {
                 date: "Dec 2023",
                 category: "ARCHITECTURE",
                 isInternal: true
+            },
+            {
+                title: "AGILE ADR STRATEGIES",
+                file: "article-9.html",
+                date: "APR 2024",
+                category: "ENGINEERING",
+                isInternal: true
             }
         ];
 

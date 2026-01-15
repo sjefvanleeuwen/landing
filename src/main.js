@@ -7,6 +7,9 @@ import { initCreator } from './js/creator.js';
 import { initCV } from './js/cv-fetcher.js';
 import { initBlog } from './js/blog-fetcher.js';
 import { initArticleViewer } from './js/article-viewer.js';
+import { MagazineAudioPlayer } from './js/audio-component.js';
+
+customElements.define('m-audio-player', MagazineAudioPlayer);
 
 // Prevent Font Flickering (FOUT)
 document.documentElement.classList.add('fonts-loading');
@@ -38,6 +41,7 @@ const routes = {
   'article-6': { template: 'article-6.html' },
   'article-7': { template: 'article-7.html' },
   'article-8': { template: 'article-8.html' },
+  'article-9': { template: 'article-9.html' },
   'noise-floor': { template: 'noise-floor.html' },
   'creator': { template: 'creator.html' },
   'cv': { template: 'cv.html' },
@@ -45,6 +49,7 @@ const routes = {
   'journal': { template: 'journal.html' },
   'blog-backup': { template: 'blog-backup.html' },
   'article-viewer': { template: 'article-viewer.html' },
+  'audio-test': { template: 'audio-test.html' },
   '404': { template: '404.html' }
 };
 

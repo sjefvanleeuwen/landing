@@ -12,6 +12,8 @@ export default defineConfig({
         home: './home.html',
         about: './about.html',
         blog: './blog.html',
+        journal: './journal.html',
+        cv: './cv.html',
         diagrams: './diagrams.html',
         elements: './elements.html',
         article1: './article-1.html',
@@ -20,10 +22,15 @@ export default defineConfig({
         article4: './article-4.html',
         article5: './article-5.html',
         article6: './article-6.html',
+        article7: './article-7.html',
+        article8: './article-8.html',
+        article9: './article-9.html',
+        articleViewer: './article-viewer.html',
+        blogBackup: './blog-backup.html',
         creator: './creator.html',
         neuralArch: './neural-arch.html',
         noiseFloor: './noise-floor.html',
-        error404: './404.html',
+        error404: './404.html'
       }
     }
   }

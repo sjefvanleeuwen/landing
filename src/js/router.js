@@ -24,23 +24,33 @@ export class Router {
     // Intercept clicks on links
     document.addEventListener('click', (e) => {
       const link = e.target.closest('a');
-      if (link && link.href.includes(window.location.origin) && !link.hasAttribute('data-no-route')) {
-        const url = new URL(link.href);
-        // If it's a relative path to an html file, convert to hash
-        if (url.pathname.endsWith('.html') && !url.hash) {
-          e.preventDefault();
-          
-          // Force scroll to top immediately on click
-          window.scrollTo({ top: 0, behavior: 'instant' });
-          
-          // Get just the filename (e.g., 'about.html' -> 'about')
-          const filename = url.pathname.split('/').pop().replace('.html', '');
-          const route = filename === 'index' ? 'home' : filename;
-          
-          // Preserve search parameters (query string) when converting to hash
-          const search = url.search;
-          window.location.hash = `#/${route === 'home' ? '' : route}${search}`;
-        }
+      
+      // We only care about internal links
+      if (!link || !link.href.includes(window.location.origin) || link.hasAttribute('data-no-route')) {
+        return;
+      }
+
+      const url = new URL(link.href);
+      const isHtml = url.pathname.endsWith('.html');
+      const isHash = link.getAttribute('href').startsWith('#');
+
+      if (isHtml && !url.hash) {
+        e.preventDefault();
+        
+        // Force scroll to top immediately on click
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        
+        // Get just the filename (e.g., 'about.html' -> 'about')
+        const filename = url.pathname.split('/').pop().replace('.html', '');
+        const route = (filename === 'index' || filename === '') ? 'home' : filename;
+        
+        // Preserve search parameters (query string) when converting to hash
+        const search = url.search;
+        window.location.hash = `#/${route === 'home' ? '' : route}${search}`;
+      } else if (isHash) {
+        // If it's already a hash link, handleRoute will be triggered by hashchange event
+        // We just ensure we scroll to top
+        window.scrollTo({ top: 0, behavior: 'instant' });
       }
     });
   }
