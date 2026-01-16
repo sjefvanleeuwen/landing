@@ -8,6 +8,7 @@ export class MagazineAudioPlayer extends HTMLElement {
         this.bars = [];
         this.peaks = [];
         this.particles = [];
+        this.showParticles = true;
         this.animationId = null;
         this.vizMode = 'both'; // both, upper, lower
         this._handleScroll = null;
@@ -24,6 +25,9 @@ export class MagazineAudioPlayer extends HTMLElement {
 
         this.innerHTML = `
             <style>
+                .menu-item:hover, .toggle-particles:hover {
+                    background: rgba(255,255,255,0.05) !important;
+                }
                 .volume-slider::-webkit-slider-thumb {
                     appearance: none;
                     width: 12px;
@@ -58,6 +62,17 @@ export class MagazineAudioPlayer extends HTMLElement {
                 }
                 .seek-slider:hover {
                     height: 8px !important;
+                }
+                .menu-item:hover {
+                    color: #C5A028 !important;
+                    background: rgba(255,255,255,0.05) !important;
+                }
+                .settings-menu button {
+                    display: block;
+                    width: 100%;
+                    transition: all 0.2s ease;
+                    border-radius: 2px;
+                    padding: 6px 8px !important;
                 }
             </style>
             <section class="article-hero audio-player-hero" style="height: 100vh; width: 100vw; position: relative; overflow: hidden;">
@@ -102,11 +117,21 @@ export class MagazineAudioPlayer extends HTMLElement {
                         <span class="time-progress" style="font-family: 'Orbitron', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; opacity: 0.6; color: #fff;">00:00 / 00:00</span>
                     </div>
 
-                    <div class="controls-right" style="display: flex; align-items: center; gap: 30px;">
-                        <button class="control-btn settings-btn" aria-label="Visualizer Mode" style="background: none; border: none; color: #fff; cursor: pointer; padding: 10px; display: flex; align-items: center; justify-content: center; position: relative;">
+                    <div class="controls-right" style="display: flex; align-items: center; gap: 30px; position: relative;">
+                        <button class="control-btn settings-btn" aria-label="Visualizer Settings" style="background: none; border: none; color: #fff; cursor: pointer; padding: 10px; display: flex; align-items: center; justify-content: center;">
                             <svg viewBox="0 0 24 24" width="24" height="24" style="display: block; pointer-events: none;"><path fill="currentColor" d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L3.09 10.22c-.12.2-.07.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
-                            <span class="mode-label" style="position: absolute; top: -10px; font-family: 'Orbitron', sans-serif; font-size: 8px; text-transform: uppercase; white-space: nowrap; background: #C5A028; color: #000; padding: 2px 4px; border-radius: 2px; opacity: 0; transition: opacity 0.3s;">Default</span>
                         </button>
+                        <div class="settings-menu" style="position: absolute; bottom: 65px; right: 0; background: rgba(0,0,0,0.95); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; display: none; flex-direction: column; padding: 12px; min-width: 180px; z-index: 200; backdrop-filter: blur(20px); box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
+                            <div style="font-family: 'Orbitron', sans-serif; font-size: 9px; color: #C5A028; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid rgba(197, 160, 40, 0.3); padding-bottom: 6px;">Visualizer Mode</div>
+                            <button class="menu-item" data-mode="both" style="background: none; border: none; color: #fff; padding: 8px; text-align: left; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 11px; transition: all 0.2s; border-radius: 4px; width: 100%;">Mirror Spectrum</button>
+                            <button class="menu-item" data-mode="upper" style="background: none; border: none; color: #fff; padding: 8px; text-align: left; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 11px; transition: all 0.2s; border-radius: 4px; width: 100%;">Upper Spectrum</button>
+                            <button class="menu-item" data-mode="lower" style="background: none; border: none; color: #fff; padding: 8px; text-align: left; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 11px; transition: all 0.2s; border-radius: 4px; width: 100%;">Lower Spectrum</button>
+                            
+                            <div style="font-family: 'Orbitron', sans-serif; font-size: 9px; color: #C5A028; margin: 12px 0 8px 0; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid rgba(197, 160, 40, 0.3); padding-bottom: 6px;">Effects</div>
+                            <button class="toggle-particles" style="background: none; border: none; color: #fff; padding: 8px; text-align: left; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 11px; transition: all 0.2s; border-radius: 4px; width: 100%; display: flex; justify-content: space-between;">
+                                Particles <span class="status">ON</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -270,24 +295,53 @@ export class MagazineAudioPlayer extends HTMLElement {
         });
 
         const settingsBtn = this.querySelector('.settings-btn');
-        const modeLabel = this.querySelector('.mode-label');
+        const settingsMenu = this.querySelector('.settings-menu');
+        const menuItems = this.querySelectorAll('.menu-item');
+        const particleToggle = this.querySelector('.toggle-particles');
 
-        if (settingsBtn) {
+        if (settingsBtn && settingsMenu) {
             settingsBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                const modes = ['both', 'upper', 'lower'];
-                const currentIndex = modes.indexOf(this.vizMode);
-                this.vizMode = modes[(currentIndex + 1) % modes.length];
-                
-                if (modeLabel) {
-                    modeLabel.textContent = this.vizMode.charAt(0).toUpperCase() + this.vizMode.slice(1);
-                    modeLabel.style.opacity = '1';
-                    setTimeout(() => {
-                        modeLabel.style.opacity = '0';
-                    }, 1500);
-                }
-                console.log(`Visualizer Mode: ${this.vizMode}`);
+                const isVisible = settingsMenu.style.display === 'flex';
+                settingsMenu.style.display = isVisible ? 'none' : 'flex';
             });
+
+            // Close menu on outside click
+            window.addEventListener('click', () => {
+                settingsMenu.style.display = 'none';
+            });
+
+            menuItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.vizMode = item.dataset.mode;
+                    
+                    // Highlight active
+                    menuItems.forEach(mi => mi.style.color = '#fff');
+                    item.style.color = '#C5A028';
+                });
+            });
+
+            if (particleToggle) {
+                const status = particleToggle.querySelector('.status');
+                if (status) {
+                    status.textContent = this.showParticles ? 'ON' : 'OFF';
+                    status.style.color = this.showParticles ? '#C5A028' : '#666';
+                }
+
+                particleToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.showParticles = !this.showParticles;
+                    if (status) {
+                        status.textContent = this.showParticles ? 'ON' : 'OFF';
+                        status.style.color = this.showParticles ? '#C5A028' : '#666';
+                    }
+                });
+            }
+            
+            // Set initial active
+            const activeItem = Array.from(menuItems).find(i => i.dataset.mode === this.vizMode);
+            if (activeItem) activeItem.style.color = '#C5A028';
         }
 
         this._updateUI = () => {
@@ -361,7 +415,14 @@ export class MagazineAudioPlayer extends HTMLElement {
             const barWidth = 1.5;
             const actualBarCount = Math.min(barCount, Math.floor(totalWidth / (barWidth + spacing))) - 8;
             const startX = (totalWidth - (actualBarCount * (barWidth + spacing))) / 2;
-            const centerY = canvas.height * 0.65;
+            
+            // Dynamic Center Y based on mode
+            let centerY = canvas.height / 2;
+            if (this.vizMode === 'lower') {
+                centerY = canvas.height * 0.4; // Offset upwards by half typical bar height
+            } else if (this.vizMode === 'upper') {
+                centerY = canvas.height * 0.6; // Offset downwards by half typical bar height
+            }
 
             this.ctx.strokeStyle = colorPrimary.replace('rgb', 'rgba').replace(')', ', 0.2)');
             this.ctx.lineWidth = 1;
@@ -375,7 +436,8 @@ export class MagazineAudioPlayer extends HTMLElement {
                 if (dataArray) {
                     const index = Math.floor(Math.pow(i / actualBarCount, 1.45) * (dataArray.length * 0.75));
                     const value = dataArray[index] || 0;
-                    targetH = (Math.pow(value / 255, 1.5)) * (canvas.height * 0.15);
+                    const hScale = this.vizMode === 'both' ? 0.15 : 0.25;
+                    targetH = (Math.pow(value / 255, 1.5)) * (canvas.height * hScale);
                     if (targetH < 2) targetH = 2;
                     
                     if (targetH > this.bars[i]) {
@@ -471,7 +533,7 @@ export class MagazineAudioPlayer extends HTMLElement {
                 this.ctx.restore();
 
                 // Particle Spawning (Mostly for aesthetic)
-                if (dataArray && peakH > 5) {
+                if (this.showParticles && dataArray && peakH > 5) {
                     if (this.bars[i] > 30 && Math.random() > 0.98) {
                         const particleY = this.vizMode === 'upper' ? centerY - currentH : centerY + currentH;
                         this.particles.push({
@@ -520,7 +582,6 @@ export class MagazineAudioPlayer extends HTMLElement {
             });
             this.ctx.globalAlpha = 1.0;
 
-            this._updateUI();
             this.animationId = requestAnimationFrame(draw);
         };
 
