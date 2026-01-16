@@ -23,6 +23,7 @@ export class MagazineAudioPlayer extends HTMLElement {
         const src = this.getAttribute('src') || '';
         const bg = this.getAttribute('bg') || 'images/cube3__camera_settings_photorealistic4kcinematiccinestillmuted_5abb89d1-5f44-438f-a008-8fbeda9ab431.png';
         const videoSrc = this.getAttribute('video-src') || 'audio/Solitude Machine.mp4';
+        const hasVideo = !!videoSrc;
 
         this.innerHTML = `
             <style>
@@ -76,12 +77,12 @@ export class MagazineAudioPlayer extends HTMLElement {
                     padding: 6px 8px !important;
                 }
             </style>
-            <section class="article-hero audio-player-hero" style="height: 100vh; width: 100vw; position: relative; overflow: hidden;">
+            <section class="article-hero audio-player-hero" style="height: 100vh; width: 100vw; position: relative; overflow: hidden; background: #000;">
                 <div class="hero-image" style="position: absolute; inset: 0; z-index: 1;">
-                    <video id="player-bg-video" autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; display: none;">
+                    <video id="player-bg-video" muted loop playsinline style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; display: ${hasVideo ? 'block' : 'none'};">
                         <source src="${videoSrc}" type="video/mp4">
                     </video>
-                    <img src="${bg}" alt="Background" id="player-bg-image" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="${bg}" alt="Background" id="player-bg-image" style="width: 100%; height: 100%; object-fit: cover; display: ${hasVideo ? 'none' : 'block'};">
                     <div class="overlay-gradient" style="position: absolute; inset: 0;"></div>
                 </div>
 
@@ -162,7 +163,8 @@ export class MagazineAudioPlayer extends HTMLElement {
     initVisualizer() {
         const title = this.getAttribute('title') || 'Untitled';
         const artist = this.getAttribute('artist') || 'Unknown artist';
-        const src = this.getAttribute('src') || '';
+        const videoSrc = this.getAttribute('video-src') || 'audio/Solitude Machine.mp4';
+        const src = this.getAttribute('src') || videoSrc;
         
         const canvas = this.querySelector('#visualizer');
         const playPauseBtn = this.querySelector('.play-pause-btn');
@@ -256,26 +258,45 @@ export class MagazineAudioPlayer extends HTMLElement {
             }
         };
 
-        if (bgVideo) {
+        if (bgVideo && videoSrc) {
             bgVideo.crossOrigin = "anonymous";
-            bgVideo.addEventListener('loadeddata', () => {
-                // Video is ready, show it and hide image
+            
+            const onVideoReady = () => {
+                // Video is ready, ensure visibility
                 bgVideo.style.display = 'block';
                 if (bgImage) bgImage.style.display = 'none';
                 
                 // Sample colors from the first frame
                 try {
-                    // We need a small delay or seek to ensure first frame is actually visible for sampling
                     setTimeout(() => {
                         updateColorsFromSource(bgVideo);
                     }, 500);
                 } catch (e) {
                     console.warn("ColorThief video extraction failed:", e);
                 }
+            };
+
+            if (bgVideo.readyState >= 3) {
+                onVideoReady();
+            } else {
+                bgVideo.addEventListener('loadeddata', onVideoReady);
+            }
+
+            // Fallback to image if video fails
+            bgVideo.addEventListener('error', () => {
+                console.warn("Video failed to load, falling back to image.");
+                bgVideo.style.display = 'none';
+                if (bgImage) {
+                    bgImage.style.display = 'block';
+                    if (bgImage.complete) {
+                        updateColorsFromSource(bgImage);
+                    } else {
+                        bgImage.addEventListener('load', () => updateColorsFromSource(bgImage));
+                    }
+                }
             });
-            // Ensure video attempts to play
-            bgVideo.play().catch(e => console.warn("Video autoplay blocked:", e));
         } else if (bgImage) {
+            bgImage.style.display = 'block';
             bgImage.crossOrigin = "anonymous";
             if (bgImage.complete) {
                 updateColorsFromSource(bgImage);
@@ -295,6 +316,14 @@ export class MagazineAudioPlayer extends HTMLElement {
             const currentPath = isPaused ? playPath : pausePath;
 
             playPauseBtn.innerHTML = `<svg viewBox="0 0 24 24" width="36" height="36" style="display: block; pointer-events: none;"><path fill="currentColor" d="${currentPath}"/></svg>`;
+            
+            if (bgVideo) {
+                if (isPaused) {
+                    bgVideo.pause();
+                } else {
+                    bgVideo.play().catch(e => console.warn("Video play blocked:", e));
+                }
+            }
         };
 
         const togglePlayback = (e) => {
@@ -314,7 +343,9 @@ export class MagazineAudioPlayer extends HTMLElement {
         seekSlider.addEventListener('input', (e) => {
             const duration = audioService.duration;
             if (duration) {
-                audioService.currentTime = (e.target.value / 100) * duration;
+                const newTime = (e.target.value / 100) * duration;
+                audioService.currentTime = newTime;
+                if (bgVideo) bgVideo.currentTime = newTime;
             }
         });
 
@@ -379,6 +410,13 @@ export class MagazineAudioPlayer extends HTMLElement {
                 seekSlider.value = percent;
                 seekSlider.style.background = `linear-gradient(to right, ${brokenWhite} ${percent}%, rgba(255, 255, 255, 0.15) ${percent}%)`;
             }
+
+            if (bgVideo && !audioService.isPaused) {
+                // Sync video with audio service time
+                if (Math.abs(bgVideo.currentTime - current) > 0.2) {
+                    bgVideo.currentTime = current;
+                }
+            }
             
             const formatTime = (s) => {
                 if (isNaN(s)) return '00:00';
@@ -441,11 +479,11 @@ export class MagazineAudioPlayer extends HTMLElement {
             const startX = (totalWidth - (actualBarCount * (barWidth + spacing))) / 2;
             
             // Dynamic Center Y based on mode
-            let centerY = canvas.height / 2;
+            let centerY = canvas.height * 0.55;
             if (this.vizMode === 'lower') {
-                centerY = canvas.height * 0.4; // Offset upwards by half typical bar height
+                centerY = canvas.height * 0.45; // Offset upwards to give room for downward bars
             } else if (this.vizMode === 'upper') {
-                centerY = canvas.height * 0.6; // Offset downwards by half typical bar height
+                centerY = canvas.height * 0.65; // Offset downwards to give room for upward bars
             }
 
             this.ctx.strokeStyle = colorPrimary.replace('rgb', 'rgba').replace(')', ', 0.2)');
