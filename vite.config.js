@@ -30,6 +30,7 @@ export default defineConfig({
         creator: './creator.html',
         neuralArch: './neural-arch.html',
         noiseFloor: './noise-floor.html',
+        lyricSync: './lyric-sync-tool.html',
         error404: './404.html'
       }
     }

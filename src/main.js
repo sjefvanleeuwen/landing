@@ -7,9 +7,10 @@ import { initCreator } from './js/creator.js';
 import { initCV } from './js/cv-fetcher.js';
 import { initBlog } from './js/blog-fetcher.js';
 import { initArticleViewer } from './js/article-viewer.js';
-import { MagazineAudioPlayer } from './js/audio-component.js';
+import { MagazineAudioPlayer, GlobalMiniPlayer } from './js/audio-component.js';
 
 customElements.define('m-audio-player', MagazineAudioPlayer);
+customElements.define('m-global-mini-player', GlobalMiniPlayer);
 
 // Prevent Font Flickering (FOUT)
 document.documentElement.classList.add('fonts-loading');

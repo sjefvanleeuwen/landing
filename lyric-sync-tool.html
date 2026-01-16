@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Lyric Sync Tool</title>
+    <link rel="stylesheet" href="./src/scss/main.scss">
+    <style>
+        body { background: #0a0a0a; color: #fff; padding: 40px; font-family: 'Inter', sans-serif; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .card { background: #151515; border: 1px solid #333; padding: 30px; border-radius: 12px; margin-bottom: 20px; }
+        h1 { color: #C5A028; font-family: 'Michroma', sans-serif; }
+        .upload-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .input-group { display: flex; flex-direction: column; gap: 10px; }
+        input[type="file"], textarea { background: #222; border: 1px solid #444; color: #fff; padding: 10px; border-radius: 4px; }
+        textarea { height: 150px; font-family: monospace; }
+        button { 
+            background: #C5A028; border: none; padding: 12px 24px; color: #000; 
+            font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 20px;
+            transition: opacity 0.2s;
+        }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+        #status { margin-top: 20px; color: #aaa; font-style: italic; }
+        #output { width: 100%; height: 200px; margin-top: 20px; display: none; }
+        audio { width: 100%; margin-top: 20px; }
+        .sync-preview { margin-top: 20px; font-size: 1.5rem; text-align: center; color: #C5A028; min-height: 2em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Lyric Synchronizer</h1>
+        <p>Upload an audio file and paste your lyrics. AI will generate the LRC timecodes in your browser.</p>
+
+        <div class="card">
+            <div class="upload-section">
+                <div class="input-group">
+                    <label>1. Audio File (MP3/WAV)</label>
+                    <input type="file" id="audio-input" accept="audio/*">
+                </div>
+                <div class="input-group">
+                    <label>2. Plain Text Lyrics</label>
+                    <textarea id="lyrics-input" placeholder="Paste lyrics line by line here..."></textarea>
+                </div>
+            </div>
+            
+            <div id="ai-controls">
+                <div class="input-group" style="margin-bottom: 10px;">
+                    <label style="font-size: 0.8rem; color: #888;">AI Model & Language</label>
+                    <div style="display: flex; gap: 10px;">
+                        <select id="model-select" style="flex: 2; background: #222; color: #fff; padding: 10px; border: 1px solid #444; border-radius: 4px;">
+                            <option value="Xenova/whisper-tiny">Tiny (40MB - Fast)</option>
+                            <option value="Xenova/whisper-base" selected>Base (75MB - Recommended)</option>
+                            <option value="Xenova/whisper-small">Small (250MB - Precise)</option>
+                        </select>
+                        <select id="lang-select" style="flex: 1; background: #222; color: #fff; padding: 10px; border: 1px solid #444; border-radius: 4px;">
+                            <option value="en">English</option>
+                            <option value="nl">Dutch</option>
+                            <option value="de">German</option>
+                            <option value="fr">French</option>
+                            <option value="es">Spanish</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="load-model-btn">Load AI Model</button>
+                <button id="process-btn" disabled>Start AI Sync</button>
+                <button id="clear-cache-btn" style="background: #444; color: #ccc;">Clear AI Cache</button>
+            </div>
+
+            <div id="progress-container" style="display: none; margin-top: 20px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                    <span id="progress-status">Downloading...</span>
+                    <span id="progress-percent">0%</span>
+                </div>
+                <div style="width: 100%; height: 8px; background: #222; border-radius: 4px; overflow: hidden;">
+                    <div id="progress-bar" style="width: 0%; height: 100%; background: #C5A028; transition: width 0.3s;"></div>
+                </div>
+            </div>
+            
+            <div id="status">Ready</div>
+            <div id="log" style="font-size: 0.8rem; color: #666; margin-top: 10px; max-height: 100px; overflow-y: auto;"></div>
+        </div>
+
+        <div id="player-section" class="card" style="display: none;">
+            <h3>Preview & Output</h3>
+            <audio id="audio-player" controls></audio>
+            <div id="active-lyric" class="sync-preview"></div>
+            <label>Raw LRC Output (Copy this):</label>
+            <textarea id="output-lrc" readonly></textarea>
+        </div>
+    </div>
+    <script type="module">
+        import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.1';
+        
+        // 1. SMART NETWORK PATCH: Force all AI requests to Hugging Face
+        const originalFetch = window.fetch;
+        window.fetch = function() {
+            let url = arguments[0];
+            if (typeof url === 'string' && (url.includes('.json') || url.includes('.onnx') || url.includes('.bin'))) {
+                const modelSelect = document.getElementById('model-select');
+                const activeModel = modelSelect ? modelSelect.value : 'Xenova/whisper-tiny';
+
+                if (!url.startsWith('http') || url.includes('localhost') || url.includes('127.0.0.1')) {
+                    const parts = url.split('/');
+                    const filename = parts.pop();
+                    const forcedUrl = `https://huggingface.co/${activeModel}/resolve/main/${filename}`;
+                    console.log(`[Bypassing Local] Redirecting ${url} -> ${forcedUrl}`);
+                    arguments[0] = forcedUrl;
+                }
+            }
+            return originalFetch.apply(this, arguments);
+        };
+
+        // 2. ULTIMATE REMOTE SETTINGS
+        env.allowLocalModels = false;
+        env.allowRemoteModels = true;
+        env.useBrowserCache = false; // Disable cache temporarily to clear the "poisoned" data
+        
+        env.remoteHost = 'https://huggingface.co';
+        env.remotePathTemplate = '{model}/resolve/main/'; 
+
+        // Fix for WASM background worker issues
+        env.backends.onnx.wasm.proxy = false;
+        env.backends.onnx.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.1/dist/';
+
+        const audioInput = document.getElementById('audio-input');
+        const lyricsInput = document.getElementById('lyrics-input');
+        const modelSelect = document.getElementById('model-select');
+        const langSelect = document.getElementById('lang-select');
+        const loadModelBtn = document.getElementById('load-model-btn');
+        const processBtn = document.getElementById('process-btn');
+        const status = document.getElementById('status');
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+        const progressStatus = document.getElementById('progress-status');
+        const progressPercent = document.getElementById('progress-percent');
+        const playerSection = document.getElementById('player-section');
+        const audioPlayer = document.getElementById('audio-player');
+        const outputLrc = document.getElementById('output-lrc');
+        const activeLyric = document.getElementById('active-lyric');
+        const logArea = document.getElementById('log');
+        const clearCacheBtn = document.getElementById('clear-cache-btn');
+
+        // FORCE clear cache on specifically that error
+        clearCacheBtn.addEventListener('click', async () => {
+            if (!confirm("Clear AI data and reset?")) return;
+            addLog("Deleting local AI cache...");
+            const dbs = await window.indexedDB.databases();
+            for (const db of dbs) {
+                if (db.name.includes('transformers')) {
+                    window.indexedDB.deleteDatabase(db.name);
+                }
+            }
+            addLog("Cache cleared. Refreshing page...");
+            setTimeout(() => location.reload(), 500);
+        });
+
+        function addLog(msg) {
+            const time = new Date().toLocaleTimeString([], { hour12: false, minute: '2-digit', second: '2-digit' });
+            const entry = document.createElement('div');
+            entry.textContent = `[${time}] ${msg}`;
+            logArea.prepend(entry);
+            console.log(msg);
+        }
+
+        let transcriber = null;
+        let timedLyrics = [];
+
+        async function initModel() {
+            const modelName = modelSelect.value;
+            loadModelBtn.disabled = true;
+            modelSelect.disabled = true;
+            progressContainer.style.display = 'block';
+            status.textContent = `Initializing ${modelName}...`;
+
+            try {
+                transcriber = await pipeline('automatic-speech-recognition', modelName, {
+                    revision: 'main', 
+                    progress_callback: (data) => {
+                        if (data.status === 'initiate') {
+                            addLog(`Downloading: ${data.file}`);
+                        } else if (data.status === 'progress') {
+                            const p = data.progress.toFixed(1);
+                            progressBar.style.width = p + '%';
+                            progressPercent.textContent = p + '%';
+                            progressStatus.textContent = `Downloading ${data.file}...`;
+                        } else if (data.status === 'ready') {
+                            addLog(`AI Model (${modelName}) is ready.`);
+                            status.textContent = "AI Model Loaded.";
+                            processBtn.disabled = false;
+                            loadModelBtn.style.display = 'none';
+                            progressContainer.style.display = 'none';
+                        }
+                    }
+                });
+            } catch (err) {
+                addLog(`ERROR: ${err.message}`);
+                console.error(err);
+                status.textContent = "Error: " + err.message;
+                loadModelBtn.disabled = false;
+                modelSelect.disabled = false;
+            }
+        }
+
+        loadModelBtn.addEventListener('click', initModel);
+
+        // 2. Audio Processing Step
+        processBtn.addEventListener('click', async () => {
+            if (!audioInput.files[0] || !lyricsInput.value.trim()) {
+                alert("Please provide both audio and lyrics.");
+                return;
+            }
+
+            processBtn.disabled = true;
+            status.textContent = "Processing audio...";
+            addLog("Preparing audio for AI...");
+            
+            try {
+                const file = audioInput.files[0];
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                addLog("Decoding audio file...");
+                const arrayBuffer = await file.arrayBuffer();
+                const rawBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+                const duration = rawBuffer.duration;
+
+                addLog(`Original Sample Rate: ${rawBuffer.sampleRate}Hz`);
+                addLog(`Resampling to 16kHz for AI...`);
+
+                // Use OfflineAudioContext for reliable resampling to 16kHz
+                const offlineCtx = new OfflineAudioContext(1, Math.ceil(duration * 16000), 16000);
+                const source = offlineCtx.createBufferSource();
+                source.buffer = rawBuffer;
+
+                // Vocal range enhancement (High-pass to remove low-end rumble/kicks)
+                const hpf = offlineCtx.createBiquadFilter();
+                hpf.type = 'highpass';
+                hpf.frequency.value = 250; // Slightly higher to cut more bass
+                hpf.Q.value = 1.0;
+                
+                source.connect(hpf);
+                hpf.connect(offlineCtx.destination);
+                
+                source.start();
+                const renderedBuffer = await offlineCtx.startRendering();
+                let float32Data = renderedBuffer.getChannelData(0);
+
+                // Volume Normalization
+                let peak = 0;
+                for(let i=0; i<float32Data.length; i+=10) if(Math.abs(float32Data[i]) > peak) peak = Math.abs(float32Data[i]);
+                if (peak > 0) {
+                    const gain = 0.9 / peak;
+                    for(let i=0; i < float32Data.length; i++) float32Data[i] *= gain;
+                }
+
+                addLog(`Ready for AI. Duration: ${duration.toFixed(1)}s`);
+                status.textContent = "AI is transcribing... (Step 1/2)";
+
+                // Transcription with aggressive word detection
+                const result = await transcriber(float32Data, { 
+                    return_timestamps: 'word',
+                    chunk_length_s: 30,
+                    stride_length_s: 5,
+                    language: langSelect.value,
+                    prompt: lyricsInput.value.split('\n').slice(0,5).join(' ')
+                });
+
+                if (!result.chunks || result.chunks.length === 0) {
+                    throw new Error("AI failed to detect words. Vocals might be too quiet.");
+                }
+
+                // Log detections for debugging
+                addLog(`AI found ${result.chunks.length} words.`);
+                const firstWords = result.chunks.slice(0, 15).map(c => `[${c.timestamp[0].toFixed(1)}s] ${c.text}`).join(' ');
+                addLog(`Detections: ${firstWords}...`);
+                
+                status.textContent = "Matching lyrics to AI words...";
+                alignLyricsFinal(result.chunks, lyricsInput.value);
+
+                addLog("Syncing complete.");
+                status.textContent = "Ready!";
+                showPlayer(URL.createObjectURL(file));
+            } catch (err) {
+                addLog(`ERROR: ${err.message}`);
+                console.error(err);
+                status.textContent = "Error: " + err.message;
+                processBtn.disabled = false;
+            }
+        });
+
+        function alignLyricsFinal(aiChunks, rawText) {
+            const lines = rawText.split('\n').map(l => l.trim()).filter(l => l);
+            let aiPointer = 0;
+            let matchedCount = 0;
+            timedLyrics = [];
+            let lrcText = "";
+
+            addLog(`Aligning ${lines.length} lines with Cluster Matching (VFinal-C)...`);
+
+            lines.forEach((line) => {
+                const lineWords = line.toLowerCase()
+                    .replace(/[^\w\s]/g, '')
+                    .split(/\s+/)
+                    .filter(w => w.length >= 2);
+
+                if (lineWords.length === 0) {
+                    timedLyrics.push({ time: timedLyrics.length > 0 ? timedLyrics[timedLyrics.length - 1].time + 0.5 : 0, text: line });
+                    return;
+                }
+
+                let bestTime = null;
+                let highestScore = 0;
+                let bestIdx = -1;
+
+                // Windowed Search: Look ahead about 150 AI chunks (~1 minute)
+                // We want to find the cluster of words that MOST matches this line.
+                // This prevents "early triggering" on a single small word hallucination.
+                const searchLimit = Math.min(aiPointer + 150, aiChunks.length);
+                
+                for (let i = aiPointer; i < searchLimit; i++) {
+                    let score = 0;
+                    // Check a window of 8 AI chunks for matches to this lyric line
+                    const aiWindow = aiChunks.slice(i, i + 8);
+                    
+                    lineWords.forEach(lw => {
+                        if (aiWindow.some(chunk => {
+                            const aiW = chunk.text.toLowerCase().replace(/[^\w]/g, '');
+                            return aiW === lw || (lw.length > 3 && (aiW.includes(lw) || lw.includes(aiW)));
+                        })) {
+                            score++;
+                        }
+                    });
+
+                    // Bonus for "long word" matches (less likely to be hallucinations)
+                    aiWindow.forEach(chunk => {
+                        const aiW = chunk.text.toLowerCase().replace(/[^\w]/g, '');
+                        if (aiW.length > 5 && lineWords.some(lw => aiW.includes(lw))) score += 1;
+                    });
+
+                    if (score > highestScore) {
+                        highestScore = score;
+                        bestIdx = i;
+                    }
+
+                    // If we found a near-perfect match for the line, skip rest of search for this line
+                    if (highestScore >= Math.max(2, lineWords.length * 0.7)) break;
+                }
+
+                // Threshold: We need at least 1.5 score (e.g. 1 long word match or 2 short ones)
+                if (highestScore >= 1.5 || (lineWords.length === 1 && highestScore >= 1)) {
+                    bestTime = aiChunks[bestIdx].timestamp[0];
+                    aiPointer = bestIdx + 1;
+                    matchedCount++;
+                }
+
+                let time = bestTime;
+                if (time === null) {
+                    // Fallback: Assume it's about 2-3 seconds after the last line
+                    time = timedLyrics.length > 0 ? timedLyrics[timedLyrics.length - 1].time + 2.5 : 0;
+                }
+
+                timedLyrics.push({ time, text: line });
+                const mins = Math.floor(time / 60);
+                const secs = (time % 60).toFixed(2);
+                lrcText += `[${mins.toString().padStart(2, '0')}:${secs.padStart(5, '0')}] ${line}\n`;
+            });
+
+            addLog(`Mapping complete: ${matchedCount}/${lines.length} confirmed lines.`);
+            outputLrc.value = lrcText;
+            playerSection.style.display = 'block';
+        }
+
+        function showPlayer(url) {
+            audioPlayer.src = url;
+            audioPlayer.ontimeupdate = () => {
+                const time = audioPlayer.currentTime;
+                const currentLine = [...timedLyrics].reverse().find(l => l.time <= time);
+                if (currentLine) activeLyric.textContent = currentLine.text;
+            };
+        }
+    </script>
+</body>
+</html>
