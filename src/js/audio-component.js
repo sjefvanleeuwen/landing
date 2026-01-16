@@ -6,8 +6,10 @@ export class MagazineAudioPlayer extends HTMLElement {
         super();
         this.ctx = null;
         this.bars = [];
+        this.peaks = [];
         this.particles = [];
         this.animationId = null;
+        this.vizMode = 'both'; // both, upper, lower
         this._handleScroll = null;
         this._updateUI = null;
         this._onPlay = null;
@@ -101,7 +103,10 @@ export class MagazineAudioPlayer extends HTMLElement {
                     </div>
 
                     <div class="controls-right" style="display: flex; align-items: center; gap: 30px;">
-                        <!-- Cleaned up right side icons -->
+                        <button class="control-btn settings-btn" aria-label="Visualizer Mode" style="background: none; border: none; color: #fff; cursor: pointer; padding: 10px; display: flex; align-items: center; justify-content: center; position: relative;">
+                            <svg viewBox="0 0 24 24" width="24" height="24" style="display: block; pointer-events: none;"><path fill="currentColor" d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L3.09 10.22c-.12.2-.07.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                            <span class="mode-label" style="position: absolute; top: -10px; font-family: 'Orbitron', sans-serif; font-size: 8px; text-transform: uppercase; white-space: nowrap; background: #C5A028; color: #000; padding: 2px 4px; border-radius: 2px; opacity: 0; transition: opacity 0.3s;">Default</span>
+                        </button>
                     </div>
                 </div>
             </section>
@@ -264,6 +269,27 @@ export class MagazineAudioPlayer extends HTMLElement {
             }
         });
 
+        const settingsBtn = this.querySelector('.settings-btn');
+        const modeLabel = this.querySelector('.mode-label');
+
+        if (settingsBtn) {
+            settingsBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const modes = ['both', 'upper', 'lower'];
+                const currentIndex = modes.indexOf(this.vizMode);
+                this.vizMode = modes[(currentIndex + 1) % modes.length];
+                
+                if (modeLabel) {
+                    modeLabel.textContent = this.vizMode.charAt(0).toUpperCase() + this.vizMode.slice(1);
+                    modeLabel.style.opacity = '1';
+                    setTimeout(() => {
+                        modeLabel.style.opacity = '0';
+                    }, 1500);
+                }
+                console.log(`Visualizer Mode: ${this.vizMode}`);
+            });
+        }
+
         this._updateUI = () => {
             if (isDragging) return;
             const duration = audioService.duration;
@@ -374,18 +400,69 @@ export class MagazineAudioPlayer extends HTMLElement {
                 
                 // Use the top 5 colors to build a complex vertical gradient
                 const grad = themeColors.gradPalette || [colorPrimary, colorSecondary, colorLight, colorSecondary, colorPrimary];
-                const gradient = this.ctx.createLinearGradient(x, centerY - currentH, x, centerY + currentH);
-                gradient.addColorStop(0, 'rgba(0, 0, 0, 0.0)');
-                gradient.addColorStop(0.15, grad[4] || grad[0]);
-                gradient.addColorStop(0.3, grad[2] || grad[0]);
-                gradient.addColorStop(0.5, grad[0]);
-                gradient.addColorStop(0.7, grad[1] || grad[0]);
-                gradient.addColorStop(0.85, grad[3] || grad[0]);
-                gradient.addColorStop(1, 'rgba(0, 0, 0, 0.0)');
+                
+                // Mode-based drawing logic
+                if (this.vizMode === 'both') {
+                    const gradient = this.ctx.createLinearGradient(x, centerY - currentH, x, centerY + currentH);
+                    gradient.addColorStop(0, 'rgba(0, 0, 0, 0.0)');
+                    gradient.addColorStop(0.15, grad[4] || grad[0]);
+                    gradient.addColorStop(0.3, grad[2] || grad[0]);
+                    gradient.addColorStop(0.5, grad[0]);
+                    gradient.addColorStop(0.7, grad[1] || grad[0]);
+                    gradient.addColorStop(0.85, grad[3] || grad[0]);
+                    gradient.addColorStop(1, 'rgba(0, 0, 0, 0.0)');
 
-                this.ctx.fillStyle = gradient;
-                this.ctx.fillRect(x, centerY - currentH, barWidth, currentH * 2);
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.fillRect(x, centerY - currentH, barWidth, currentH * 2);
+                    
+                    if (dataArray && peakH > 5) {
+                        this.ctx.save();
+                        this.ctx.shadowBlur = 8;
+                        this.ctx.shadowColor = colorAccent;
+                        this.ctx.fillStyle = colorLight;
+                        this.ctx.fillRect(x, centerY - peakH - 2, barWidth, 1.5);
+                        this.ctx.fillRect(x, centerY + peakH + 1, barWidth, 1.5);
+                        this.ctx.restore();
+                    }
+                } else if (this.vizMode === 'upper') {
+                    const gradient = this.ctx.createLinearGradient(x, centerY - currentH, x, centerY);
+                    gradient.addColorStop(0, 'rgba(0, 0, 0, 0.0)');
+                    gradient.addColorStop(0.3, grad[2] || grad[0]);
+                    gradient.addColorStop(0.5, grad[0]);
+                    gradient.addColorStop(1, grad[1] || grad[0]);
 
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.fillRect(x, centerY - currentH, barWidth, currentH);
+                    
+                    if (dataArray && peakH > 5) {
+                        this.ctx.save();
+                        this.ctx.shadowBlur = 8;
+                        this.ctx.shadowColor = colorAccent;
+                        this.ctx.fillStyle = colorLight;
+                        this.ctx.fillRect(x, centerY - peakH - 2, barWidth, 1.5);
+                        this.ctx.restore();
+                    }
+                } else if (this.vizMode === 'lower') {
+                    const gradient = this.ctx.createLinearGradient(x, centerY, x, centerY + currentH);
+                    gradient.addColorStop(0, grad[1] || grad[0]);
+                    gradient.addColorStop(0.5, grad[0]);
+                    gradient.addColorStop(0.7, grad[2] || grad[0]);
+                    gradient.addColorStop(1, 'rgba(0, 0, 0, 0.0)');
+
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.fillRect(x, centerY, barWidth, currentH);
+                    
+                    if (dataArray && peakH > 5) {
+                        this.ctx.save();
+                        this.ctx.shadowBlur = 8;
+                        this.ctx.shadowColor = colorAccent;
+                        this.ctx.fillStyle = colorLight;
+                        this.ctx.fillRect(x, centerY + peakH + 1, barWidth, 1.5);
+                        this.ctx.restore();
+                    }
+                }
+
+                // Shadow around center line
                 this.ctx.save();
                 this.ctx.shadowBlur = 15;
                 this.ctx.shadowColor = grad[0];
@@ -393,21 +470,15 @@ export class MagazineAudioPlayer extends HTMLElement {
                 this.ctx.fillRect(x, centerY - 1, barWidth, 2);
                 this.ctx.restore();
 
+                // Particle Spawning (Mostly for aesthetic)
                 if (dataArray && peakH > 5) {
-                    this.ctx.save();
-                    this.ctx.shadowBlur = 8;
-                    this.ctx.shadowColor = colorAccent;
-                    this.ctx.fillStyle = colorLight;
-                    this.ctx.fillRect(x, centerY - peakH - 2, barWidth, 1.5);
-                    this.ctx.fillRect(x, centerY + peakH + 1, barWidth, 1.5);
-                    this.ctx.restore();
-
                     if (this.bars[i] > 30 && Math.random() > 0.98) {
+                        const particleY = this.vizMode === 'upper' ? centerY - currentH : centerY + currentH;
                         this.particles.push({
                             x: x + barWidth / 2,
-                            y: centerY + currentH,
+                            y: particleY,
                             vx: (Math.random() - 0.5) * 0.4,
-                            vy: 0.2 + Math.random() * 1.0, 
+                            vy: this.vizMode === 'upper' ? -0.2 - Math.random() : 0.2 + Math.random(), 
                             size: Math.random() * 0.7 + 0.2,
                             life: 1.0,
                             color: grad[0]
@@ -420,7 +491,9 @@ export class MagazineAudioPlayer extends HTMLElement {
                     this.ctx.shadowBlur = 20;
                     this.ctx.shadowColor = grad[1] || colorSecondary;
                     this.ctx.globalAlpha = Math.min(1, currentH / 60);
-                    this.ctx.fillRect(x, centerY - currentH, barWidth, currentH * 2);
+                    const yStart = this.vizMode === 'lower' ? centerY : centerY - currentH;
+                    const yHeight = this.vizMode === 'both' ? currentH * 2 : currentH;
+                    this.ctx.fillRect(x, yStart, barWidth, yHeight);
                     this.ctx.restore();
                 }
             }
@@ -428,10 +501,13 @@ export class MagazineAudioPlayer extends HTMLElement {
             this.particles.forEach((p, index) => {
                 p.x += p.vx;
                 p.y += p.vy;
-                p.vy += 0.015;
+                
+                // Gravity depends on direction
+                p.vy += (p.vy > 0) ? 0.015 : -0.005; 
                 p.life -= 0.003;
                 
-                if (p.life <= 0 || p.y > canvas.height + 20) {
+                // Remove if out of bounds or dead
+                if (p.life <= 0 || p.y > canvas.height + 20 || p.y < -20) {
                     this.particles.splice(index, 1);
                     return;
                 }
