@@ -22,6 +22,7 @@ export class MagazineAudioPlayer extends HTMLElement {
         const artist = this.getAttribute('artist') || 'Unknown artist';
         const src = this.getAttribute('src') || '';
         const bg = this.getAttribute('bg') || 'images/cube3__camera_settings_photorealistic4kcinematiccinestillmuted_5abb89d1-5f44-438f-a008-8fbeda9ab431.png';
+        const videoSrc = this.getAttribute('video-src') || 'audio/Solitude Machine.mp4';
 
         this.innerHTML = `
             <style>
@@ -77,6 +78,9 @@ export class MagazineAudioPlayer extends HTMLElement {
             </style>
             <section class="article-hero audio-player-hero" style="height: 100vh; width: 100vw; position: relative; overflow: hidden;">
                 <div class="hero-image" style="position: absolute; inset: 0; z-index: 1;">
+                    <video id="player-bg-video" autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; display: none;">
+                        <source src="${videoSrc}" type="video/mp4">
+                    </video>
                     <img src="${bg}" alt="Background" id="player-bg-image" style="width: 100%; height: 100%; object-fit: cover;">
                     <div class="overlay-gradient" style="position: absolute; inset: 0;"></div>
                 </div>
@@ -166,6 +170,7 @@ export class MagazineAudioPlayer extends HTMLElement {
         const timeDisplayLarge = this.querySelector('.time-display-large');
         const timeProgress = this.querySelector('.time-progress');
         const bgImage = this.querySelector('#player-bg-image');
+        const bgVideo = this.querySelector('#player-bg-video');
         
         if (!canvas) return;
 
@@ -177,10 +182,10 @@ export class MagazineAudioPlayer extends HTMLElement {
             light: '#F9E49B'
         };
 
-        const updateColorsFromImage = () => {
+        const updateColorsFromSource = (source) => {
             try {
                 // Get a larger palette to ensure we have variety
-                const palette = colorThief.getPalette(bgImage, 8);
+                const palette = colorThief.getPalette(source, 8);
                 if (palette && palette.length >= 3) {
                     const inv = (c) => ({ r: 255 - c.r, g: 255 - c.g, b: 255 - c.b });
                     
@@ -251,12 +256,31 @@ export class MagazineAudioPlayer extends HTMLElement {
             }
         };
 
-        if (bgImage) {
+        if (bgVideo) {
+            bgVideo.crossOrigin = "anonymous";
+            bgVideo.addEventListener('loadeddata', () => {
+                // Video is ready, show it and hide image
+                bgVideo.style.display = 'block';
+                if (bgImage) bgImage.style.display = 'none';
+                
+                // Sample colors from the first frame
+                try {
+                    // We need a small delay or seek to ensure first frame is actually visible for sampling
+                    setTimeout(() => {
+                        updateColorsFromSource(bgVideo);
+                    }, 500);
+                } catch (e) {
+                    console.warn("ColorThief video extraction failed:", e);
+                }
+            });
+            // Ensure video attempts to play
+            bgVideo.play().catch(e => console.warn("Video autoplay blocked:", e));
+        } else if (bgImage) {
             bgImage.crossOrigin = "anonymous";
             if (bgImage.complete) {
-                updateColorsFromImage();
+                updateColorsFromSource(bgImage);
             } else {
-                bgImage.addEventListener('load', updateColorsFromImage);
+                bgImage.addEventListener('load', () => updateColorsFromSource(bgImage));
             }
         }
 
