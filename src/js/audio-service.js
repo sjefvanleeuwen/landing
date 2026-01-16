@@ -91,6 +91,14 @@ class AudioService {
         return this.audio.duration;
     }
 
+    get volume() {
+        return this.audio.volume;
+    }
+
+    set volume(v) {
+        this.audio.volume = v;
+    }
+
     get analyzerData() {
         if (!this.analyzer) return null;
         this.analyzer.getByteFrequencyData(this.dataArray);
