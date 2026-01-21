@@ -716,7 +716,9 @@ export class GlobalMiniPlayer extends HTMLElement {
                         <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
                     </button>
                 </div>
-                <div class="mini-progress-bar"></div>
+                <div class="mini-progress-container">
+                    <div class="mini-progress-bar"></div>
+                </div>
             </div>
         `;
 
@@ -724,6 +726,19 @@ export class GlobalMiniPlayer extends HTMLElement {
             audioService.toggle();
             this._updateUI!();
         });
+
+        const progressContainer = this.querySelector('.mini-progress-container') as HTMLElement;
+        if (progressContainer) {
+            progressContainer.addEventListener('click', (e) => {
+                const rect = progressContainer.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const percent = x / rect.width;
+                if (audioService.duration) {
+                    audioService.currentTime = percent * audioService.duration;
+                    this._updateUI!();
+                }
+            });
+        }
     }
 
     disconnectedCallback(): void {
