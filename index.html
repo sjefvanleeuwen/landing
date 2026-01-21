@@ -26,6 +26,24 @@
 
     <m-footer></m-footer>
 
+    <script type="text/javascript">
+      // GitHub Pages SPA Redirect Handler
+      (function(l) {
+        if (l.search[1] === 'p' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&') 
+          }).filter(function(s) {
+            return s.slice(0, 2) === 'p='
+          })[0];
+          if (decoded) {
+            window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded.slice(2) +
+              l.hash
+            );
+          }
+        }
+      }(window.location))
+    </script>
     <script type="module" src="src/main.ts"></script>
 </body>
 </html>

@@ -32,30 +32,10 @@ interface RouteConfig {
   template: string;
 }
 
+// Router now uses convention-based routing (path -> path.html)
+// Only define special overrides here
 const routes: Record<string, RouteConfig> = {
   'home': { template: 'home.html' },
-  'diagrams': { template: 'diagrams.html' },
-  'about': { template: 'about.html' },
-  'elements': { template: 'elements.html' },
-  'neural-arch': { template: 'neural-arch.html' },
-  'article-1': { template: 'article-1.html' },
-  'article-2': { template: 'article-2.html' },
-  'article-3': { template: 'article-3.html' },
-  'article-4': { template: 'article-4.html' },
-  'article-5': { template: 'article-5.html' },
-  'article-6': { template: 'article-6.html' },
-  'article-7': { template: 'article-7.html' },
-  'article-8': { template: 'article-8.html' },
-  'article-9': { template: 'article-9.html' },
-  'noise-floor': { template: 'noise-floor.html' },
-  'creator': { template: 'creator.html' },
-  'cv': { template: 'cv.html' },
-  'blog': { template: 'blog.html' },
-  'journal': { template: 'journal.html' },
-  'blog-backup': { template: 'blog-backup.html' },
-  'article-viewer': { template: 'article-viewer.html' },
-  'audio-test': { template: 'audio-test.html' },
-  'city-lights': { template: 'city-lights.html' },
   '404': { template: '404.html' }
 };
 

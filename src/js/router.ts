@@ -66,19 +66,33 @@ export class Router {
     // 1. Immediately scroll to top when navigation begins
     window.scrollTo(0, 0);
 
-    let rawPath = window.location.hash.slice(2) || 'home';
-    if (rawPath === '') rawPath = 'home';
+    // Support both Hash and Path-based routing (for the GitHub Pages 404 hack)
+    let rawPath = window.location.hash.slice(2);
+    
+    // If no hash, check if there's a path (clean URL support)
+    if (!rawPath && window.location.pathname !== '/') {
+        rawPath = window.location.pathname.slice(1);
+    }
+    
+    if (!rawPath || rawPath === '') rawPath = 'home';
     
     // Strip query string for route matching
     const path = rawPath.split('?')[0];
 
-    const route = this.routes[path] || this.routes['404'] || this.routes['home'];
+    // DETERMINING THE TEMPLATE (CONVENTION-BASED)
+    // 1. Check manual route map (for special mappings)
+    // 2. Default to [path].html
+    const route = this.routes[path];
+    const template = route ? route.template : `${path}.html`;
     
     try {
       if (!this.container) return;
       
       this.container.classList.add('loading');
-      const response = await fetch(route.template);
+      const response = await fetch(template);
+      
+      if (!response.ok) throw new Error(`Template not found: ${template}`);
+      
       const html = await response.text();
       
       // Extract only the content from the body of the fetched file if it's a full HTML page
