@@ -161,7 +161,7 @@ export class MagazineAudioPlayer extends HTMLElement {
     initVisualizer(): void {
         const title = this.getAttribute('title') || 'Untitled';
         const artist = this.getAttribute('artist') || 'Unknown artist';
-        const videoSrc = this.getAttribute('video-src') || 'audio/Solitude Machine.mp4';
+        const videoSrc = this.getAttribute('video-src') || '';
         const src = this.getAttribute('src') || videoSrc;
         
         const canvas = this.querySelector('#visualizer') as HTMLCanvasElement;
@@ -251,6 +251,13 @@ export class MagazineAudioPlayer extends HTMLElement {
             const onVideoReady = () => {
                 bgVideo.style.display = 'block';
                 if (bgImage) bgImage.style.display = 'none';
+                
+                const isPlaying = !audioService.isPaused && audioService.currentSrc === src;
+                if (isPlaying) {
+                    bgVideo.play().catch(() => {});
+                    bgVideo.currentTime = audioService.currentTime;
+                }
+                
                 setTimeout(() => updateColorsFromSource(bgVideo), 500);
             };
 
@@ -277,16 +284,17 @@ export class MagazineAudioPlayer extends HTMLElement {
         this.peaks = new Array(barCount).fill(0);
         
         const updatePlayIcons = () => {
-            const isPaused = audioService.isPaused;
+            const isCurrentTrack = audioService.currentSrc === src;
+            const isPlaying = !audioService.isPaused && isCurrentTrack;
             const playPath = "M8 5v14l11-7z";
             const pausePath = "M6 19h4V5H6v14zm8-14v14h4V5h-4z";
-            const currentPath = isPaused ? playPath : pausePath;
+            const currentPath = isPlaying ? pausePath : playPath;
 
             playPauseBtn.innerHTML = `<svg viewBox="0 0 24 24" width="36" height="36" style="display: block; pointer-events: none;"><path fill="currentColor" d="${currentPath}"/></svg>`;
             
             if (bgVideo) {
-                if (isPaused) bgVideo.pause();
-                else bgVideo.play().catch(e => console.warn("Video play blocked:", e));
+                if (isPlaying) bgVideo.play().catch(e => console.warn("Video play blocked:", e));
+                else bgVideo.pause();
             }
         };
 
@@ -297,6 +305,19 @@ export class MagazineAudioPlayer extends HTMLElement {
         };
 
         playPauseBtn.addEventListener('click', togglePlayback);
+
+        // Auto-switch track on page load
+        if (src && audioService.currentSrc !== src) {
+            audioService.play(src, title, artist).then(() => {
+                updatePlayIcons();
+            }).catch(e => console.warn("Autoplay blocked:", e));
+        } else if (src && audioService.currentSrc === src) {
+            // Already current track, just sync UI and video
+            updatePlayIcons();
+            if (bgVideo && !audioService.isPaused) {
+                bgVideo.currentTime = audioService.currentTime;
+            }
+        }
 
         let isDragging = false;
         seekSlider.addEventListener('mousedown', () => isDragging = true);
@@ -361,18 +382,22 @@ export class MagazineAudioPlayer extends HTMLElement {
 
         this._updateUI = () => {
             if (isDragging) return;
-            const duration = audioService.duration;
-            const current = audioService.currentTime;
+            const isCurrentTrack = audioService.currentSrc === src;
+            const duration = isCurrentTrack ? audioService.duration : 0;
+            const current = isCurrentTrack ? audioService.currentTime : 0;
             const brokenWhite = 'rgba(255, 255, 255, 0.85)';
 
-            if (duration && !isNaN(duration)) {
+            if (duration && !isNaN(duration) && duration > 0) {
                 const percent = (current / duration) * 100;
                 seekSlider.value = percent.toString();
                 seekSlider.style.background = `linear-gradient(to right, ${brokenWhite} ${percent}%, rgba(255, 255, 255, 0.15) ${percent}%)`;
+            } else {
+                seekSlider.value = "0";
+                seekSlider.style.background = `rgba(255, 255, 255, 0.15)`;
             }
 
-            if (bgVideo && !audioService.isPaused) {
-                if (Math.abs(bgVideo.currentTime - current) > 0.2) {
+            if (bgVideo && isCurrentTrack && !audioService.isPaused) {
+                if (Math.abs(bgVideo.currentTime - current) > 0.3) {
                     bgVideo.currentTime = current;
                 }
             }
