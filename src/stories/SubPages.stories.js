@@ -4,7 +4,7 @@ export default {
 
 const Header = `
   <m-nav class="scrolled">
-    <a href="#" class="logo">SJEF VAN LEEUWEN</a>
+    <a href="#" class="logo">SJEF VAN LEEUWEN1</a>
     <div class="nav-links">
       <a href="#">Home</a>
       <a href="#">Stories</a>

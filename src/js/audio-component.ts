@@ -22,7 +22,7 @@ export class MagazineAudioPlayer extends HTMLElement {
         const title = this.getAttribute('title') || 'Untitled';
         const artist = this.getAttribute('artist') || 'Unknown artist';
         const bg = this.getAttribute('bg') || 'images/cube3__camera_settings_photorealistic4kcinematiccinestillmuted_5abb89d1-5f44-438f-a008-8fbeda9ab431.png';
-        const videoSrc = this.getAttribute('video-src') || 'audio/Solitude Machine.mp4';
+        const videoSrc = this.getAttribute('video-src') || '';
         const hasVideo = !!videoSrc;
 
         this.innerHTML = `

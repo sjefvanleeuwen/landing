@@ -37,8 +37,9 @@ export class ColorThief {
     this.ctx = context;
   }
 
-  getDominantColor(img: HTMLImageElement, quality: number = 10): RGB {
+  getDominantColor(img: HTMLImageElement | HTMLVideoElement | HTMLCanvasElement, quality: number = 10): RGB {
     const { width, height } = this._prepareCanvas(img);
+    if (width === 0 || height === 0) return { r: 0, g: 0, b: 0 };
     const imageData = this.ctx.getImageData(0, 0, width, height).data;
     const colorCounts: Record<string, number> = {};
 
@@ -73,8 +74,9 @@ export class ColorThief {
     return dominantColor;
   }
 
-  getPalette(img: HTMLImageElement, colorCount: number = 4, quality: number = 10): RGB[] {
+  getPalette(img: HTMLImageElement | HTMLVideoElement | HTMLCanvasElement, colorCount: number = 4, quality: number = 10): RGB[] {
     const { width, height } = this._prepareCanvas(img);
+    if (width === 0 || height === 0) return [];
     const imageData = this.ctx.getImageData(0, 0, width, height).data;
     const colorCounts = new Map<string, number>();
 
@@ -204,10 +206,29 @@ export class ColorThief {
 
   toRgbString(color: RGB): string { return `${color.r}, ${color.g}, ${color.b}`; }
 
-  private _prepareCanvas(img: HTMLImageElement): { width: number; height: number } {
-    const scale = Math.min(1, 100 / Math.max(img.naturalWidth, img.naturalHeight));
-    const w = Math.floor(img.naturalWidth * scale), h = Math.floor(img.naturalHeight * scale);
-    this.canvas.width = w; this.canvas.height = h;
+  private _prepareCanvas(img: HTMLImageElement | HTMLVideoElement | HTMLCanvasElement): { width: number; height: number } {
+    let naturalWidth = 0;
+    let naturalHeight = 0;
+
+    if (img instanceof HTMLImageElement) {
+        naturalWidth = img.naturalWidth;
+        naturalHeight = img.naturalHeight;
+    } else if (img instanceof HTMLVideoElement) {
+        naturalWidth = img.videoWidth;
+        naturalHeight = img.videoHeight;
+    } else {
+        naturalWidth = img.width;
+        naturalHeight = img.height;
+    }
+    
+    if (naturalWidth === 0 || naturalHeight === 0) return { width: 0, height: 0 };
+
+    const scale = Math.min(1, 100 / Math.max(naturalWidth, naturalHeight));
+    const w = Math.max(1, Math.floor(naturalWidth * scale));
+    const h = Math.max(1, Math.floor(naturalHeight * scale));
+    
+    this.canvas.width = w; 
+    this.canvas.height = h;
     this.ctx.drawImage(img, 0, 0, w, h);
     return { width: w, height: h };
   }
@@ -259,8 +280,23 @@ export class DynamicTheme {
   init(): void {
     this.reset();
     const currentId = this._lifecycleId;
-    const allImages = Array.from(document.querySelectorAll('.article-hero img, .hero-image img, header img, #hero-img, .article-image img, .feature-large img, .full-bleed img, figure img')) as HTMLImageElement[];
-    this.heroImg = allImages.find(img => img.closest('.article-hero, .hero-image, header')) || null;
+
+    // Support for data-dynamic-theme attribute on the page root
+    const rootEl = document.querySelector('[data-dynamic-theme]');
+    let dynamicSource: HTMLElement | null = null;
+    if (rootEl) {
+      const selector = rootEl.getAttribute('data-dynamic-theme');
+      if (selector) dynamicSource = document.querySelector(selector) as HTMLElement;
+    }
+
+    const allSources = Array.from(document.querySelectorAll('.article-hero img, .hero-image img, .hero-image video, header img, #hero-img, #player-bg-image, #player-bg-video, #cv-hero-img, #creator-hero-img, .article-image img, .feature-large img, .full-bleed img, figure img, .video-background video')) as (HTMLImageElement | HTMLVideoElement)[];
+    
+    // Ensure the dynamic target is in the list
+    if (dynamicSource && !allSources.includes(dynamicSource as any)) {
+      allSources.unshift(dynamicSource as any);
+    }
+
+    this.heroImg = (dynamicSource || allSources.find(s => s.closest('.article-hero, .hero-image, header') || s.id === 'player-bg-image')) as HTMLImageElement;
 
     this.observer = new IntersectionObserver((entries) => {
       if (this._lifecycleId !== currentId) return;
@@ -268,7 +304,9 @@ export class DynamicTheme {
       this._update();
     }, { threshold: [0, 0.1, 1], rootMargin: "20% 0px" });
 
-    allImages.forEach(img => this.observer!.observe(img));
+    allSources.forEach(source => {
+      if (source) this.observer!.observe(source);
+    });
 
     let ticking = false;
     this._onScroll = () => {
@@ -294,12 +332,12 @@ export class DynamicTheme {
     this._update();
   }
 
-  async applyFromImage(img: HTMLImageElement): Promise<Theme | null> {
+  async applyFromImage(img: HTMLImageElement | HTMLVideoElement): Promise<Theme | null> {
     const theme = await this._extract(img);
     if (theme) {
       this._apply(theme, img);
       
-      const rawPalette = this.colorThief.getPalette(img, 8);
+      const rawPalette = this.colorThief.getPalette(img as any, 8);
       
       const hexPalette = rawPalette.map(c => {
         const toHex = (n: number) => n.toString(16).padStart(2, '0');
@@ -335,34 +373,34 @@ export class DynamicTheme {
       return;
     }
 
-    let bestImg: HTMLImageElement | null = null;
+    let bestSource: HTMLElement | null = null;
     let minDistance = Infinity;
 
-    const images = this._visibilityMap.size > 0 
-      ? (Array.from(this._visibilityMap.keys()) as HTMLImageElement[])
-      : (Array.from(document.querySelectorAll('.article-hero img, .hero-image img, .article-image img, figure img')) as HTMLImageElement[]);
+    const sources = this._visibilityMap.size > 0 
+      ? (Array.from(this._visibilityMap.keys()) as HTMLElement[])
+      : (Array.from(document.querySelectorAll('.article-hero img, .hero-image img, .hero-image video, #player-bg-image, #player-bg-video, #cv-hero-img, #creator-hero-img, .article-image img, figure img')) as HTMLElement[]);
 
-    images.forEach(img => {
-      if (!img.isConnected || img.offsetWidth === 0) return;
-      const rect = img.getBoundingClientRect();
+    sources.forEach(source => {
+      if (!source.isConnected || (source as HTMLElement).offsetWidth === 0) return;
+      const rect = source.getBoundingClientRect();
       
       if (rect.top <= focusPoint && rect.bottom >= focusPoint) {
-        bestImg = img;
+        bestSource = source;
         minDistance = 0;
       } 
       else if (rect.top < vh && rect.bottom > 0) {
         const dist = Math.min(Math.abs(rect.top - focusPoint), Math.abs(rect.bottom - focusPoint));
         if (dist < minDistance) {
           minDistance = dist;
-          bestImg = img;
+          bestSource = source;
         }
       }
     });
 
-    if (bestImg) {
-      this._extract(bestImg).then(theme => {
+    if (bestSource) {
+      this._extract(bestSource as any).then(theme => {
         if (theme && this._lifecycleId === currentId) {
-          this._apply(theme, bestImg as HTMLImageElement);
+          this._apply(theme, bestSource as HTMLElement);
           
           const rgbToInverted = (rgbStr: string) => {
             const [r, g, b] = rgbStr.split(',').map(n => 255 - parseInt(n.trim()));
@@ -393,12 +431,19 @@ export class DynamicTheme {
     }
   }
 
-  private async _extract(img: HTMLImageElement): Promise<Theme | null> {
-    if (this.colorCache.has(img.src)) return this.colorCache.get(img.src) || null;
-    if (!img.complete) await new Promise(r => { img.onload = r; img.onerror = r; });
+  private async _extract(source: HTMLImageElement | HTMLVideoElement): Promise<Theme | null> {
+    const src = (source as HTMLImageElement).src || (source as HTMLVideoElement).currentSrc || source.id;
+    if (this.colorCache.has(src)) return this.colorCache.get(src) || null;
+    
+    if (source instanceof HTMLImageElement) {
+        if (!source.complete) await new Promise(r => { source.onload = r; source.onerror = r; });
+    } else if (source instanceof HTMLVideoElement) {
+        if (source.readyState < 2) await new Promise(r => { source.onloadeddata = r; source.onerror = r; });
+    }
+    
     try {
-      const theme = this.colorThief.generateTheme(this.colorThief.getDominantColor(img));
-      this.colorCache.set(img.src, theme);
+      const theme = this.colorThief.generateTheme(this.colorThief.getDominantColor(source));
+      if (src) this.colorCache.set(src, theme);
       return theme;
     } catch(e) { return this.defaultTheme; }
   }
