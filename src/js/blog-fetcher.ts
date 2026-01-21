@@ -1,14 +1,17 @@
-export async function initBlog() {
+export interface Article {
+    title: string;
+    file: string;
+    date: string;
+    category: string;
+    isInternal?: boolean;
+}
+
+export async function initBlog(): Promise<void> {
     const grid = document.querySelector('.blog-grid');
     if (!grid) return;
 
     try {
-        // In a real environment, we'd have an index.json or similar.
-        // For this demo/SPA, we'll fetch the list of files if possible, 
-        // but since we're in a browser, we usually need a manifest.
-        // I will assume we have a list of important articles to show.
-        
-        const articles = [
+        const articles: Article[] = [
             {
                 title: "NOISE FLOOR",
                 file: "noise-floor.html",

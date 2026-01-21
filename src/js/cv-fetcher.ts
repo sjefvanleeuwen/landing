@@ -2,9 +2,9 @@
  * Simple CSV to Object Array Parser
  * Handles basic comma-separated values with quoted strings
  */
-function parseCSV(csvText) {
-    const rows = [];
-    let currentRow = [];
+function parseCSV(csvText: string): any[] {
+    const rows: string[][] = [];
+    let currentRow: string[] = [];
     let currentField = '';
     let inQuotes = false;
 
@@ -41,7 +41,7 @@ function parseCSV(csvText) {
 
     const headers = rows[0];
     return rows.slice(1).map(row => {
-        const obj = {};
+        const obj: any = {};
         headers.forEach((header, index) => {
             obj[header] = row[index] || '';
         });
@@ -49,7 +49,7 @@ function parseCSV(csvText) {
     });
 }
 
-export async function initCV() {
+export async function initCV(): Promise<void> {
     try {
         // Fetch All Data
         const [profile, positions, education, projects, certifications, courses] = await Promise.all([
@@ -73,7 +73,7 @@ export async function initCV() {
     }
 }
 
-function renderProfile(data) {
+function renderProfile(data: any): void {
     if (!data) return;
     const nameEl = document.getElementById('cv-name-placeholder');
     const summaryEl = document.getElementById('cv-summary-placeholder');
@@ -92,19 +92,21 @@ function renderProfile(data) {
     if (summaryEl) summaryEl.textContent = data['Summary'];
 }
 
-function parseDate(dateStr) {
+function parseDate(dateStr: string): Date {
     if (!dateStr) return new Date();
     // Handle "Apr 2024" or "2024"
     const parts = dateStr.split(' ');
     if (parts.length === 2) {
+        // Month Year
         return new Date(`${parts[0]} 1, ${parts[1]}`);
-    } else if (parts.length === 1 && !isNaN(parts[0])) {
+    } else if (parts.length === 1 && !isNaN(Number(parts[0]))) {
+        // Year only
         return new Date(`Jan 1, ${parts[0]}`);
     }
     return new Date(dateStr);
 }
 
-function calculateDuration(startStr, endStr) {
+function calculateDuration(startStr: string, endStr: string): string {
     if (!startStr) return '';
     const start = parseDate(startStr);
     const end = endStr ? parseDate(endStr) : new Date();
@@ -123,7 +125,7 @@ function calculateDuration(startStr, endStr) {
     return parts.join(' ');
 }
 
-function renderPositions(data) {
+function renderPositions(data: any[]): void {
     const list = document.getElementById('cv-positions-list');
     if (!list) return;
 
@@ -145,7 +147,7 @@ function renderPositions(data) {
     }).join('');
 }
 
-function renderEducation(data) {
+function renderEducation(data: any[]): void {
     const list = document.getElementById('cv-education-list');
     if (!list) return;
 
@@ -160,7 +162,7 @@ function renderEducation(data) {
     `).join('');
 }
 
-function renderProjects(data) {
+function renderProjects(data: any[]): void {
     const list = document.getElementById('cv-projects-list');
     if (!list) return;
 
@@ -172,7 +174,7 @@ function renderProjects(data) {
     `).join('');
 }
 
-function renderCertifications(data) {
+function renderCertifications(data: any[]): void {
     const list = document.getElementById('cv-certs-list');
     if (!list) return;
 
@@ -197,12 +199,12 @@ function renderCertifications(data) {
     }).join('');
 }
 
-function renderCourses(data) {
+export function renderCourses(data: any[]): void {
     const list = document.getElementById('cv-courses-list');
     if (!list) return;
 
     list.innerHTML = data.map(course => {
-        const isLinkedIn = course['Number']?.includes('linkedin.com');
+        const isLinkedIn = course['Number']?.includes('linkedin.com') || course['Number']?.includes('learning');
         const icon = isLinkedIn ? 
             `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>` :
             `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>`;

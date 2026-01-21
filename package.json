@@ -8,7 +8,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc && vite build",
     "preview": "vite preview"
   },
   "keywords": [],
@@ -20,11 +20,13 @@
     "@storybook/addon-docs": "^10.1.11",
     "@storybook/addon-vitest": "^10.1.11",
     "@storybook/html-vite": "^10.1.11",
+    "@types/node": "^20.10.6",
     "@vitest/browser-playwright": "^4.0.17",
     "@vitest/coverage-v8": "^4.0.17",
     "playwright": "^1.57.0",
     "sass": "^1.97.2",
     "storybook": "^10.1.11",
+    "typescript": "^5.3.3",
     "vite": "^7.3.1",
     "vitest": "^4.0.17"
   },

@@ -1,42 +1,42 @@
 /**
  * Title Card Creator Logic
  */
-export function initCreator() {
-    const preview = document.querySelector('.preview-card');
-    const heroImg = document.getElementById('creator-hero-img');
-    const copyBtn = document.getElementById('copy-config');
+export function initCreator(): void {
+    const preview = document.querySelector('.preview-card') as HTMLElement;
+    const heroImg = document.getElementById('creator-hero-img') as HTMLImageElement;
+    const copyBtn = document.getElementById('copy-config') as HTMLButtonElement;
     
     // Add class to body to manage scroll while in creator
     document.body.classList.add('creator-mode');
     
     // UI Elements
     const inputs = {
-        title: document.getElementById('c-title'),
-        subtitle: document.getElementById('c-subtitle'),
-        meta: document.getElementById('c-meta'),
-        fontTitle: document.getElementById('c-font-title'),
-        fontSubtitle: document.getElementById('c-font-subtitle'),
-        fontMeta: document.getElementById('c-font-meta'),
-        fontSize: document.getElementById('c-font-size'),
-        letterSpacing: document.getElementById('c-spacing'),
-        lineHeight: document.getElementById('c-line-height'),
-        blendMode: document.getElementById('c-blend'),
-        padding: document.getElementById('c-padding'),
-        borderWidth: document.getElementById('c-border'),
-        blur: document.getElementById('c-blur'),
-        brightness: document.getElementById('c-brightness'),
-        invert: document.getElementById('c-invert'),
-        useColorThief: document.getElementById('c-thief-toggle')
+        title: document.getElementById('c-title') as HTMLTextAreaElement,
+        subtitle: document.getElementById('c-subtitle') as HTMLInputElement,
+        meta: document.getElementById('c-meta') as HTMLInputElement,
+        fontTitle: document.getElementById('c-font-title') as HTMLSelectElement,
+        fontSubtitle: document.getElementById('c-font-subtitle') as HTMLSelectElement,
+        fontMeta: document.getElementById('c-font-meta') as HTMLSelectElement,
+        fontSize: document.getElementById('c-font-size') as HTMLInputElement,
+        letterSpacing: document.getElementById('c-spacing') as HTMLInputElement,
+        lineHeight: document.getElementById('c-line-height') as HTMLInputElement,
+        blendMode: document.getElementById('c-blend') as HTMLSelectElement,
+        padding: document.getElementById('c-padding') as HTMLInputElement,
+        borderWidth: document.getElementById('c-border') as HTMLInputElement,
+        blur: document.getElementById('c-blur') as HTMLInputElement,
+        brightness: document.getElementById('c-brightness') as HTMLInputElement,
+        invert: document.getElementById('c-invert') as HTMLInputElement,
+        useColorThief: document.getElementById('c-thief-toggle') as HTMLInputElement
     };
 
-    const colorTargets = {
-        title: document.getElementById('c-color-title'),
-        subtitle: document.getElementById('c-color-subtitle'),
-        meta: document.getElementById('c-color-meta'),
-        border: document.getElementById('c-color-border')
+    const colorTargets: Record<string, HTMLInputElement> = {
+        title: document.getElementById('c-color-title') as HTMLInputElement,
+        subtitle: document.getElementById('c-color-subtitle') as HTMLInputElement,
+        meta: document.getElementById('c-color-meta') as HTMLInputElement,
+        border: document.getElementById('c-color-border') as HTMLInputElement
     };
 
-    const values = {
+    const values: Record<string, HTMLElement | null> = {
         'c-font-size': document.getElementById('v-font-size'),
         'c-spacing': document.getElementById('v-spacing'),
         'c-line-height': document.getElementById('v-line-height'),
@@ -47,12 +47,12 @@ export function initCreator() {
         'c-invert': document.getElementById('v-invert')
     };
 
-    function updatePreview() {
+    function updatePreview(): void {
         if (!preview) return;
 
-        const titleEl = preview.querySelector('.combo-title');
-        const subEl = preview.querySelector('.combo-sub');
-        const metaEl = preview.querySelector('.combo-meta');
+        const titleEl = preview.querySelector('.combo-title') as HTMLElement;
+        const subEl = preview.querySelector('.combo-sub') as HTMLElement;
+        const metaEl = preview.querySelector('.combo-meta') as HTMLElement;
 
         // Content
         const rawTitle = inputs.title.value;
@@ -80,12 +80,12 @@ export function initCreator() {
         metaEl.style.color = colorTargets.meta.value;
 
         // FX
-        titleEl.style.mixBlendMode = inputs.blendMode.value;
+        titleEl.style.mixBlendMode = inputs.blendMode.value as any;
         preview.style.padding = `${inputs.padding.value}px`;
         preview.style.borderWidth = `${inputs.borderWidth.value}px`;
         preview.style.borderColor = colorTargets.border.value;
         
-        if (inputs.borderWidth.value > 0) {
+        if (Number(inputs.borderWidth.value) > 0) {
             preview.style.borderStyle = 'solid';
         } else {
             preview.style.borderStyle = 'none';
@@ -107,7 +107,7 @@ export function initCreator() {
         if (values['c-invert']) values['c-invert'].textContent = inputs.invert.value;
     }
 
-    function updateColorSwatches(palette, invertedPalette = []) {
+    function updateColorSwatches(palette: any[], invertedPalette: any[] = []): void {
         const swatchContainer = document.getElementById('color-swatches');
         if (!swatchContainer) return;
         
@@ -137,11 +137,13 @@ export function initCreator() {
                 btn.style.backgroundColor = color;
                 btn.title = color;
                 btn.addEventListener('click', () => {
-                    const activeColorInput = document.querySelector('.color-input-btn.active');
+                    const activeColorInput = document.querySelector('.color-input-btn.active') as HTMLElement;
                     if (activeColorInput) {
                         const targetId = activeColorInput.dataset.target;
-                        colorTargets[targetId].value = color;
-                        updatePreview();
+                        if (targetId && colorTargets[targetId]) {
+                            colorTargets[targetId].value = color;
+                            updatePreview();
+                        }
                     }
                 });
                 grid.appendChild(btn);
@@ -150,7 +152,7 @@ export function initCreator() {
         });
     }
 
-    function copyToClipboard() {
+    function copyToClipboard(): void {
         const scss = `// Generated Title Card Styles
 .custom-title-card {
     .combo-title {
@@ -183,14 +185,16 @@ export function initCreator() {
     }
 }`;
         navigator.clipboard.writeText(scss).then(() => {
-            const originalText = copyBtn.textContent;
-            copyBtn.textContent = 'COPIED!';
-            setTimeout(() => copyBtn.textContent = originalText, 2000);
+            if (copyBtn) {
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = 'COPIED!';
+                setTimeout(() => copyBtn.textContent = originalText, 2000);
+            }
         });
     }
 
     // Event Listeners
-    document.addEventListener('theme-updated', (e) => {
+    document.addEventListener('theme-updated', (e: any) => {
         if (inputs.useColorThief.checked && e.detail.palette) {
             updateColorSwatches(e.detail.palette, e.detail.invertedPalette || []);
         }
@@ -204,8 +208,8 @@ export function initCreator() {
     });
 
     inputs.useColorThief.addEventListener('change', async () => {
-        if (inputs.useColorThief.checked && window.dynamicTheme) {
-            await window.dynamicTheme.applyFromImage(heroImg);
+        if (inputs.useColorThief.checked && (window as any).dynamicTheme) {
+            await (window as any).dynamicTheme.applyFromImage(heroImg);
         }
         updatePreview();
     });
@@ -221,25 +225,29 @@ export function initCreator() {
     document.querySelectorAll('.img-thumb').forEach(thumb => {
         thumb.addEventListener('click', () => {
             const imgEl = thumb.querySelector('img');
+            if (!imgEl) return;
             heroImg.src = imgEl.src;
             document.querySelectorAll('.img-thumb').forEach(t => t.classList.remove('active'));
             thumb.classList.add('active');
 
             heroImg.onload = async () => {
-                if (window.dynamicTheme) {
-                    await window.dynamicTheme.applyFromImage(heroImg);
+                if ((window as any).dynamicTheme) {
+                    await (window as any).dynamicTheme.applyFromImage(heroImg);
                 }
                 updatePreview();
             };
-            if (heroImg.complete) heroImg.onload();
+            if (heroImg.complete) heroImg.onload(new Event('load'));
         });
     });
 
     if (copyBtn) copyBtn.addEventListener('click', copyToClipboard);
 
     // Initial trigger
-    if (heroImg.complete && window.dynamicTheme) {
-        window.dynamicTheme.applyFromImage(heroImg);
-    }
-    updatePreview();
+    const initialApply = async () => {
+        if (heroImg.complete && (window as any).dynamicTheme) {
+            await (window as any).dynamicTheme.applyFromImage(heroImg);
+        }
+        updatePreview();
+    };
+    initialApply();
 }

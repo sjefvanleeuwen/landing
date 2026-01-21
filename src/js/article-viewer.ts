@@ -1,4 +1,4 @@
-export async function initArticleViewer() {
+export async function initArticleViewer(): Promise<void> {
     // Check both standard search and hash-based search (for SPA stability)
     const hash = window.location.hash;
     const searchPart = hash.includes('?') ? hash.split('?')[1] : window.location.search.slice(1);
@@ -23,7 +23,7 @@ export async function initArticleViewer() {
         const doc = parser.parseFromString(html, 'text/html');
         
         // Extract Title
-        const title = doc.querySelector('h1')?.textContent || fileName.split('-').pop().replace('.html', '');
+        const title = doc.querySelector('h1')?.textContent || fileName.split('-').pop()?.replace('.html', '') || 'Untitled';
         if (titleEl) titleEl.textContent = title;
 
         // Extract Date (Published or Created)
@@ -40,7 +40,7 @@ export async function initArticleViewer() {
 
         if (bodyEl) {
             // TRANSFORMATION LOGIC: Turn LinkedIn HTML into Magazine Layout
-            const paragraphs = Array.from(bodyContent.querySelectorAll('p, h2, h3, ul, ol, blockquote'));
+            const paragraphs = Array.from(bodyContent.querySelectorAll('p, h2, h3, ul, ol, blockquote')) as HTMLElement[];
             
             if (paragraphs.length > 0) {
                 // Change page layout to dense
@@ -70,7 +70,6 @@ export async function initArticleViewer() {
                 }
 
                 // 2. Wrap remaining in text-columns blocks
-                // We'll chunk them or just wrap the whole thing
                 let bodyHtml = `
                     <section class="article-body text-columns">
                         <m-reveal class="fly-in-up active">
@@ -93,15 +92,14 @@ export async function initArticleViewer() {
             // Final cleanup of any style blocks or broken images
             bodyEl.querySelectorAll('style, script, link').forEach(s => s.remove());
             
-            // Fix images - if any exist in the LinkedIn article, make them full bleed blocks
+            // Fix images
             bodyEl.querySelectorAll('img').forEach(img => {
                 const figure = document.createElement('figure');
                 figure.className = 'article-image full-bleed';
                 const reveal = document.createElement('m-reveal');
                 reveal.className = 'fly-in-up active';
                 
-                // Copy the image
-                const newImg = img.cloneNode(true);
+                const newImg = img.cloneNode(true) as HTMLImageElement;
                 reveal.appendChild(newImg);
                 figure.appendChild(reveal);
                 

@@ -1,10 +1,17 @@
-import { initDynamicTheming } from './color-thief.js';
+import { initDynamicTheming } from './color-thief';
+
+interface RouteConfig {
+  template: string;
+}
 
 /**
  * Simple Vanilla SPA Router
  */
 export class Router {
-  constructor(routes, containerId) {
+  private routes: Record<string, RouteConfig>;
+  private container: HTMLElement | null;
+
+  constructor(routes: Record<string, RouteConfig>, containerId: string) {
     this.routes = routes;
     this.container = document.getElementById(containerId);
     if (!this.container) return;
@@ -17,13 +24,13 @@ export class Router {
     this.init();
   }
 
-  init() {
+  private init(): void {
     window.addEventListener('hashchange', () => this.handleRoute());
     window.addEventListener('load', () => this.handleRoute());
     
     // Intercept clicks on links
-    document.addEventListener('click', (e) => {
-      const link = e.target.closest('a');
+    document.addEventListener('click', (e: MouseEvent) => {
+      const link = (e.target as HTMLElement).closest('a') as HTMLAnchorElement | null;
       
       // We only care about internal links
       if (!link || !link.href.includes(window.location.origin) || link.hasAttribute('data-no-route')) {
@@ -32,7 +39,7 @@ export class Router {
 
       const url = new URL(link.href);
       const isHtml = url.pathname.endsWith('.html');
-      const isHash = link.getAttribute('href').startsWith('#');
+      const isHash = link.getAttribute('href')?.startsWith('#');
 
       if (isHtml && !url.hash) {
         e.preventDefault();
@@ -41,7 +48,7 @@ export class Router {
         window.scrollTo({ top: 0, behavior: 'instant' });
         
         // Get just the filename (e.g., 'about.html' -> 'about')
-        const filename = url.pathname.split('/').pop().replace('.html', '');
+        const filename = url.pathname.split('/').pop()?.replace('.html', '') || '';
         const route = (filename === 'index' || filename === '') ? 'home' : filename;
         
         // Preserve search parameters (query string) when converting to hash
@@ -55,7 +62,7 @@ export class Router {
     });
   }
 
-  async handleRoute() {
+  private async handleRoute(): Promise<void> {
     // 1. Immediately scroll to top when navigation begins
     window.scrollTo(0, 0);
 
@@ -68,6 +75,8 @@ export class Router {
     const route = this.routes[path] || this.routes['404'] || this.routes['home'];
     
     try {
+      if (!this.container) return;
+      
       this.container.classList.add('loading');
       const response = await fetch(route.template);
       const html = await response.text();
@@ -92,14 +101,14 @@ export class Router {
       // Clear previous data attributes
       Array.from(this.container.attributes).forEach(attr => {
         if (attr.name.startsWith('data-')) {
-          this.container.removeAttribute(attr.name);
+          this.container!.removeAttribute(attr.name);
         }
       });
 
       // Transfer data attributes (important for dynamic theming)
       Array.from(content.attributes).forEach(attr => {
         if (attr.name.startsWith('data-')) {
-          this.container.setAttribute(attr.name, attr.value);
+          this.container!.setAttribute(attr.name, attr.value);
         }
       });
       
@@ -130,24 +139,28 @@ export class Router {
       
     } catch (error) {
       console.error('Routing error:', error);
-      this.container.innerHTML = `
-        <div class="sub-page">
-          <section class="elements-hero">
-            <div class="title-stack">
-              <span class="overline">ERROR // 404</span>
-              <h1 class="hero-title cinematic">LOST IN THE NOISE</h1>
-              <p class="tagline">System failure or missing frequency.</p>
-            </div>
-          </section>
-        </div>
-      `;
+      if (this.container) {
+        this.container.innerHTML = `
+          <div class="sub-page">
+            <section class="elements-hero">
+              <div class="title-stack">
+                <span class="overline">ERROR // 404</span>
+                <h1 class="hero-title cinematic">LOST IN THE NOISE</h1>
+                <p class="tagline">System failure or missing frequency.</p>
+              </div>
+            </section>
+          </div>
+        `;
+      }
     } finally {
-      this.container.classList.remove('loading');
+      if (this.container) {
+        this.container.classList.remove('loading');
+      }
     }
   }
 
-  updateActiveLinks(path) {
-    document.querySelectorAll('m-nav a').forEach(link => {
+  private updateActiveLinks(path: string): void {
+    document.querySelectorAll('m-nav a').forEach((link) => {
       const href = link.getAttribute('href');
       if (href === `#/${path}` || (path === 'home' && href === '#/')) {
         link.classList.add('active');

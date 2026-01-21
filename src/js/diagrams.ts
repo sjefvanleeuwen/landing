@@ -2,7 +2,7 @@
  * Magazine Flowchart Component
  */
 class MagazineFlowchart extends HTMLElement {
-  connectedCallback() {
+  connectedCallback(): void {
     this.innerHTML = `
       <div class="diagram-container">
         <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
@@ -42,7 +42,7 @@ class MagazineFlowchart extends HTMLElement {
  * Magazine Bar Chart Component
  */
 class MagazineBarChart extends HTMLElement {
-  connectedCallback() {
+  connectedCallback(): void {
     const rawData = this.getAttribute("data") || "70,90,50,85";
     const labels = (this.getAttribute("labels") || "UX,UI,DEV,SEO").split(",");
     const values = rawData.split(",").map(Number);
@@ -88,7 +88,10 @@ class MagazineBarChart extends HTMLElement {
  * Magazine Mind Map Component
  */
 class MagazineMindMap extends HTMLElement {
-  connectedCallback() {
+  private resizeObserver: ResizeObserver | null = null;
+  private animationId: number | null = null;
+
+  connectedCallback(): void {
     this.innerHTML = `
       <div class="diagram-container mind-map-container">
         <canvas></canvas>
@@ -97,14 +100,15 @@ class MagazineMindMap extends HTMLElement {
     this.init();
   }
 
-  init() {
-    const canvas = this.querySelector("canvas");
+  init(): void {
+    const canvas = this.querySelector("canvas") as HTMLCanvasElement;
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
     const container = canvas.parentElement;
+    if (!ctx || !container) return;
 
-    let width, height;
+    let width: number, height: number;
     const nodes = [
         { id: "core", text: "Strategy", x: 0, y: 0, size: 45, color: "#D4A017" },
         { id: "design", text: "Design", x: -110, y: -40, size: 30, color: "#ffffff" },
@@ -156,8 +160,8 @@ class MagazineMindMap extends HTMLElement {
         ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
     };
 
-    const resizeObserver = new ResizeObserver(() => resize());
-    resizeObserver.observe(container);
+    this.resizeObserver = new ResizeObserver(() => resize());
+    this.resizeObserver.observe(container);
     resize();
 
     let mouseX = 0, mouseY = 0;
@@ -171,22 +175,21 @@ class MagazineMindMap extends HTMLElement {
 
     const animate = () => {
         if (!this.isConnected) {
-            resizeObserver.disconnect();
+            if (this.resizeObserver) this.resizeObserver.disconnect();
             return;
         }
         ctx.clearRect(0, 0, width, height);
         ctx.save();
         ctx.translate(width / 2, height / 2);
 
-        // Responsive scale - more aggressive factor to fill width
+        // Responsive scale
         const scaleFactor = width / 550; 
 
-        // Draw Background Particles with drift
+        // Draw Background Particles
         particles.forEach(p => {
             p.x += p.vx;
             p.y += p.vy;
 
-            // Soft wrap
             if (p.x > 400) p.x = -400;
             if (p.x < -400) p.x = 400;
             if (p.y > 250) p.y = -250;
@@ -237,10 +240,15 @@ class MagazineMindMap extends HTMLElement {
         });
 
         ctx.restore();
-        requestAnimationFrame(animate);
+        this.animationId = requestAnimationFrame(animate);
     };
 
-    animate();
+    this.animationId = requestAnimationFrame(animate);
+  }
+
+  disconnectedCallback(): void {
+    if (this.animationId) cancelAnimationFrame(this.animationId);
+    if (this.resizeObserver) this.resizeObserver.disconnect();
   }
 }
 
@@ -248,7 +256,7 @@ class MagazineMindMap extends HTMLElement {
  * Magazine Line Chart Component
  */
 class MagazineLineChart extends HTMLElement {
-  connectedCallback() {
+  connectedCallback(): void {
     const rawData = this.getAttribute("data") || "10,40,25,70,45,90";
     const labels = (this.getAttribute("labels") || "").split(",");
     const values = rawData.split(",").map(Number);
@@ -311,7 +319,7 @@ class MagazineLineChart extends HTMLElement {
  * Magazine Spider (Radar) Chart Component
  */
 class MagazineSpiderChart extends HTMLElement {
-  connectedCallback() {
+  connectedCallback(): void {
     const rawData = this.getAttribute("data") || "80,70,90,60,85";
     const labels = (this.getAttribute("labels") || "Design,Speed,UX,Tech,SEO").split(",");
     const values = rawData.split(",").map(Number);
@@ -375,4 +383,3 @@ customElements.define("m-barchart", MagazineBarChart);
 customElements.define("m-mindmap", MagazineMindMap);
 customElements.define("m-linechart", MagazineLineChart);
 customElements.define("m-spiderchart", MagazineSpiderChart);
-

@@ -3,16 +3,44 @@
  * Uses canvas pixel sampling and color theory for accessible, dynamic theming
  */
 
-class ColorThief {
+interface RGB {
+  r: number;
+  g: number;
+  b: number;
+}
+
+interface HSL {
+  h: number;
+  s: number;
+  l: number;
+}
+
+interface Theme {
+  primaryRgb: string;
+  bgDarkRgb: string;
+  textPrimaryRgb: string;
+  accentRgb: string;
+  accentTextRgb: string;
+  goldRgb: string;
+  isDark: boolean;
+  overlayDark: string;
+}
+
+export class ColorThief {
+  private canvas: HTMLCanvasElement;
+  private ctx: CanvasRenderingContext2D;
+
   constructor() {
     this.canvas = document.createElement('canvas');
-    this.ctx = this.canvas.getContext('2d', { willReadFrequently: true });
+    const context = this.canvas.getContext('2d', { willReadFrequently: true });
+    if (!context) throw new Error('Could not get 2D context');
+    this.ctx = context;
   }
 
-  getDominantColor(img, quality = 10) {
+  getDominantColor(img: HTMLImageElement, quality: number = 10): RGB {
     const { width, height } = this._prepareCanvas(img);
     const imageData = this.ctx.getImageData(0, 0, width, height).data;
-    const colorCounts = {};
+    const colorCounts: Record<string, number> = {};
 
     for (let i = 0; i < imageData.length; i += 4 * quality) {
       const r = imageData[i];
@@ -29,7 +57,7 @@ class ColorThief {
       colorCounts[key] = (colorCounts[key] || 0) + 1;
     }
 
-    let dominantColor = { r: 10, g: 10, b: 10 };
+    let dominantColor: RGB = { r: 10, g: 10, b: 10 };
     let maxScore = -1;
 
     Object.entries(colorCounts).forEach(([key, count]) => {
@@ -45,13 +73,10 @@ class ColorThief {
     return dominantColor;
   }
 
-  /**
-   * Get a palette of distinct colors from an image
-   */
-  getPalette(img, colorCount = 4, quality = 10) {
+  getPalette(img: HTMLImageElement, colorCount: number = 4, quality: number = 10): RGB[] {
     const { width, height } = this._prepareCanvas(img);
     const imageData = this.ctx.getImageData(0, 0, width, height).data;
-    const colorCounts = new Map();
+    const colorCounts = new Map<string, number>();
 
     for (let i = 0; i < imageData.length; i += 4 * quality) {
       const r = imageData[i], g = imageData[i + 1], b = imageData[i + 2], a = imageData[i + 3];
@@ -62,7 +87,6 @@ class ColorThief {
       colorCounts.set(key, (colorCounts.get(key) || 0) + 1);
     }
 
-    // Sort by frequency and return top ones
     return Array.from(colorCounts.entries())
       .sort((a, b) => b[1] - a[1])
       .slice(0, colorCount)
@@ -72,21 +96,16 @@ class ColorThief {
       });
   }
 
-  generateTheme(color) {
+  generateTheme(color: RGB): Theme {
     const luminance = this.getLuminance(color);
-    const saturate = (c, amount) => {
+    const saturate = (c: RGB, amount: number): RGB => {
       const hsl = this.rgbToHsl(c);
       hsl.s = Math.min(1, hsl.s + amount);
       return this.hslToRgb(hsl);
     };
-    const desaturate = (c, amount) => {
-      const hsl = this.rgbToHsl(c);
-      hsl.s = Math.max(0, hsl.s - amount);
-      return this.hslToRgb(hsl);
-    };
 
     const hsl = this.rgbToHsl(color);
-    const bgHsl = { h: hsl.h, s: Math.min(hsl.s, 0.25), l: 0.08 }; // More neutral, darker background
+    const bgHsl: HSL = { h: hsl.h, s: Math.min(hsl.s, 0.25), l: 0.08 };
     let bgDark = this.hslToRgb(bgHsl);
     
     let accent = saturate(color, 0.2);
@@ -95,8 +114,6 @@ class ColorThief {
     const textOnDark = this.getAccessibleTextColor(bgDark);
     const textOnAccent = this.getAccessibleTextColor(accent);
     
-    // Brand Gold: Base is Metallic Bronze-Gold (197, 160, 40)
-    // We use a deeper bronze base to prevent browser extensions from forcing it to pale yellow.
     const goldBase = { r: 197, g: 160, b: 40 };
     const goldAccent = this.ensureMinContrast(goldBase, bgDark, 3.0);
 
@@ -108,12 +125,11 @@ class ColorThief {
       accentTextRgb: this.toRgbString(textOnAccent),
       goldRgb: this.toRgbString(goldAccent),
       isDark: luminance < 0.5,
-      // Change to a radial gradient for the magazine vignette effect
       overlayDark: `radial-gradient(circle at center, transparent 20%, rgba(${bgDark.r}, ${bgDark.g}, ${bgDark.b}, 0.4) 100%)`
     };
   }
 
-  ensureMinContrast(color, bgColor, minRatio = 4.5) {
+  ensureMinContrast(color: RGB, bgColor: RGB, minRatio: number = 4.5): RGB {
     let currentRatio = this.getContrastRatio(color, bgColor);
     if (currentRatio >= minRatio) return color;
     const hsl = this.rgbToHsl(color);
@@ -129,30 +145,30 @@ class ColorThief {
     return this.hslToRgb(hsl);
   }
 
-  getAccessibleTextColor(bgColor) {
+  getAccessibleTextColor(bgColor: RGB): RGB {
     const white = { r: 255, g: 255, b: 255 };
     const black = { r: 10, g: 10, b: 10 };
     return this.getContrastRatio(white, bgColor) >= this.getContrastRatio(black, bgColor) ? white : black;
   }
 
-  getLuminance(color) {
-    const normalize = (c) => {
+  getLuminance(color: RGB): number {
+    const normalize = (c: number) => {
       const sRGB = c / 255;
       return sRGB <= 0.03928 ? sRGB / 12.92 : Math.pow((sRGB + 0.055) / 1.055, 2.4);
     };
     return 0.2126 * normalize(color.r) + 0.7152 * normalize(color.g) + 0.0722 * normalize(color.b);
   }
 
-  getContrastRatio(color1, color2) {
+  getContrastRatio(color1: RGB, color2: RGB): number {
     const l1 = this.getLuminance(color1) + 0.05;
     const l2 = this.getLuminance(color2) + 0.05;
     return Math.max(l1, l2) / Math.min(l1, l2);
   }
 
-  rgbToHsl(color) {
+  rgbToHsl(color: RGB): HSL {
     const r = color.r / 255, g = color.g / 255, b = color.b / 255;
     const max = Math.max(r, g, b), min = Math.min(r, g, b);
-    let h, s, l = (max + min) / 2;
+    let h: number, s: number, l = (max + min) / 2;
     if (max === min) h = s = 0;
     else {
       const d = max - min;
@@ -161,15 +177,16 @@ class ColorThief {
         case r: h = (g - b) / d + (g < b ? 6 : 0); break;
         case g: h = (b - r) / d + 2; break;
         case b: h = (r - g) / d + 4; break;
+        default: h = 0;
       }
       h /= 6;
     }
     return { h: h * 360, s, l };
   }
 
-  hslToRgb({ h, s, l }) {
+  hslToRgb({ h, s, l }: HSL): RGB {
     h /= 360;
-    const hue2rgb = (p, q, t) => {
+    const hue2rgb = (p: number, q: number, t: number) => {
       if (t < 0) t += 1; if (t > 1) t -= 1;
       if (t < 1/6) return p + (q - p) * 6 * t;
       if (t < 1/2) return q;
@@ -185,9 +202,9 @@ class ColorThief {
     };
   }
 
-  toRgbString(color) { return `${color.r}, ${color.g}, ${color.b}`; }
+  toRgbString(color: RGB): string { return `${color.r}, ${color.g}, ${color.b}`; }
 
-  _prepareCanvas(img) {
+  private _prepareCanvas(img: HTMLImageElement): { width: number; height: number } {
     const scale = Math.min(1, 100 / Math.max(img.naturalWidth, img.naturalHeight));
     const w = Math.floor(img.naturalWidth * scale), h = Math.floor(img.naturalHeight * scale);
     this.canvas.width = w; this.canvas.height = h;
@@ -195,14 +212,24 @@ class ColorThief {
     return { width: w, height: h };
   }
 
-  _quantizeColor(r, g, b, levels) {
+  private _quantizeColor(r: number, g: number, b: number, levels: number): RGB {
     const step = 256 / levels;
-    const q = (c) => Math.round(Math.floor(c / step) * step + step / 2);
+    const q = (c: number) => Math.round(Math.floor(c / step) * step + step / 2);
     return { r: q(r), g: q(g), b: q(b) };
   }
 }
 
-class DynamicTheme {
+export class DynamicTheme {
+  private colorThief: ColorThief;
+  private colorCache: Map<string, Theme>;
+  private _visibilityMap: Map<HTMLElement, boolean>;
+  private activeElement: HTMLElement | string | null;
+  private defaultTheme: Theme | null;
+  private heroImg: HTMLImageElement | null;
+  private _lifecycleId: number;
+  private observer: IntersectionObserver | null;
+  private _onScroll: (() => void) | null;
+
   constructor() {
     this.colorThief = new ColorThief();
     this.colorCache = new Map();
@@ -211,9 +238,11 @@ class DynamicTheme {
     this.defaultTheme = null;
     this.heroImg = null;
     this._lifecycleId = 0;
+    this.observer = null;
+    this._onScroll = null;
   }
 
-  reset() {
+  reset(): void {
     this._lifecycleId++;
     if (this.observer) this.observer.disconnect();
     if (this._onScroll) window.removeEventListener('scroll', this._onScroll);
@@ -222,24 +251,24 @@ class DynamicTheme {
     this.heroImg = null;
     this._visibilityMap.clear();
     const root = document.documentElement;
-    ['--theme-bg', '--theme-bg-rgb', '--theme-primary', '--theme-text', '--theme-accent', '--theme-gold', '--theme-overlay']
+    ['--theme-bg', '--theme-bg-rgb', '--theme-primary', '--theme-text', '--theme-accent', '--theme-accent-text', '--theme-gold', '--theme-overlay']
       .forEach(p => root.style.removeProperty(p));
     root.classList.remove('theme-dark', 'theme-light');
   }
 
-  init() {
+  init(): void {
     this.reset();
     const currentId = this._lifecycleId;
-    const allImages = Array.from(document.querySelectorAll('.article-hero img, .hero-image img, header img, #hero-img, .article-image img, .feature-large img, .full-bleed img, figure img'));
-    this.heroImg = allImages.find(img => img.closest('.article-hero, .hero-image, header'));
+    const allImages = Array.from(document.querySelectorAll('.article-hero img, .hero-image img, header img, #hero-img, .article-image img, .feature-large img, .full-bleed img, figure img')) as HTMLImageElement[];
+    this.heroImg = allImages.find(img => img.closest('.article-hero, .hero-image, header')) || null;
 
     this.observer = new IntersectionObserver((entries) => {
       if (this._lifecycleId !== currentId) return;
-      entries.forEach(entry => entry.isIntersecting ? this._visibilityMap.set(entry.target, true) : this._visibilityMap.delete(entry.target));
+      entries.forEach(entry => entry.isIntersecting ? this._visibilityMap.set(entry.target as HTMLElement, true) : this._visibilityMap.delete(entry.target as HTMLElement));
       this._update();
     }, { threshold: [0, 0.1, 1], rootMargin: "20% 0px" });
 
-    allImages.forEach(img => this.observer.observe(img));
+    allImages.forEach(img => this.observer!.observe(img));
 
     let ticking = false;
     this._onScroll = () => {
@@ -265,29 +294,23 @@ class DynamicTheme {
     this._update();
   }
 
-  /**
-   * Helper for manual theme application (used in article-3.html)
-   */
-  async applyFromImage(img) {
+  async applyFromImage(img: HTMLImageElement): Promise<Theme | null> {
     const theme = await this._extract(img);
     if (theme) {
       this._apply(theme, img);
       
-      // Extract a rich palette for visualizers (palette selectors)
       const rawPalette = this.colorThief.getPalette(img, 8);
       
       const hexPalette = rawPalette.map(c => {
-        const toHex = (n) => n.toString(16).padStart(2, '0');
+        const toHex = (n: number) => n.toString(16).padStart(2, '0');
         return `#${toHex(c.r)}${toHex(c.g)}${toHex(c.b)}`;
       });
 
-      // Calculate inverted versions of the palette for "Difference" blend compatibility
       const invertedPalette = rawPalette.map(c => {
-        const toHex = (n) => (255 - n).toString(16).padStart(2, '0');
+        const toHex = (n: number) => (255 - n).toString(16).padStart(2, '0');
         return `#${toHex(c.r)}${toHex(c.g)}${toHex(c.b)}`;
       });
 
-      // Broadcast theme update for any listeners (like the Title Card Creator)
       document.dispatchEvent(new CustomEvent('theme-updated', { 
         detail: { 
           palette: hexPalette.map(hex => ({ rgbPrimary: hex })),
@@ -301,7 +324,7 @@ class DynamicTheme {
     return null;
   }
 
-  _update() {
+  private _update(): void {
     const currentId = this._lifecycleId;
     const scrollY = window.scrollY;
     const vh = window.innerHeight;
@@ -312,12 +335,12 @@ class DynamicTheme {
       return;
     }
 
-    let bestImg = null;
+    let bestImg: HTMLImageElement | null = null;
     let minDistance = Infinity;
 
     const images = this._visibilityMap.size > 0 
-      ? Array.from(this._visibilityMap.keys())
-      : Array.from(document.querySelectorAll('.article-hero img, .hero-image img, .article-image img, figure img'));
+      ? (Array.from(this._visibilityMap.keys()) as HTMLImageElement[])
+      : (Array.from(document.querySelectorAll('.article-hero img, .hero-image img, .article-image img, figure img')) as HTMLImageElement[]);
 
     images.forEach(img => {
       if (!img.isConnected || img.offsetWidth === 0) return;
@@ -339,14 +362,13 @@ class DynamicTheme {
     if (bestImg) {
       this._extract(bestImg).then(theme => {
         if (theme && this._lifecycleId === currentId) {
-          this._apply(theme, bestImg);
+          this._apply(theme, bestImg as HTMLImageElement);
           
-          const rgbToInverted = (rgbStr) => {
+          const rgbToInverted = (rgbStr: string) => {
             const [r, g, b] = rgbStr.split(',').map(n => 255 - parseInt(n.trim()));
             return `rgb(${r}, ${g}, ${b})`;
           };
 
-          // Broadcast theme update for any listeners
           document.dispatchEvent(new CustomEvent('theme-updated', { 
             detail: {
               palette: [
@@ -371,8 +393,8 @@ class DynamicTheme {
     }
   }
 
-  async _extract(img) {
-    if (this.colorCache.has(img.src)) return this.colorCache.get(img.src);
+  private async _extract(img: HTMLImageElement): Promise<Theme | null> {
+    if (this.colorCache.has(img.src)) return this.colorCache.get(img.src) || null;
     if (!img.complete) await new Promise(r => { img.onload = r; img.onerror = r; });
     try {
       const theme = this.colorThief.generateTheme(this.colorThief.getDominantColor(img));
@@ -381,15 +403,12 @@ class DynamicTheme {
     } catch(e) { return this.defaultTheme; }
   }
 
-  _apply(theme, source) {
+  private _apply(theme: Theme | null, source: HTMLElement | string): void {
     if (!theme || this.activeElement === source) return;
-    
-    // Safety check for SPA transitions
     if (typeof source !== 'string' && !source.isConnected) return;
 
     this.activeElement = source;
     requestAnimationFrame(() => {
-      // Final guard inside animation frame
       if (typeof source !== 'string' && !source.isConnected) return;
       
       const root = document.documentElement;
@@ -403,15 +422,12 @@ class DynamicTheme {
       root.classList.toggle('theme-dark', theme.isDark);
       root.classList.toggle('theme-light', !theme.isDark);
 
-      // Contrast Audit - Ensure elements on accent background are readable
       this._auditContrast();
 
-      // Handle Palette Display (found in article-3.html)
-      // This specifically fulfills the user request for a "different method" (raw palette)
       const paletteContainer = document.getElementById('paletteDisplay');
-      if (paletteContainer && (source === this.heroImg || source === 'hero-initial' || source === 'hero-top-reset')) {
+      if (paletteContainer && this.heroImg && (source === this.heroImg || source === 'hero-initial' || source === 'hero-top-reset')) {
         this.colorThief.getPalette(this.heroImg, 4).forEach((color, idx) => {
-          const swatches = paletteContainer.querySelectorAll('.palette-swatch');
+          const swatches = paletteContainer.querySelectorAll('.palette-swatch') as NodeListOf<HTMLElement>;
           if (swatches[idx]) {
             swatches[idx].style.background = `rgb(${this.colorThief.toRgbString(color)})`;
           }
@@ -420,17 +436,12 @@ class DynamicTheme {
     });
   }
 
-  /**
-   * Scans for specific problem areas where contrast might fail 
-   * and applies overrides if the automated theme values aren't enough.
-   */
-  _auditContrast() {
+  private _auditContrast(): void {
     const accentCards = document.querySelectorAll('.accent-card');
     const accentText = getComputedStyle(document.documentElement).getPropertyValue('--theme-accent-text').trim();
     
     accentCards.forEach(card => {
-      // Find all nested text elements that might be inheriting wrong colors
-      const nested = card.querySelectorAll('h1, h2, h3, h4, h5, h6, p, li, strong, span, i, b');
+      const nested = card.querySelectorAll('h1, h2, h3, h4, h5, h6, p, li, strong, span, i, b') as NodeListOf<HTMLElement>;
       nested.forEach(el => {
         el.style.color = accentText;
       });
@@ -438,7 +449,13 @@ class DynamicTheme {
   }
 }
 
+declare global {
+  interface Window {
+    dynamicTheme: DynamicTheme;
+  }
+}
+
 window.dynamicTheme = new DynamicTheme();
-export function initDynamicTheming() { window.dynamicTheme.init(); }
+export function initDynamicTheming(): void { window.dynamicTheme.init(); }
 document.addEventListener('DOMContentLoaded', () => initDynamicTheming());
-export { ColorThief, DynamicTheme };
+export type { Theme };

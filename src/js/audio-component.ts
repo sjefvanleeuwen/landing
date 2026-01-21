@@ -1,26 +1,26 @@
-import { audioService } from './audio-service.js';
-import { ColorThief } from './color-thief.js';
+import { audioService } from './audio-service';
+import { ColorThief } from './color-thief';
 
 export class MagazineAudioPlayer extends HTMLElement {
+    private ctx: CanvasRenderingContext2D | null = null;
+    private bars: number[] = [];
+    private peaks: number[] = [];
+    private particles: any[] = [];
+    private showParticles: boolean = true;
+    private animationId: number | null = null;
+    private vizMode: string = 'both'; // both, upper, lower
+    private _handleScroll: (() => void) | null = null;
+    private _updateUI: (() => void) | null = null;
+    private _onPlay: (() => void) | null = null;
+    private _onPause: (() => void) | null = null;
+
     constructor() {
         super();
-        this.ctx = null;
-        this.bars = [];
-        this.peaks = [];
-        this.particles = [];
-        this.showParticles = true;
-        this.animationId = null;
-        this.vizMode = 'both'; // both, upper, lower
-        this._handleScroll = null;
-        this._updateUI = null;
-        this._onPlay = null;
-        this._onPause = null;
     }
 
-    connectedCallback() {
+    connectedCallback(): void {
         const title = this.getAttribute('title') || 'Untitled';
         const artist = this.getAttribute('artist') || 'Unknown artist';
-        const src = this.getAttribute('src') || '';
         const bg = this.getAttribute('bg') || 'images/cube3__camera_settings_photorealistic4kcinematiccinestillmuted_5abb89d1-5f44-438f-a008-8fbeda9ab431.png';
         const videoSrc = this.getAttribute('video-src') || 'audio/Solitude Machine.mp4';
         const hasVideo = !!videoSrc;
@@ -142,57 +142,52 @@ export class MagazineAudioPlayer extends HTMLElement {
             </section>
         `;
 
-        // Add Hover Effect for Volume Slider
-        const volContainer = this.querySelector('.volume-container');
-        const volSlider = this.querySelector('.volume-slider');
+        const volContainer = this.querySelector('.volume-container') as HTMLElement;
+        const volSlider = this.querySelector('.volume-slider') as HTMLInputElement;
         if (volContainer && volSlider) {
             volContainer.addEventListener('mouseenter', () => volSlider.style.opacity = '1');
             volContainer.addEventListener('mouseleave', () => volSlider.style.opacity = '0');
-            volSlider.addEventListener('input', (e) => {
-                const v = e.target.value;
+            volSlider.addEventListener('input', (e: Event) => {
+                const v = parseFloat((e.target as HTMLInputElement).value);
                 audioService.volume = v;
                 volSlider.style.background = `linear-gradient(to right, rgba(255,255,255,0.85) ${v * 100}%, rgba(255,255,255,0.2) ${v * 100}%)`;
             });
-            // Initial volume background
             volSlider.style.background = `linear-gradient(to right, rgba(255,255,255,0.85) ${audioService.volume * 100}%, rgba(255,255,255,0.2) ${audioService.volume * 100}%)`;
         }
 
         this.initVisualizer();
     }
 
-    initVisualizer() {
+    initVisualizer(): void {
         const title = this.getAttribute('title') || 'Untitled';
         const artist = this.getAttribute('artist') || 'Unknown artist';
         const videoSrc = this.getAttribute('video-src') || 'audio/Solitude Machine.mp4';
         const src = this.getAttribute('src') || videoSrc;
         
-        const canvas = this.querySelector('#visualizer');
-        const playPauseBtn = this.querySelector('.play-pause-btn');
-        const seekSlider = this.querySelector('.seek-slider');
+        const canvas = this.querySelector('#visualizer') as HTMLCanvasElement;
+        const playPauseBtn = this.querySelector('.play-pause-btn') as HTMLElement;
+        const seekSlider = this.querySelector('.seek-slider') as HTMLInputElement;
         const timeDisplayLarge = this.querySelector('.time-display-large');
         const timeProgress = this.querySelector('.time-progress');
-        const bgImage = this.querySelector('#player-bg-image');
-        const bgVideo = this.querySelector('#player-bg-video');
+        const bgImage = this.querySelector('#player-bg-image') as HTMLImageElement;
+        const bgVideo = this.querySelector('#player-bg-video') as HTMLVideoElement;
         
         if (!canvas) return;
 
         this.ctx = canvas.getContext('2d');
         const colorThief = new ColorThief();
-        let themeColors = {
+        let themeColors: any = {
             primary: '#C5A028',
             secondary: '#D4813D',
             light: '#F9E49B'
         };
 
-        const updateColorsFromSource = (source) => {
+        const updateColorsFromSource = (source: HTMLImageElement | HTMLVideoElement) => {
             try {
-                // Get a larger palette to ensure we have variety
-                const palette = colorThief.getPalette(source, 8);
+                const palette = colorThief.getPalette(source as any, 8);
                 if (palette && palette.length >= 3) {
-                    const inv = (c) => ({ r: 255 - c.r, g: 255 - c.g, b: 255 - c.b });
-                    
-                    // Function to ensure a color is "bright" or "visible" by shifting it towards white if too dark
-                    const boost = (c, minBrightness = 180) => {
+                    const inv = (c: any) => ({ r: 255 - c.r, g: 255 - c.g, b: 255 - c.b });
+                    const boost = (c: any, minBrightness = 180) => {
                         const b = (c.r + c.g + c.b) / 3;
                         if (b < minBrightness) {
                             const factor = minBrightness / Math.max(b, 1);
@@ -205,19 +200,16 @@ export class MagazineAudioPlayer extends HTMLElement {
                         return c;
                     };
 
-                    // Extract distinct roles from the palette and invert them
-                    const p0 = boost(inv(palette[0]), 200); // Title should be quite bright
+                    const p0 = boost(inv(palette[0]), 200);
                     const p1 = boost(inv(palette[1]), 160);
                     themeColors.primary = `rgb(${p0.r}, ${p0.g}, ${p0.b})`;
                     themeColors.secondary = `rgb(${p1.r}, ${p1.g}, ${p1.b})`;
                     
-                    // Find a "light" color for highlights (inverted becomes dark/contrast)
                     const lightSource = palette.find(c => (c.r + c.g + c.b) > 400) || palette[2];
-                    const lBase = boost(inv(lightSource), 230); // Timer should be very bright
+                    const lBase = boost(inv(lightSource), 230);
                     themeColors.light = `rgb(${lBase.r}, ${lBase.g}, ${lBase.b})`;
 
-                    // Find a "vibrant" color for glow/accents
-                    const vibrantSource = palette.slice(1).sort((a, b) => {
+                    const vibrantSource = palette.slice(1).sort((a: any, b: any) => {
                         const sA = Math.max(a.r, a.g, a.b) - Math.min(a.r, a.g, a.b);
                         const sB = Math.max(b.r, b.g, b.b) - Math.min(b.r, b.g, b.b);
                         return sB - sA;
@@ -225,20 +217,16 @@ export class MagazineAudioPlayer extends HTMLElement {
                     const vBase = inv(vibrantSource);
                     themeColors.accent = `rgb(${vBase.r}, ${vBase.g}, ${vBase.b})`;
                     
-                    // Create a 5-color palette specifically for building the gradients (all inverted)
                     const top5 = palette.slice(0, 5).map(inv);
-                    themeColors.gradPalette = top5.map(c => `rgb(${c.r}, ${c.g}, ${c.b})`);
+                    themeColors.gradPalette = top5.map((c: any) => `rgb(${c.r}, ${c.g}, ${c.b})`);
+                    themeColors.fullPalette = palette.map(inv).map((c: any) => `rgb(${c.r}, ${c.g}, ${c.b})`);
 
-                    // Create a full palette for spectral effects
-                    themeColors.fullPalette = palette.map(inv).map(c => `rgb(${c.r}, ${c.g}, ${c.b})`);
-
-                    // Apply colors to the UI elements for a sharp, reactive look
-                    const titleEl = this.querySelector('.track-title');
-                    const largeTimeEl = this.querySelector('.time-display-large');
-                    const artistEl = this.querySelector('.track-artist');
-                    const progressEl = this.querySelector('.time-progress');
-                    const volumeBtnEl = this.querySelector('.volume-btn');
-                    const playPauseBtnEl = this.querySelector('.play-pause-btn');
+                    const titleEl = this.querySelector('.track-title') as HTMLElement;
+                    const largeTimeEl = this.querySelector('.time-display-large') as HTMLElement;
+                    const artistEl = this.querySelector('.track-artist') as HTMLElement;
+                    const progressEl = this.querySelector('.time-progress') as HTMLElement;
+                    const volumeBtnEl = this.querySelector('.volume-btn') as HTMLElement;
+                    const playPauseBtnEl = this.querySelector('.play-pause-btn') as HTMLElement;
                     
                     const brokenWhite = 'rgba(255, 255, 255, 0.85)';
 
@@ -260,49 +248,28 @@ export class MagazineAudioPlayer extends HTMLElement {
 
         if (bgVideo && videoSrc) {
             bgVideo.crossOrigin = "anonymous";
-            
             const onVideoReady = () => {
-                // Video is ready, ensure visibility
                 bgVideo.style.display = 'block';
                 if (bgImage) bgImage.style.display = 'none';
-                
-                // Sample colors from the first frame
-                try {
-                    setTimeout(() => {
-                        updateColorsFromSource(bgVideo);
-                    }, 500);
-                } catch (e) {
-                    console.warn("ColorThief video extraction failed:", e);
-                }
+                setTimeout(() => updateColorsFromSource(bgVideo), 500);
             };
 
-            if (bgVideo.readyState >= 3) {
-                onVideoReady();
-            } else {
-                bgVideo.addEventListener('loadeddata', onVideoReady);
-            }
+            if (bgVideo.readyState >= 3) onVideoReady();
+            else bgVideo.addEventListener('loadeddata', onVideoReady);
 
-            // Fallback to image if video fails
             bgVideo.addEventListener('error', () => {
-                console.warn("Video failed to load, falling back to image.");
                 bgVideo.style.display = 'none';
                 if (bgImage) {
                     bgImage.style.display = 'block';
-                    if (bgImage.complete) {
-                        updateColorsFromSource(bgImage);
-                    } else {
-                        bgImage.addEventListener('load', () => updateColorsFromSource(bgImage));
-                    }
+                    if (bgImage.complete) updateColorsFromSource(bgImage);
+                    else bgImage.addEventListener('load', () => updateColorsFromSource(bgImage));
                 }
             });
         } else if (bgImage) {
             bgImage.style.display = 'block';
             bgImage.crossOrigin = "anonymous";
-            if (bgImage.complete) {
-                updateColorsFromSource(bgImage);
-            } else {
-                bgImage.addEventListener('load', () => updateColorsFromSource(bgImage));
-            }
+            if (bgImage.complete) updateColorsFromSource(bgImage);
+            else bgImage.addEventListener('load', () => updateColorsFromSource(bgImage));
         }
 
         const barCount = 180;
@@ -318,15 +285,12 @@ export class MagazineAudioPlayer extends HTMLElement {
             playPauseBtn.innerHTML = `<svg viewBox="0 0 24 24" width="36" height="36" style="display: block; pointer-events: none;"><path fill="currentColor" d="${currentPath}"/></svg>`;
             
             if (bgVideo) {
-                if (isPaused) {
-                    bgVideo.pause();
-                } else {
-                    bgVideo.play().catch(e => console.warn("Video play blocked:", e));
-                }
+                if (isPaused) bgVideo.pause();
+                else bgVideo.play().catch(e => console.warn("Video play blocked:", e));
             }
         };
 
-        const togglePlayback = (e) => {
+        const togglePlayback = (e: Event) => {
             e.stopPropagation();
             audioService.toggle(src, title, artist);
             updatePlayIcons();
@@ -340,18 +304,18 @@ export class MagazineAudioPlayer extends HTMLElement {
         seekSlider.addEventListener('touchstart', () => isDragging = true, { passive: true });
         window.addEventListener('touchend', () => isDragging = false, { passive: true });
 
-        seekSlider.addEventListener('input', (e) => {
+        seekSlider.addEventListener('input', (e: Event) => {
             const duration = audioService.duration;
             if (duration) {
-                const newTime = (e.target.value / 100) * duration;
+                const newTime = (parseFloat((e.target as HTMLInputElement).value) / 100) * duration;
                 audioService.currentTime = newTime;
                 if (bgVideo) bgVideo.currentTime = newTime;
             }
         });
 
         const settingsBtn = this.querySelector('.settings-btn');
-        const settingsMenu = this.querySelector('.settings-menu');
-        const menuItems = this.querySelectorAll('.menu-item');
+        const settingsMenu = this.querySelector('.settings-menu') as HTMLElement;
+        const menuItems = this.querySelectorAll('.menu-item') as NodeListOf<HTMLElement>;
         const particleToggle = this.querySelector('.toggle-particles');
 
         if (settingsBtn && settingsMenu) {
@@ -361,7 +325,6 @@ export class MagazineAudioPlayer extends HTMLElement {
                 settingsMenu.style.display = isVisible ? 'none' : 'flex';
             });
 
-            // Close menu on outside click
             window.addEventListener('click', () => {
                 settingsMenu.style.display = 'none';
             });
@@ -369,9 +332,7 @@ export class MagazineAudioPlayer extends HTMLElement {
             menuItems.forEach(item => {
                 item.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    this.vizMode = item.dataset.mode;
-                    
-                    // Highlight active
+                    this.vizMode = item.dataset.mode || 'both';
                     menuItems.forEach(mi => mi.style.color = '#fff');
                     item.style.color = '#C5A028';
                 });
@@ -381,7 +342,7 @@ export class MagazineAudioPlayer extends HTMLElement {
                 const status = particleToggle.querySelector('.status');
                 if (status) {
                     status.textContent = this.showParticles ? 'ON' : 'OFF';
-                    status.style.color = this.showParticles ? '#C5A028' : '#666';
+                    (status as HTMLElement).style.color = this.showParticles ? '#C5A028' : '#666';
                 }
 
                 particleToggle.addEventListener('click', (e) => {
@@ -389,12 +350,11 @@ export class MagazineAudioPlayer extends HTMLElement {
                     this.showParticles = !this.showParticles;
                     if (status) {
                         status.textContent = this.showParticles ? 'ON' : 'OFF';
-                        status.style.color = this.showParticles ? '#C5A028' : '#666';
+                        (status as HTMLElement).style.color = this.showParticles ? '#C5A028' : '#666';
                     }
                 });
             }
             
-            // Set initial active
             const activeItem = Array.from(menuItems).find(i => i.dataset.mode === this.vizMode);
             if (activeItem) activeItem.style.color = '#C5A028';
         }
@@ -407,18 +367,17 @@ export class MagazineAudioPlayer extends HTMLElement {
 
             if (duration && !isNaN(duration)) {
                 const percent = (current / duration) * 100;
-                seekSlider.value = percent;
+                seekSlider.value = percent.toString();
                 seekSlider.style.background = `linear-gradient(to right, ${brokenWhite} ${percent}%, rgba(255, 255, 255, 0.15) ${percent}%)`;
             }
 
             if (bgVideo && !audioService.isPaused) {
-                // Sync video with audio service time
                 if (Math.abs(bgVideo.currentTime - current) > 0.2) {
                     bgVideo.currentTime = current;
                 }
             }
             
-            const formatTime = (s) => {
+            const formatTime = (s: number) => {
                 if (isNaN(s)) return '00:00';
                 const mins = Math.floor(s / 60);
                 const secs = Math.floor(s % 60);
@@ -441,21 +400,22 @@ export class MagazineAudioPlayer extends HTMLElement {
         audioService.on('ended', this._onPause);
 
         const resize = () => {
-            canvas.width = canvas.parentElement.clientWidth;
-            canvas.height = canvas.parentElement.clientHeight;
+            canvas.width = canvas.parentElement?.clientWidth || window.innerWidth;
+            canvas.height = canvas.parentElement?.clientHeight || window.innerHeight;
         };
 
         window.addEventListener('resize', resize);
         resize();
 
         const draw = () => {
+            if (!this.ctx) return;
             this.ctx.clearRect(0, 0, canvas.width, canvas.height);
             
             const colorPrimary = themeColors.primary;
             const colorLight = themeColors.light;
             const colorSecondary = themeColors.secondary;
             const colorAccent = themeColors.accent || colorSecondary;
-            const palette = themeColors.fullPalette || [colorPrimary, colorSecondary, colorLight];
+            // Removed unused palette
 
             let bassValue = 0;
             const dataArray = audioService.analyzerData;
@@ -478,13 +438,9 @@ export class MagazineAudioPlayer extends HTMLElement {
             const actualBarCount = Math.min(barCount, Math.floor(totalWidth / (barWidth + spacing))) - 8;
             const startX = (totalWidth - (actualBarCount * (barWidth + spacing))) / 2;
             
-            // Dynamic Center Y based on mode
             let centerY = canvas.height * 0.55;
-            if (this.vizMode === 'lower') {
-                centerY = canvas.height * 0.45; // Offset upwards to give room for downward bars
-            } else if (this.vizMode === 'upper') {
-                centerY = canvas.height * 0.65; // Offset downwards to give room for upward bars
-            }
+            if (this.vizMode === 'lower') centerY = canvas.height * 0.45;
+            else if (this.vizMode === 'upper') centerY = canvas.height * 0.65;
 
             this.ctx.strokeStyle = colorPrimary.replace('rgb', 'rgba').replace(')', ', 0.2)');
             this.ctx.lineWidth = 1;
@@ -521,11 +477,8 @@ export class MagazineAudioPlayer extends HTMLElement {
                 const currentH = this.bars[i];
                 const peakH = this.peaks[i];
                 const x = startX + i * (barWidth + spacing);
-                
-                // Use the top 5 colors to build a complex vertical gradient
                 const grad = themeColors.gradPalette || [colorPrimary, colorSecondary, colorLight, colorSecondary, colorPrimary];
                 
-                // Mode-based drawing logic
                 if (this.vizMode === 'both') {
                     const gradient = this.ctx.createLinearGradient(x, centerY - currentH, x, centerY + currentH);
                     gradient.addColorStop(0, 'rgba(0, 0, 0, 0.0)');
@@ -586,7 +539,6 @@ export class MagazineAudioPlayer extends HTMLElement {
                     }
                 }
 
-                // Shadow around center line
                 this.ctx.save();
                 this.ctx.shadowBlur = 15;
                 this.ctx.shadowColor = grad[0];
@@ -594,7 +546,6 @@ export class MagazineAudioPlayer extends HTMLElement {
                 this.ctx.fillRect(x, centerY - 1, barWidth, 2);
                 this.ctx.restore();
 
-                // Particle Spawning (Mostly for aesthetic)
                 if (this.showParticles && dataArray && peakH > 5) {
                     if (this.bars[i] > 30 && Math.random() > 0.98) {
                         const particleY = this.vizMode === 'upper' ? centerY - currentH : centerY + currentH;
@@ -625,46 +576,32 @@ export class MagazineAudioPlayer extends HTMLElement {
             this.particles.forEach((p, index) => {
                 p.x += p.vx;
                 p.y += p.vy;
-                
-                // Gravity depends on direction
                 p.vy += (p.vy > 0) ? 0.015 : -0.005; 
                 p.life -= 0.003;
-                
-                // Remove if out of bounds or dead
                 if (p.life <= 0 || p.y > canvas.height + 20 || p.y < -20) {
                     this.particles.splice(index, 1);
                     return;
                 }
-
-                this.ctx.fillStyle = p.color;
-                this.ctx.globalAlpha = p.life * 0.8;
-                this.ctx.beginPath();
-                this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                this.ctx.fill();
+                this.ctx!.fillStyle = p.color;
+                this.ctx!.globalAlpha = p.life * 0.8;
+                this.ctx!.beginPath();
+                this.ctx!.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                this.ctx!.fill();
             });
             this.ctx.globalAlpha = 1.0;
-
             this.animationId = requestAnimationFrame(draw);
         };
 
         this.animationId = requestAnimationFrame(draw);
         updatePlayIcons();
-        this._updateUI();
+        this._updateUI!();
     }
 
-    disconnectedCallback() {
-        if (this.animationId) {
-            cancelAnimationFrame(this.animationId);
-        }
-        if (this._handleScroll) {
-            window.removeEventListener('scroll', this._handleScroll);
-        }
-        if (this._updateUI) {
-            audioService.off('timeupdate', this._updateUI);
-        }
-        if (this._onPlay) {
-            audioService.off('play', this._onPlay);
-        }
+    disconnectedCallback(): void {
+        if (this.animationId) cancelAnimationFrame(this.animationId);
+        if (this._handleScroll) window.removeEventListener('scroll', this._handleScroll);
+        if (this._updateUI) audioService.off('timeupdate', this._updateUI);
+        if (this._onPlay) audioService.off('play', this._onPlay);
         if (this._onPause) {
             audioService.off('pause', this._onPause);
             audioService.off('ended', this._onPause);
@@ -673,26 +610,26 @@ export class MagazineAudioPlayer extends HTMLElement {
 }
 
 export class GlobalMiniPlayer extends HTMLElement {
+    private _updateUI: (() => void) | null = null;
+    private _onTrackChange: (() => void) | null = null;
+
     constructor() {
         super();
-        this._updateUI = null;
-        this._onTrackChange = null;
     }
 
-    connectedCallback() {
+    connectedCallback(): void {
         this.render();
         
         this._updateUI = () => {
             const hasSource = !!audioService.currentSrc;
             const isPlaying = !audioService.isPaused;
-            const miniDiv = this.querySelector('.mini-player');
+            const miniDiv = this.querySelector('.mini-player') as HTMLElement;
             
             if (!hasSource || !miniDiv) {
                 if (miniDiv) miniDiv.classList.remove('visible');
                 return;
             }
 
-            // Check if we should be visible
             const localPlayer = document.querySelector('m-audio-player');
             let shouldBeVisible = true;
 
@@ -700,23 +637,19 @@ export class GlobalMiniPlayer extends HTMLElement {
                 const hero = localPlayer.querySelector('.audio-player-hero');
                 if (hero) {
                     const rect = hero.getBoundingClientRect();
-                    // Show mini-player if hero is scrolled past its half-point
                     shouldBeVisible = rect.bottom < window.innerHeight * 0.5;
                 }
             }
             
-            if (shouldBeVisible) {
-                miniDiv.classList.add('visible');
-            } else {
-                miniDiv.classList.remove('visible');
-            }
+            if (shouldBeVisible) miniDiv.classList.add('visible');
+            else miniDiv.classList.remove('visible');
 
             const title = this.querySelector('.mini-title');
             const artist = this.querySelector('.mini-artist');
             if (title) title.textContent = audioService.currentTitle || '';
             if (artist) artist.textContent = audioService.currentArtist || '';
 
-            const progress = this.querySelector('.mini-progress-bar');
+            const progress = this.querySelector('.mini-progress-bar') as HTMLElement;
             if (progress && audioService.duration) {
                 progress.style.width = `${(audioService.currentTime / audioService.duration) * 100}%`;
             }
@@ -729,7 +662,7 @@ export class GlobalMiniPlayer extends HTMLElement {
         };
 
         this._onTrackChange = () => {
-            this._updateUI();
+            this._updateUI!();
         };
 
         audioService.on('timeupdate', this._updateUI);
@@ -737,18 +670,16 @@ export class GlobalMiniPlayer extends HTMLElement {
         audioService.on('pause', this._updateUI);
         audioService.on('trackchange', this._onTrackChange);
         
-        // Listen to navigation events to re-check visibility
         window.addEventListener('hashchange', this._updateUI);
         window.addEventListener('scroll', this._updateUI, { passive: true });
         window.addEventListener('page-loaded', () => {
-            // Give a tiny delay for DOM to settle
-            setTimeout(() => this._updateUI(), 50);
+            setTimeout(() => this._updateUI!(), 50);
         });
         
         this._updateUI();
     }
 
-    render() {
+    render(): void {
         this.innerHTML = `
             <div class="mini-player global-mini">
                 <div class="mini-track-info">
@@ -764,18 +695,20 @@ export class GlobalMiniPlayer extends HTMLElement {
             </div>
         `;
 
-        this.querySelector('.mini-play-btn').addEventListener('click', () => {
+        (this.querySelector('.mini-play-btn') as HTMLElement).addEventListener('click', () => {
             audioService.toggle();
-            this._updateUI();
+            this._updateUI!();
         });
     }
 
-    disconnectedCallback() {
-        audioService.off('timeupdate', this._updateUI);
-        audioService.off('play', this._updateUI);
-        audioService.off('pause', this._updateUI);
-        audioService.off('trackchange', this._onTrackChange);
-        window.removeEventListener('hashchange', this._updateUI);
-        window.removeEventListener('scroll', this._updateUI);
+    disconnectedCallback(): void {
+        if (this._updateUI) {
+            audioService.off('timeupdate', this._updateUI);
+            audioService.off('play', this._updateUI);
+            audioService.off('pause', this._updateUI);
+            window.removeEventListener('hashchange', this._updateUI);
+            window.removeEventListener('scroll', this._updateUI);
+        }
+        if (this._onTrackChange) audioService.off('trackchange', this._onTrackChange);
     }
 }

@@ -1,25 +1,33 @@
 class MagazineReveal extends HTMLElement {
-  connectedCallback() {
-    const observerOptions = {
+  private observer: IntersectionObserver | null = null;
+
+  connectedCallback(): void {
+    const observerOptions: IntersectionObserverInit = {
       threshold: 0.1,
       rootMargin: "0px 0px -50px 0px"
     };
 
-    const observer = new IntersectionObserver((entries) => {
+    this.observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           this.classList.add('active');
-          if (this.hasAttribute('once')) observer.unobserve(this);
+          if (this.hasAttribute('once')) this.observer?.unobserve(this);
         }
       });
     }, observerOptions);
 
-    observer.observe(this);
+    this.observer.observe(this);
+  }
+
+  disconnectedCallback(): void {
+    this.observer?.disconnect();
   }
 }
 
 class MagazineNav extends HTMLElement {
-  connectedCallback() {
+  private _handleScroll: (() => void) | null = null;
+
+  connectedCallback(): void {
     this.innerHTML = `
       <a href="index.html" class="logo">SJEF VAN LEEUWEN</a>
       
@@ -39,8 +47,8 @@ class MagazineNav extends HTMLElement {
       </div>
     `;
 
-    const toggle = this.querySelector('.nav-toggle');
-    const links = this.querySelector('.nav-links');
+    const toggle = this.querySelector('.nav-toggle') as HTMLElement;
+    const links = this.querySelector('.nav-links') as HTMLElement;
 
     toggle.addEventListener('click', () => {
       this.classList.toggle('nav-open');
@@ -48,8 +56,8 @@ class MagazineNav extends HTMLElement {
     });
 
     // Close menu when a link is clicked (important for SPA)
-    links.addEventListener('click', (e) => {
-      if (e.target.tagName === 'A') {
+    links.addEventListener('click', (e: Event) => {
+      if ((e.target as HTMLElement).tagName === 'A') {
         this.classList.remove('nav-open');
         document.body.classList.remove('no-scroll');
       }
@@ -75,13 +83,15 @@ class MagazineNav extends HTMLElement {
     this._handleScroll = handleScroll;
   }
 
-  disconnectedCallback() {
-    window.removeEventListener('scroll', this._handleScroll);
+  disconnectedCallback(): void {
+    if (this._handleScroll) {
+      window.removeEventListener('scroll', this._handleScroll);
+    }
   }
 }
 
 class MagazineChevron extends HTMLElement {
-  connectedCallback() {
+  connectedCallback(): void {
     const text = this.getAttribute('text') || 'Scroll';
     this.innerHTML = `
       <div class="chevron-container" style="display: flex; flex-direction: column; align-items: center; cursor: pointer;">
@@ -96,10 +106,10 @@ class MagazineChevron extends HTMLElement {
     
     this.addEventListener('click', () => {
       const parentSection = this.closest('section') || this.closest('header');
-      const nextSection = parentSection?.nextElementSibling;
+      const nextSection = parentSection?.nextElementSibling as HTMLElement | null;
       if (nextSection) {
         // Calculate offset to account for fixed navigation height
-        const nav = document.querySelector('m-nav');
+        const nav = document.querySelector('m-nav') as HTMLElement | null;
         const navHeight = nav ? nav.offsetHeight : 0;
         const targetPosition = nextSection.getBoundingClientRect().top + window.scrollY - navHeight;
 
@@ -113,7 +123,7 @@ class MagazineChevron extends HTMLElement {
 }
 
 class MagazineFooter extends HTMLElement {
-  connectedCallback() {
+  connectedCallback(): void {
     this.innerHTML = `
       <footer>
         <div class="footer-grid">
