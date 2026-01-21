@@ -47,9 +47,9 @@ export class Router {
         // Force scroll to top immediately on click
         window.scrollTo({ top: 0, behavior: 'instant' });
         
-        // Get just the filename (e.g., 'about.html' -> 'about')
-        const filename = url.pathname.split('/').pop()?.replace('.html', '') || '';
-        const route = (filename === 'index' || filename === '') ? 'home' : filename;
+        // Preserve folder structure (e.g., 'blog/article-1.html' -> 'blog/article-1')
+        const pathname = url.pathname.replace(/^\/|\/$/g, '');
+        const route = (pathname === 'index.html' || pathname === '') ? 'home' : pathname.replace('.html', '');
         
         // Preserve search parameters (query string) when converting to hash
         const search = url.search;

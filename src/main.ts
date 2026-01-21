@@ -36,6 +36,7 @@ interface RouteConfig {
 // Only define special overrides here
 const routes: Record<string, RouteConfig> = {
   'home': { template: 'home.html' },
+  'index': { template: 'home.html' },
   '404': { template: '404.html' }
 };
 

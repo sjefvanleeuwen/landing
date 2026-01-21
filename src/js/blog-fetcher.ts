@@ -14,14 +14,14 @@ export async function initBlog(): Promise<void> {
         const articles: Article[] = [
             {
                 title: "NOISE FLOOR",
-                file: "noise-floor.html",
+                file: "blog/noise-floor.html",
                 date: "LIVE",
                 category: "REBEL_SONIC",
                 isInternal: true
             },
             {
                 title: "NEURAL ARCH",
-                file: "neural-arch.html",
+                file: "blog/neural-arch.html",
                 date: "LIVE",
                 category: "COGNITIVE",
                 isInternal: true
@@ -58,21 +58,21 @@ export async function initBlog(): Promise<void> {
             },
             {
                 title: "MIT's Applied Generative AI",
-                file: "article-7.html",
+                file: "blog/article-7.html",
                 date: "Apr 2025",
                 category: "AI & STRATEGY",
                 isInternal: true
             },
             {
                 title: "The Case for Graph-Shaped Data",
-                file: "article-8.html",
+                file: "blog/article-8.html",
                 date: "Dec 2023",
                 category: "ARCHITECTURE",
                 isInternal: true
             },
             {
                 title: "AGILE ADR STRATEGIES",
-                file: "article-9.html",
+                file: "blog/article-9.html",
                 date: "APR 2024",
                 category: "ENGINEERING",
                 isInternal: true
